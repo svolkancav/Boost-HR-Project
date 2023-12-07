@@ -26,7 +26,7 @@ namespace HR_Project.Domain.Entities.Concrete
 
         //Navigation
 
-        public Personnel Manager { get; set; }
-        public ICollection<Personnel> Personnel { get; set; }
+        public Personel Manager { get; set; }
+        public ICollection<Personel> Personeller { get; set; }
 	}
 }

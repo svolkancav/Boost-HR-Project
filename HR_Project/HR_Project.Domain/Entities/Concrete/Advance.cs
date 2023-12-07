@@ -14,8 +14,7 @@ namespace HR_Project.Domain.Entities.Concrete
 
 	{
 		public int Id { get; set; }
-		public int PersonnelId { get; set; }
-		public Personnel Personnel { get; set; }
+
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }
@@ -25,5 +24,11 @@ namespace HR_Project.Domain.Entities.Concrete
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }
+
+        //Navigation
+        public int PersonelId { get; set; }
+        public Personel Personel { get; set; }
+
+
     }
 }

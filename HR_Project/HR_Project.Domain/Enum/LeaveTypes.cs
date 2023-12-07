@@ -31,20 +31,14 @@ namespace HR_Project.Domain.Enum
         [Display(Name = "Babalık İzni")]
         PaternityLeave = 10, //5 gün
         [Display(Name = "Refakat İzni")]
-        AccompanimentLeave = 11 //Maksimum 3 ay
+        AccompanimentLeave = 11, //Maksimum 3 ay
+        [Display(Name = "Gebelik Kontrol İzni")]
+        PregnancyCheckPermit =12, //Hamile kalan kadın çalışanlar kontrolleri için bu ücretli izin hakkından yararlanabilmektedir.
+        [Display(Name = "Süt İzni")]
+        BreastFeedingLeave = 13, //Günde 1.5 saat
+        [Display(Name = "Yeni İş Arama İzni")]
+        NewJobSearchPermit = 14, //Günde 2 saat
 
-        //Yıllık izin,+
-        //Hafta tatili, ????
-        //Ulusal-Dini Bayram izni,+
-        //Doğum izni,+
-        //Gebelik kontrol izni, ????
-        //Süt izni, *Günde 1.5 saat  ????
-        //Babalık izni,+
-        //Ölüm izni,+
-        //Yeni iş arama izni, *Günde 2 saat  ????
-        //Evlilik izni,+
-        //Mazeret izni, * evlilik, babalık, doğum, ölüm, süt ve hastalık izinleri mazeret izni olarak sayılmaktadır.
-        //Refakat izni+
     }
 }
 

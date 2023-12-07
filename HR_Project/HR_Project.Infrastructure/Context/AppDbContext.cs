@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Infrastructure.Context
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext 
     {
+        //
     }
 }

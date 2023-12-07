@@ -9,5 +9,6 @@ namespace HR_Project.Infrastructure.Context
 {
     public class AppDbContext 
     {
+        //
     }
 }

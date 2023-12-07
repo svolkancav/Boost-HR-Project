@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HR_Project.Domain.Entities.Abstract;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
+
 	public class Department : IBaseEntity
+
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

@@ -1,4 +1,6 @@
 ﻿using HR_Project.Application.IoC.Models.DTOs;
+using HR_Project.Common.Models.DTOs;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,8 @@ namespace HR_Project.Application.Services.PersonelServices
         Task Delete(string id);
         Task<PersonelDTO> GetById(string id);
         Task<List<PersonelDTO>> GetPersonels();
+        Task<SignInResult> Login(LoginDTO model);
+        Task<string[]> GetRoles(string email);
+        void Logout(string token);
     }
 }

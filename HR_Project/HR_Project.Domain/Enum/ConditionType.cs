@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace HR_Project.Domain.Enum
 {
-    public enum LeaveConditions
+    public enum ConditionType
     {
         [Display(Name = "Onaylandı")]
         Approved = 1,

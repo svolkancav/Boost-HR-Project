@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using HR_Project.Application.IoC.Models.DTOs;
+using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,9 @@ namespace HR_Project.Application.Mapper
         public Mapping()
         {
             CreateMap<Personnel, PersonelDTO>().ReverseMap();
+            CreateMap<Advance, UpdateAdvanceDTO>().ReverseMap();
+            CreateMap<Advance, CreateAdvanceDTO>().ReverseMap();
+            CreateMap<Advance, AdvanceVM>().ReverseMap();
         }
         
     }

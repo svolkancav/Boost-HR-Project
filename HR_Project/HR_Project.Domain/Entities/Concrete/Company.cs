@@ -10,10 +10,15 @@ using HR_Project.Domain.Entities.Abstract;
 namespace HR_Project.Domain.Entities.Concrete
 {
 
-	public class Company : IBaseEntity
-
+	public class Company : BaseEntity, IEntity<int>
 	{
-		public int Id { get; set; }
+        public Company()
+        {
+            Departments = new HashSet<Department>();
+			Managers = new HashSet<Personnel>();
+			Personnels = new HashSet<Personnel>();
+        }
+        public int Id { get; set; }
 		public string Name { get; set; }
 		public string? Address { get; set; }
 		public string? City { get; set; }
@@ -23,14 +28,9 @@ namespace HR_Project.Domain.Entities.Concrete
 		public string? Phone { get; set; }
 		public string? Fax { get; set; }
 
-        //IBaseEntity
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public Status Status { get; set; }
-
         //Navigation
         public ICollection<Department> Departments { get; set; }
-		public ICollection<Personnel> Personnels { get; set; }
+        public ICollection<Personnel> Managers { get; set; }
+        public ICollection<Personnel> Personnels { get; set; }
 	}
 }

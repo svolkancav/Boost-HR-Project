@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Repositories;

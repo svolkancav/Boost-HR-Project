@@ -30,7 +30,7 @@ namespace HR_Project.Application.IoC.Models.DTOs
 
         public ICollection<Personnel> Subordinates { get; set; }
         //public ICollection<Salary> Salaries { get; set; }
-        public ICollection<Leave> Absences { get; set; }
+        public ICollection<Absence> Absences { get; set; }
         public ICollection<Advance> Advance { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

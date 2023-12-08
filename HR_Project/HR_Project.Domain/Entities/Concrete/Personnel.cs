@@ -12,10 +12,16 @@ using Microsoft.AspNetCore.Identity;
 namespace HR_Project.Domain.Entities.Concrete
 {
 
-	public class Personnel : IBaseEntity
+	public class Personnel : IdentityUser<Guid>, IBaseEntity
 
 	{
-		public string Name { get; set; }
+        public Personnel()
+        {
+            Personnels = new HashSet<Personnel>();
+            Absences = new HashSet<Absence>();
+            Advances = new HashSet<Advance>();
+        }
+        public string Name { get; set; }
 		public string Surname { get; set; }
         public string Email { get; set; }
         public string? Address { get; set; }
@@ -28,15 +34,20 @@ namespace HR_Project.Domain.Entities.Concrete
         //public Bloodtype? Bloodtype { get; set; }
 
         //IBaseEntity
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }= DateTime.Now;
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public Status Status { get; set; }
+        public Status Status { get; set; }= Status.Inserted;
 
 		//Navigation
 
         public int? DepartmentId { get; set; }
+		public Department Department { get; set; }
+		public Guid? ManagerId { get; set; }
+		public Personnel Manager { get; set; }
+		public ICollection<Personnel> Personnels { get; set; }
+        public ICollection<Absence> Absences { get; set; }
+        public ICollection<Advance> Advances { get; set; }
 
-
-	}
+    }
 }

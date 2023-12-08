@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace HR_Project.Application.Extensions
+namespace HR_Project.Common.Extensions
 {
     public class PictureFileExtensionAttribute : ValidationAttribute
     {

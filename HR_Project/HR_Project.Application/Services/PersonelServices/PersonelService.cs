@@ -1,8 +1,10 @@
 ﻿
 using AutoMapper;
 using HR_Project.Application.IoC.Models.DTOs;
+using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Repositories;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
-    public class PersonelService : IPersonelService
+	public class PersonelService : IPersonelService
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
@@ -71,7 +73,22 @@ namespace HR_Project.Application.Services.PersonelServices
             return personels;
         }
 
-        public async Task Update(PersonelDTO model)
+		public Task<string[]> GetRoles(string email)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<PersonelDTO> Login(LoginDTO model)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Logout(string token)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task Update(PersonelDTO model)
         {
             bool isExist = await _personelRepository.Any(x => x.Id == model.Id);
 
@@ -81,5 +98,10 @@ namespace HR_Project.Application.Services.PersonelServices
                 await _personelRepository.Update(personel);
             }
         }
-    }
+
+		Task<SignInResult> IPersonelService.Login(LoginDTO model)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

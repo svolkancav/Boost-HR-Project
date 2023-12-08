@@ -29,12 +29,11 @@ namespace HR_Project.Domain.Entities.Concrete
         public string Title { get; set; }
 		public string? City { get; set; }
 		public string? Region { get; set; }
+        public string? ImagePath { get; set; }
 
 		public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }
-
-        //Todo: Add Bloodtype enum
-        //public Bloodtype? Bloodtype { get; set; }
+        public BloodType? BloodType { get; set; }
 
         //IBaseEntity
         public DateTime CreatedDate { get; set; }= DateTime.Now;

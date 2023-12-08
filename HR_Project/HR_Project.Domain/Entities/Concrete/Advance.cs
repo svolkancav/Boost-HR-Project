@@ -17,8 +17,7 @@ namespace HR_Project.Domain.Entities.Concrete
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }
-		//todo : add a single condition enum 
-		//public CoditionType Codition { get; set; }
+		public ConditionType Condition { get; set; }
 
 		public Guid PersonnelId { get; set; }
 		public Personnel Personnel { get; set; }

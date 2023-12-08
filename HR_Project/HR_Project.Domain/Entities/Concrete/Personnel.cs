@@ -24,11 +24,10 @@ namespace HR_Project.Domain.Entities.Concrete
 		public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }
 
-        //Todo: Add Bloodtype enum
-        //public Bloodtype? Bloodtype { get; set; }
+		public BloodType? BloodType { get; set; }
 
-        //IBaseEntity
-        public DateTime CreatedDate { get; set; }
+		//IBaseEntity
+		public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }

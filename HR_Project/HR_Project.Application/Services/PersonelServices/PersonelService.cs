@@ -5,6 +5,7 @@ using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,22 +25,22 @@ namespace HR_Project.Application.Services.PersonelServices
 
         public async Task Create(PersonelDTO model)
         {
-            Personel personel = _mapper.Map<Personel>(model);
+            Personnel personel = _mapper.Map<Personnel>(model);
             await _personelRepository.Create(personel);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(string id)
         {
-            Personel personel = await _personelRepository.GetDefault(x => x.Id == id);
+            Personnel personel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
             personel.DeletedDate = DateTime.Now;
             personel.Status = Domain.Enum.Status.Deleted;
             await _personelRepository.Delete(personel);
         }
 
 
-        public async Task<PersonelDTO> GetById(int id)
+        public async Task<PersonelDTO> GetById(string id)
         {
-            Personel genre = await _personelRepository.GetDefault(x => x.Id == id);
+            Personnel genre = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
             var model = _mapper.Map<PersonelDTO>(genre);
 
             return model;
@@ -76,7 +77,7 @@ namespace HR_Project.Application.Services.PersonelServices
 
             if (isExist)
             {
-                var personel = _mapper.Map<Personel>(model);
+                var personel = _mapper.Map<Personnel>(model);
                 await _personelRepository.Update(personel);
             }
         }

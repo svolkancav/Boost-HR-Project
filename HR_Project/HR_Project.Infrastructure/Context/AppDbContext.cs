@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Infrastructure.Context
 {
-    public class AppDbContext : IdentityDbContext<Personel, IdentityRole<int>, int>
+    public class AppDbContext : IdentityDbContext<Personnel, IdentityRole<Guid>, Guid>
     {
         //ToDo : Eklenecek
         public DbSet<Advance> Advances { get; set; }
         public DbSet<Absence> Absences { get; set; }
-        public DbSet<Personel> Personeler { get; set; }
+        public DbSet<Personnel> Personeler { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -24,22 +24,22 @@ namespace HR_Project.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Personel>()
+            builder.Entity<Personnel>()
                 .HasOne(x => x.Department)
-                .WithMany(x => x.Personeller)
+                .WithMany(x => x.Personnels)
                 .HasForeignKey(x => x.DepartmentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Absence>()
-                .HasOne(x => x.Personel)
+                .HasOne(x => x.Personnel)
                 .WithMany(x => x.Absences)
-                .HasForeignKey(x => x.PersonelId)
+                .HasForeignKey(x => x.PersonnelId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Advance>()
-                .HasOne(x => x.Personel)
+                .HasOne(x => x.Personnel)
                 .WithMany(x => x.Advances)
-                .HasForeignKey(x => x.PersonelId)
+                .HasForeignKey(x => x.PersonnelId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(builder);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Infrastructure.Repositories
 {
-    public class PersonnelRepository : BaseRepository<Personel>, IPersonnelRepository
+    public class PersonnelRepository : BaseRepository<Personnel>, IPersonnelRepository
     {
         public PersonnelRepository(AppDbContext context) : base(context)
         {

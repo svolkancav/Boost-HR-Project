@@ -148,7 +148,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personel", b =>
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -400,29 +400,29 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Absence", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", "Personel")
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
                         .WithMany("Absences")
                         .HasForeignKey("PersonelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Personel");
+                    b.Navigation("Personnel");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Advance", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", "Personel")
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
                         .WithMany("Advances")
                         .HasForeignKey("PersonelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Personel");
+                    b.Navigation("Personnel");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Department", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", "Manager")
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -431,7 +431,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personel", b =>
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Department", "Department")
                         .WithMany("Personeller")
@@ -453,7 +453,7 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", null)
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -462,7 +462,7 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", null)
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -477,7 +477,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", null)
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,7 +486,7 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personel", null)
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -498,7 +498,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Personeller");
                 });
 
-            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personel", b =>
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.Navigation("Absences");
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Domain.Repositories
 {
-    public interface IPersonelRepository : IBaseRepository<Personel>
+    public interface IPersonelRepository : IBaseRepository<Personnel>
     {
 
     }

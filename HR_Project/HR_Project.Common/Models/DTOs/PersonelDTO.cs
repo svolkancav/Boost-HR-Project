@@ -10,7 +10,7 @@ namespace HR_Project.Application.IoC.Models.DTOs
 {
     public class PersonelDTO
     {
-        public int Id { get; set; }    
+        public Guid Id { get; set; }    
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }   
@@ -26,9 +26,9 @@ namespace HR_Project.Application.IoC.Models.DTOs
         public int? DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public int? ManagerId { get; set; }
+        public Guid? ManagerId { get; set; }
 
-        public ICollection<Personel> Subordinates { get; set; }
+        public ICollection<Personnel> Subordinates { get; set; }
         //public ICollection<Salary> Salaries { get; set; }
         public ICollection<Absence> Absences { get; set; }
         public ICollection<Advance> Advances { get; set; }

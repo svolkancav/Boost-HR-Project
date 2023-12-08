@@ -18,13 +18,20 @@ namespace HR_Project.Domain.Entities.Concrete
 		public string? Address { get; set; }
 		public string? City { get; set; }
 		public string? Region { get; set; }
+<<<<<<< HEAD:HR_Project/HR_Project.Domain/Entities/Concrete/Company.cs
 		public string? PostalCode { get; set; }
 		public string? Country { get; set; }
 		public string? Phone { get; set; }
 		public string? Fax { get; set; }
+=======
+		public DateTime? BirthDate { get; set; }
+		public DateTime? HireDate { get; set; }
 
-        //IBaseEntity
-        public DateTime CreatedDate { get; set; }
+		public BloodType? BloodType { get; set; }
+>>>>>>> BloodType enum eklendi.:HR_Project/HR_Project.Domain/Entities/Concrete/Personnel.cs
+
+		//IBaseEntity
+		public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }

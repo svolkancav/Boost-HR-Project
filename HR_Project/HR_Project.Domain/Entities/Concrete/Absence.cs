@@ -28,8 +28,8 @@ namespace HR_Project.Domain.Entities.Concrete
         public Status Status { get; set; }
 
         //Navigation
-        public int PersonnelId { get; set; }
-		public Personnel Personnel { get; set; }
+        public int PersonelId { get; set; }
+		public Personel Personel { get; set; }
 
         
     }

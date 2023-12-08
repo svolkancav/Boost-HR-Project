@@ -31,6 +31,6 @@ namespace HR_Project.Domain.Entities.Concrete
 
         //Navigation
         public ICollection<Department> Departments { get; set; }
-		public ICollection<Personnel> Personnels { get; set; }
+		public ICollection<Personel> Personeller { get; set; }
 	}
 }

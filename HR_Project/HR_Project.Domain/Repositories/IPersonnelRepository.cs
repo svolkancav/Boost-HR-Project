@@ -9,5 +9,6 @@ namespace HR_Project.Domain.Repositories
 {
     public interface IPersonnelRepository : IBaseRepository<Personel>
     {
+
     }
 }

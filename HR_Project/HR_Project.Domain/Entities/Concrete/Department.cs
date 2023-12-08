@@ -10,23 +10,21 @@ using HR_Project.Domain.Entities.Abstract;
 namespace HR_Project.Domain.Entities.Concrete
 {
 
-	public class Department : IBaseEntity
+	public class Department : BaseEntity, IEntity<int>
 
 	{
-		public int Id { get; set; }
+        public Department()
+        {
+            Personnels = new HashSet<Personnel>();
+        }
+        public int Id { get; set; }
 		public string Name { get; set; }
 		public string? Description { get; set; }
-		public int? ManagerId { get; set; }
 
-        //IBaseEntity
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public Status Status { get; set; }
 
         //Navigation
-
-        public Personel Manager { get; set; }
-        public ICollection<Personel> Personeller { get; set; }
+		public Guid? ManagerId { get; set; }
+        public Personnel Manager { get; set; }
+        public ICollection<Personnel> Personnels { get; set; }
 	}
 }

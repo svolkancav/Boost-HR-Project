@@ -24,25 +24,28 @@ namespace HR_Project.Application.Services.PersonelServices
 
         public async Task Create(PersonelDTO model)
         {
-            Personnel personel = _mapper.Map<Personnel>(model);
+            Personel personel = _mapper.Map<Personel>(model);
             await _personelRepository.Create(personel);
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(int id)
         {
-            Personnel personel = await _personelRepository.GetDefault(x => x.Id == id);
+            Personel personel = await _personelRepository.GetDefault(x => x.Id == id);
             personel.DeletedDate = DateTime.Now;
             personel.Status = Domain.Enum.Status.Deleted;
             await _personelRepository.Delete(personel);
         }
 
-        public async Task<PersonelDTO> GetById(Guid id)
+
+        public async Task<PersonelDTO> GetById(int id)
         {
-            Personnel genre = await _personelRepository.GetDefault(x => x.Id == id);
+            Personel genre = await _personelRepository.GetDefault(x => x.Id == id);
             var model = _mapper.Map<PersonelDTO>(genre);
 
             return model;
         }
+
+
 
         public async Task<List<PersonelDTO>> GetPersonels()
         {
@@ -57,7 +60,7 @@ namespace HR_Project.Application.Services.PersonelServices
                     BirthDate = x.BirthDate,
                     Department = x.Department,
                     HireDate = x.HireDate,
-                    Manager = x.Manager,
+                    ManagerId = x.ManagerId
 
                 },
                 where: x => x.Status != Domain.Enum.Status.Deleted,
@@ -73,7 +76,7 @@ namespace HR_Project.Application.Services.PersonelServices
 
             if (isExist)
             {
-                var personel = _mapper.Map<Personnel>(model);
+                var personel = _mapper.Map<Personel>(model);
                 await _personelRepository.Update(personel);
             }
         }

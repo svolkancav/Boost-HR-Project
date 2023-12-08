@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using HR_Project.Domain.Entities.Abstract;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
@@ -25,8 +26,10 @@ namespace HR_Project.Domain.Entities.Concrete
 		public string Surname { get; set; }
         public string Email { get; set; }
         public string? Address { get; set; }
+        public string Title { get; set; }
 		public string? City { get; set; }
 		public string? Region { get; set; }
+
 		public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }
 

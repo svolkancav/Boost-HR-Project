@@ -10,10 +10,11 @@ namespace HR_Project.Application.IoC.Models.DTOs
 {
     public class PersonelDTO
     {
-        public Guid Id { get; set; }    
+        public int Id { get; set; }    
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }   
+        public string Title { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? Region { get; set; }
@@ -26,13 +27,12 @@ namespace HR_Project.Application.IoC.Models.DTOs
         public Department Department { get; set; }
 
         public int? ManagerId { get; set; }
-        public Personnel Manager { get; set; }
 
-        public ICollection<Personnel> Subordinates { get; set; }
+        public ICollection<Personel> Subordinates { get; set; }
         //public ICollection<Salary> Salaries { get; set; }
         public ICollection<Absence> Absences { get; set; }
-        public ICollection<Advance> Advance { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public ICollection<Advance> Advances { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }

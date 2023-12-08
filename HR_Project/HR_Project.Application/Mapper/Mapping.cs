@@ -13,7 +13,7 @@ namespace HR_Project.Application.Mapper
     {
         public Mapping()
         {
-            CreateMap<Personel, PersonelDTO>().ReverseMap();
+            CreateMap<Personnel, PersonelDTO>().ReverseMap();
         }
         
     }

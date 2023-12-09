@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HR_Project.Application\HR_Project.Application.csproj" />
+    <ProjectReference Include="..\HR_Project.Common\HR_Project.Common.csproj" />
   </ItemGroup>
 
 </Project>

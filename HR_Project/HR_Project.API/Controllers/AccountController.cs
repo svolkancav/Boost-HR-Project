@@ -11,22 +11,22 @@ namespace HR_Project.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class AcoountController : ControllerBase
+	public class AccountController : ControllerBase
 	{
-		private readonly IPersonelService _personelService;
+		private readonly IPersonnelService _personnelService;
 		private readonly IConfiguration _configuration;
 
 
-		public AcoountController(IPersonelService personelService, IConfiguration configuration)
+		public AccountController(IPersonnelService personnelService, IConfiguration configuration)
 		{
-			_personelService = personelService;
+            _personnelService = personnelService;
 			_configuration = configuration;
 		}
 
 		[HttpPost("login")]
 		public async Task<IActionResult> Login(LoginDTO model)
 		{
-			var user = await _personelService.Login(model);
+			var user = await _personnelService.Login(model);
 
 			if (user.Succeeded)
 			{
@@ -36,7 +36,7 @@ namespace HR_Project.API.Controllers
 					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 				};
 
-				var userRoles = await _personelService.GetRoles(model.Email);
+				var userRoles = await _personnelService.GetRoles(model.Email);
 
 				foreach (var userRole in userRoles)
 				{
@@ -62,7 +62,7 @@ namespace HR_Project.API.Controllers
 		{
 			// Kullanıcının token'ını iptal etme işlemi
 			var accessToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-			_personelService.Logout(accessToken);
+            _personnelService.Logout(accessToken);
 
 			return Ok(new { message = "Logout successful" });
 		}

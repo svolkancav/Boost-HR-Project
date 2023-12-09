@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
-	public class PersonelService : IPersonelService
+	public class PersonnelService : IPersonnelService
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
 
-        public PersonelService(IPersonelRepository personelRepository, IMapper mapper)
+        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper)
         {
             _personelRepository = personelRepository;
             _mapper = mapper;
@@ -99,7 +99,7 @@ namespace HR_Project.Application.Services.PersonelServices
             }
         }
 
-		Task<SignInResult> IPersonelService.Login(LoginDTO model)
+		Task<SignInResult> IPersonnelService.Login(LoginDTO model)
 		{
 			throw new NotImplementedException();
 		}

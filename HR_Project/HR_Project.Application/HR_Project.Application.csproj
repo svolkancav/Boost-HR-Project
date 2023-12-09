@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HR_Project.Common\HR_Project.Common.csproj" />
     <ProjectReference Include="..\HR_Project.Infrastructure\HR_Project.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ namespace HR_Project.Common.Models.DTOs
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }
-		public ConditionType Codition { get; set; }
+		public ConditionType Condition { get; set; }
 
 		public Guid PersonnelId { get; set; }
 	}

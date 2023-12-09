@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
-    public interface IPersonelService
+    public interface IPersonnelService
     {
         // TODO: PersonelDTO geçici eklendi. DTO lar oluştuktan sonra yenileri eklenebilir.
         Task Create(PersonelDTO model);

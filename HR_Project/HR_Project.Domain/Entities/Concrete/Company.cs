@@ -15,7 +15,6 @@ namespace HR_Project.Domain.Entities.Concrete
         public Company()
         {
             Departments = new HashSet<Department>();
-			Managers = new HashSet<Personnel>();
 			Personnels = new HashSet<Personnel>();
         }
         public int Id { get; set; }
@@ -30,7 +29,6 @@ namespace HR_Project.Domain.Entities.Concrete
 
         //Navigation
         public ICollection<Department> Departments { get; set; }
-        public ICollection<Personnel> Managers { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
 	}
 }

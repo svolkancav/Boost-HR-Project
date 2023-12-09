@@ -47,6 +47,8 @@ namespace HR_Project.Domain.Entities.Concrete
 		public Department Department { get; set; }
 		public Guid? ManagerId { get; set; }
 		public Personnel Manager { get; set; }
+        public int? CompanyId { get; set; }
+		public Company Company { get; set; }
 		public ICollection<Personnel> Personnels { get; set; }
         public ICollection<Absence> Absences { get; set; }
         public ICollection<Advance> Advances { get; set; }

@@ -23,8 +23,10 @@ namespace HR_Project.Domain.Entities.Concrete
 
 
         //Navigation
-		public Guid? ManagerId { get; set; }
+		public Guid ManagerId { get; set; }
         public Personnel Manager { get; set; }
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
 	}
 }

@@ -23,6 +23,6 @@ namespace HR_Project.Presentation.APIService
 		Task<TokenResponse> LoginAsync(LoginDTO loginModel);
 
 		//register
-		Task<bool> RegisterAsync(RegisterDTO registerModel);
+		//Task<bool> RegisterAsync(RegisterDTO registerModel);
 	}
 }

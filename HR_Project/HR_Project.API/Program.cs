@@ -3,6 +3,7 @@ using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -45,9 +46,11 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 	builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
 }));
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddIdentityCore<Personnel>().AddEntityFrameworkStores<AppDbContext>();
 
-builder.Services.AddIdentity<Personnel, IdentityRole>(opt =>
+builder.Services.AddIdentity<Personnel, IdentityRole<Guid>>(opt =>
 {
 	opt.SignIn.RequireConfirmedEmail = false;
 	opt.SignIn.RequireConfirmedPhoneNumber = false;

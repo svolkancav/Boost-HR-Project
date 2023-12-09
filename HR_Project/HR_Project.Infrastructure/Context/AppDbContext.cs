@@ -1,4 +1,5 @@
 ﻿using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Infrastructure.EntityTypeConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,9 @@ namespace HR_Project.Infrastructure.Context
         //ToDo : Eklenecek
         public DbSet<Advance> Advances { get; set; }
         public DbSet<Absence> Absences { get; set; }
-        public DbSet<Personnel> Personeler { get; set; }
+        public DbSet<Personnel> Personnels { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -24,23 +27,11 @@ namespace HR_Project.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Personnel>()
-                .HasOne(x => x.Department)
-                .WithMany(x => x.Personnels)
-                .HasForeignKey(x => x.DepartmentId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Absence>()
-                .HasOne(x => x.Personnel)
-                .WithMany(x => x.Absences)
-                .HasForeignKey(x => x.PersonnelId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Advance>()
-                .HasOne(x => x.Personnel)
-                .WithMany(x => x.Advances)
-                .HasForeignKey(x => x.PersonnelId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.ApplyConfiguration(new PersonnelConfig());
+            builder.ApplyConfiguration(new AdvanceConfig());
+            builder.ApplyConfiguration(new AbsenceConfig());
+            builder.ApplyConfiguration(new CompanyConfig());
+            builder.ApplyConfiguration(new DepartmentConfig());
 
             base.OnModelCreating(builder);
         }

@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HR_Project.Application.IoC;
+using HR_Project.Application.SeedData;
 using HR_Project.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new DependencyResolver());
 });
 
+//TODO: SeedData
+SeedData.Seed(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

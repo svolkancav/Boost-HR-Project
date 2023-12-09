@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using AutoMapper;
 using HR_Project.Application.Mapper;
+using HR_Project.Application.Services.AbsenceService;
+using HR_Project.Application.Services.AdvanceService;
+using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Domain.Repositories;
 using HR_Project.Infrastructure.Repositories;
 using System;
@@ -16,6 +19,11 @@ namespace HR_Project.Application.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<PersonelRepository>().As<IPersonelRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<PersonnelService>().As<IPersonnelService>().InstancePerLifetimeScope();
+            builder.RegisterType<AdvanceRepository>().As<IAdvanceRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<AdvanceServise>().As<IAdvanceServise>().InstancePerLifetimeScope();
+            builder.RegisterType<AbsenceRepository>().As<IAbsenceRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<AbsenceService>().As<IAbsenceService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

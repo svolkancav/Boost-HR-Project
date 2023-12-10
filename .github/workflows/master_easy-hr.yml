@@ -22,26 +22,20 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
           
-      - name: List contents of the working directory
-        run: ls
-
-      - name: Set working directory to HR_Project.Presentation
-        run: cd HR_Project.Presentation
-
-      - name: List contents of HR_Project.Presentation directory
-        run: ls
+      - name: Set working directory to HR_Project/HR_Project.Presentation
+        run: cd HR_Project/HR_Project.Presentation
 
       - name: Build with dotnet
-        run: dotnet build HR_Project.Presentation.csproj --configuration Release
+        run: dotnet build HR_Project/HR_Project.Presentation.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish HR_Project.Presentation.csproj --configuration Release -o ./publish
+        run: dotnet publish HR_Project/HR_Project.Presentation.csproj --configuration Release -o ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ./HR_Project.Presentation/publish
+          path: .HR_Project/HR_Project.Presentation/publish
 
   deploy:
     runs-on: windows-latest

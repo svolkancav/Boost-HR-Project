@@ -23,16 +23,16 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build HR_Project.Presentation.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish HR_Project.Presentation.csproj --configuration Release -o ./publish
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ./HR_Project.Presentation/publish
 
   deploy:
     runs-on: windows-latest
@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'easy-hr'
           slot-name: 'Production'
-          package: .
+          package: ./HR_Project.Presentation/publish
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C7701911EB8B4CBA8B61C7EAAB07C94A }}

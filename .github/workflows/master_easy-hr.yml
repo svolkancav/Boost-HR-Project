@@ -22,11 +22,14 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
           
-      - name: Set working directory to repository root
-        run: cd ${{ github.workspace }}
+      - name: List contents of the working directory
+        run: ls
 
       - name: Set working directory to HR_Project.Presentation
         run: cd HR_Project.Presentation
+
+      - name: List contents of HR_Project.Presentation directory
+        run: ls
 
       - name: Build with dotnet
         run: dotnet build HR_Project.Presentation.csproj --configuration Release

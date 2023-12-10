@@ -24,7 +24,7 @@ namespace HR_Project.Application.SeedData
 
                 var titles = new[] { "Yazılımcı", "Muhasebeci", "Satın Alma", "Pazarlama", "IT", "IK" };
 
-                if (!context.Personeler.Any())
+                if (!context.Personnels.Any())
                 {
                     var personnellFaker = new Faker<Personnel>()
                         .RuleFor(i => i.Name, i => i.Person.FirstName)
@@ -39,7 +39,7 @@ namespace HR_Project.Application.SeedData
 
                     var genereatedPersonnels = personnellFaker.Generate(10);
 
-                    context.Personeler.AddRange(genereatedPersonnels);
+                    context.Personnels.AddRange(genereatedPersonnels);
 
                     context.SaveChangesAsync();
 

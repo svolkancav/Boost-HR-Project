@@ -24,11 +24,11 @@ namespace HR_Project.Presentation.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var advance=await _apiService.GetAsync<List<AdvanceVM>>(endpoint: "advance", HttpContext.Request.Cookies["access-token"]);
+			//var advance=await _apiService.GetAsync<List<AdvanceVM>>(endpoint: "advance", HttpContext.Request.Cookies["access-token"]);
 
-			CreateAdvanceDTO createAdvanceDTO = new CreateAdvanceDTO();
+			//CreateAdvanceDTO createAdvanceDTO = new CreateAdvanceDTO();
 
-			await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", createAdvanceDTO, HttpContext.Request.Cookies["access-token"]);
+			//await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", createAdvanceDTO, HttpContext.Request.Cookies["access-token"]);
 
 			return View();
 		}

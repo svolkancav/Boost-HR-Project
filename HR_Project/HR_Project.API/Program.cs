@@ -1,4 +1,7 @@
 using System.Text;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using HR_Project.Application.IoC;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -87,6 +90,12 @@ builder.Services.AddAuthentication(opt =>
 		ValidAudience = jwtSettings["validAudience"],
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
 	};
+});
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new DependencyResolver());
 });
 
 var app = builder.Build();

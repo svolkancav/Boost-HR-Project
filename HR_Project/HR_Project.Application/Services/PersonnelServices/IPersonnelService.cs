@@ -19,6 +19,9 @@ namespace HR_Project.Application.Services.PersonelServices
         Task<List<PersonelDTO>> GetPersonels();
         Task<SignInResult> Login(LoginDTO model);
         Task<string[]> GetRoles(string email);
+
+        //RegisterDTO
+        Task<IdentityResult> Register(RegisterDTO model);
         void Logout(string token);
     }
 }

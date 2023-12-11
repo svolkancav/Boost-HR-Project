@@ -33,7 +33,15 @@ namespace HR_Project.Presentation.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
+        public async Task<IActionResult> Index2()
+        {
+
+
+            return View();
+        }
+
+
+        public IActionResult Privacy()
 		{
 			return View();
 		}

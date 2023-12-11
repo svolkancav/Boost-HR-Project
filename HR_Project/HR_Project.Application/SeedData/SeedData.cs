@@ -41,7 +41,7 @@ namespace HR_Project.Application.SeedData
 
                     context.Personnels.AddRange(genereatedPersonnels);
 
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
 
                 }
 
@@ -58,7 +58,7 @@ namespace HR_Project.Application.SeedData
 
                     context.Advances.AddRange(genereatedAdvances);
 
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                 }
 
                 if (context.Absences.Any())
@@ -75,7 +75,7 @@ namespace HR_Project.Application.SeedData
 
                     context.Absences.AddRange(genereatedAbsences);
 
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                 }
             }
         }

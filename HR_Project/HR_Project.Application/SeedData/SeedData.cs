@@ -47,8 +47,10 @@ namespace HR_Project.Application.SeedData
 
                 if (!context.Advances.Any())
                 {
+                    List<Personnel> personnels= new List<Personnel>();
+                    personnels = await context.Personnels.ToListAsync();
                     var advancesFaker = new Faker<Advance>()
-                        .RuleFor(i => i.PersonnelId, i => i.PickRandom<Personnel>().Id)
+                        .RuleFor(i => i.PersonnelId, i => i.PickRandom(personnels).Id)
                         .RuleFor(i => i.Amount, i => i.Random.Int(20, 500))
                         .RuleFor(i => i.Reason, i => i.Lorem.Sentence(1))
                         .RuleFor(i => i.Condition, i => i.PickRandom<ConditionType>())
@@ -61,10 +63,12 @@ namespace HR_Project.Application.SeedData
                     await context.SaveChangesAsync();
                 }
 
-                if (context.Absences.Any())
+                if (!context.Absences.Any())
                 {
+                    List<Personnel> personnels = new List<Personnel>();
+                    personnels = await context.Personnels.ToListAsync();
                     var absencesFaker = new Faker<Absence>()
-                       .RuleFor(i => i.PersonnelId, i => i.PickRandom<Personnel>().Id)
+                       .RuleFor(i => i.PersonnelId, i => i.PickRandom(personnels).Id)
                        .RuleFor(i => i.Reason, i => i.Lorem.Sentence(1))
                        .RuleFor(i => i.Condition, i => i.PickRandom<ConditionType>())
                        .RuleFor(i => i.StartDate, i => i.Date.Recent(100))

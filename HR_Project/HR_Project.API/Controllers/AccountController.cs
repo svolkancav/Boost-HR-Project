@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using HR_Project.Application.IoC.Models.DTOs;
@@ -28,29 +29,21 @@ namespace HR_Project.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            try
+            await _personnelService.Register(new RegisterDTO
             {
-                await _personnelService.Register(new RegisterDTO
-                {
-                    Email = "volkan@hotmail.com",
-                    Name = "volkan",
-                    Surname = "cavusoglu",
-                    Title = "IK",
-                    Password = "asd123",
-                    CompanyId = 1
+                Name = "admin",
+                Surname = "admin",
+                Title = "admin",
+                Email = "admin",
+                UserName = "admin",
+                Password = "admin",
 
-                });
-            }
-            catch (Exception message)
-            {
 
-                throw message;
-            }
+
+            });
 
 
             var user = await _personnelService.Login(model);
-
-
 
             if (user.Succeeded)
             {

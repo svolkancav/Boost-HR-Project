@@ -18,11 +18,35 @@ namespace HR_Project.Application.Services.PersonelServices
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
+        private readonly SignInManager<Personnel> _signInManager;
+        private readonly UserManager<Personnel> _userManager;
 
-        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper)
+        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager)
         {
             _personelRepository = personelRepository;
             _mapper = mapper;
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
+
+        public async Task<IdentityResult> Register(RegisterDTO model)
+        {
+            //TODO auto mapper
+            Personnel user = new Personnel
+            {
+                UserName = model.Name,
+                Email = model.Email,
+                CreatedDate = DateTime.Now,
+                Title = model.Title,
+                Surname = model.Surname,
+                CompanyId = model.CompanyId,
+
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+                await _signInManager.SignInAsync(user, isPersistent: false);
+            return result;
         }
 
         public async Task Create(PersonelDTO model)
@@ -78,10 +102,6 @@ namespace HR_Project.Application.Services.PersonelServices
 			throw new NotImplementedException();
 		}
 
-		public Task<PersonelDTO> Login(LoginDTO model)
-		{
-			throw new NotImplementedException();
-		}
 
 		public void Logout(string token)
 		{
@@ -99,9 +119,9 @@ namespace HR_Project.Application.Services.PersonelServices
             }
         }
 
-		Task<SignInResult> IPersonnelService.Login(LoginDTO model)
+		public async Task<SignInResult> Login(LoginDTO model)
 		{
-			throw new NotImplementedException();
-		}
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+        }
 	}
 }

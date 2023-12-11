@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HR_Project.Presentation.APIService
 {
-	public class APIService
+	public class APIService : IAPIService
 	{
 		private readonly HttpClient _httpClient;
 

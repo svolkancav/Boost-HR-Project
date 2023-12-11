@@ -4,6 +4,8 @@ using HR_Project.Application.IoC;
 using HR_Project.Application.SeedData;
 using HR_Project.Infrastructure.Context;
 using HR_Project.Presentation.APIService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +18,25 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://localhost:7258/api");
+    opt.BaseAddress = new Uri("https://localhost:7258/api/");
 });
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.Secure = CookieSecurePolicy.Always;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/account/Login";
+
+            });
+
+
+
 
 var app = builder.Build();
 
@@ -36,6 +55,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 });
 
 
+
+
 //TODO: SeedData
 //SeedData.Seed(app);
 
@@ -43,6 +64,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

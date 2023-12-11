@@ -39,6 +39,7 @@ namespace HR_Project.API.Controllers
                 Password = "admin",
 
 
+
             });
 
 

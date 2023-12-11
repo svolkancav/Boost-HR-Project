@@ -29,18 +29,16 @@ namespace HR_Project.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            await _personnelService.Register(new RegisterDTO
-            {
-                Name = "admin",
-                Surname = "admin",
-                Title = "admin",
-                Email = "admin",
-                UserName = "admin",
-                Password = "admin",
+            //await _personnelService.Register(new RegisterDTO
+            //{
+            //    Name = "admin",
+            //    Surname = "admin",
+            //    Title = "admin",
+            //    Email = "admin",
+            //    UserName = "admin",
+            //    Password = "admin123",
 
-
-
-            });
+            //});
 
 
             var user = await _personnelService.Login(model);
@@ -53,12 +51,12 @@ namespace HR_Project.API.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var userRoles = await _personnelService.GetRoles(model.Email);
+                //var userRoles = await _personnelService.GetRoles(model.Email);
 
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
+                //foreach (var userRole in userRoles)
+                //{
+                //    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                //}
 
                 var token = GetToken(authClaims);
 

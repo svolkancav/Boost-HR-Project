@@ -35,13 +35,12 @@ namespace HR_Project.Application.Services.PersonelServices
             //TODO auto mapper
             Personnel user = new Personnel
             {
-                UserName = model.Name,
+                UserName = model.Email,
                 Name = model.Name,
                 Email = model.Email,
                 CreatedDate = DateTime.Now,
                 Title = model.Title,
                 Surname = model.Surname,
-                CompanyId = model.CompanyId,
 
             };
 
@@ -123,11 +122,20 @@ namespace HR_Project.Application.Services.PersonelServices
 
 		public async Task<SignInResult> Login(LoginDTO model)
 		{
-            var users = await _userManager.Users.ToListAsync();
-            var user = await _userManager.FindByEmailAsync(model.Email);
             //PasswordHasher<Personnel> hasher = new PasswordHasher<Personnel>();
             //var password = hasher.HashPassword(user, model.Password);
-            return await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
+            try
+            {
+                SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                return result;
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+            
+            
         }
 	}
 }

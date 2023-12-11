@@ -119,7 +119,7 @@ namespace HR_Project.Presentation.APIService
 			var jsonData = JsonConvert.SerializeObject(loginModel);
 			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-			var response = await _httpClient.PostAsync("account/login", content);
+			var response = await _httpClient.PostAsync("Account/Login", content);
 
 			if (!response.IsSuccessStatusCode)
 			{
@@ -130,20 +130,20 @@ namespace HR_Project.Presentation.APIService
 			return JsonConvert.DeserializeObject<TokenResponse>(responseContent);
 		}
 
-		//register
-		//public async Task<bool> RegisterAsync(RegisterDTO registerModel)
-		//{
-		//	var jsonData = JsonConvert.SerializeObject(registerModel);
-		//	var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        //register
+        //public async Task<bool> RegisterAsync(RegisterDTO registerModel)
+        //{
+        //	var jsonData = JsonConvert.SerializeObject(registerModel);
+        //	var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-		//	var response = await _httpClient.PostAsync("account/register", content);
+        //	var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
 
-		//	if (!response.IsSuccessStatusCode)
-		//	{
-		//		throw new Exception($"API isteği başarısız: {response.StatusCode}");
-		//	}
+        //	if (!response.IsSuccessStatusCode)
+        //	{
+        //		throw new Exception($"API isteği başarısız: {response.StatusCode}");
+        //	}
 
-		//	return true;
-		//}
-	}
+        //	return true;
+        //}
+    }
 }

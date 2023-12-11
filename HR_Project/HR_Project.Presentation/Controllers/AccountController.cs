@@ -60,7 +60,7 @@ namespace HR_Project.Presentation.Controllers
 
 
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

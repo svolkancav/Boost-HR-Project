@@ -18,10 +18,13 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
 			builder.Property(x => x.Surname).IsRequired(true).HasMaxLength(15);
 			builder.Property(x => x.Email).IsRequired(true).HasMaxLength(25);
 			builder.Property(x => x.PasswordHash).IsRequired(true);
+			builder.Property(x => x.CompanyId).IsRequired(false);
+            builder.Property(x => x.DepartmentId).IsRequired(false);
+            builder.Property(x => x.ManagerId).IsRequired(false);
 
-			
 
-			builder.HasMany(x => x.Absences).WithOne(x => x.Personnel).HasForeignKey(x => x.PersonnelId);
+
+            builder.HasMany(x => x.Absences).WithOne(x => x.Personnel).HasForeignKey(x => x.PersonnelId);
 
 			builder.HasMany(x => x.Advances).WithOne(x => x.Personnel).HasForeignKey(x => x.PersonnelId);
 

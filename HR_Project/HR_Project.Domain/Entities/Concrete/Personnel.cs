@@ -21,10 +21,10 @@ namespace HR_Project.Domain.Entities.Concrete
             Personnels = new HashSet<Personnel>();
             Absences = new HashSet<Absence>();
             Advances = new HashSet<Advance>();
+            
         }
         public string Name { get; set; }
-		public string Surname { get; set; }
-        public string Email { get; set; }
+        public string Surname { get; set; }
         public string? Address { get; set; }
         public string Title { get; set; }
 		public string? City { get; set; }

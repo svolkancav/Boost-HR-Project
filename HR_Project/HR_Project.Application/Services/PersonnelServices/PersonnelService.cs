@@ -5,6 +5,7 @@ using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,6 +36,7 @@ namespace HR_Project.Application.Services.PersonelServices
             Personnel user = new Personnel
             {
                 UserName = model.Name,
+                Name = model.Name,
                 Email = model.Email,
                 CreatedDate = DateTime.Now,
                 Title = model.Title,
@@ -121,7 +123,11 @@ namespace HR_Project.Application.Services.PersonelServices
 
 		public async Task<SignInResult> Login(LoginDTO model)
 		{
-            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+            var users = await _userManager.Users.ToListAsync();
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            //PasswordHasher<Personnel> hasher = new PasswordHasher<Personnel>();
+            //var password = hasher.HashPassword(user, model.Password);
+            return await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
         }
 	}
 }

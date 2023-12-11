@@ -58,7 +58,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 
 //TODO: SeedData
-//SeedData.Seed(app);
+SeedData.Seed(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

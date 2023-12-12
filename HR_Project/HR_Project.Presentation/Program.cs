@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://easy-hr-apim.azure-api.net/api/");
+    opt.BaseAddress = new Uri("https://easy-hr-client.azurewebsites.net/api/");
 });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>

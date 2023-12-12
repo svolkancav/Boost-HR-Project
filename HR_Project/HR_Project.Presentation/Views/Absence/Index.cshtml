@@ -97,7 +97,7 @@
                                 <tr>
 
                                     <td>
-                                        @item.LeaveTypes
+                                        @item.LeaveTypes.GetDisplayName()
                                     </td>
                                     <td>
                                         @item.Reason
@@ -112,7 +112,7 @@
                                         @item.AbsenceDuration
                                     </td>
                                     <td>
-                                        @item.Condition
+                                        @item.Condition.GetDisplayName()
                                     </td>
                                     <td>
                                         @Html.ActionLink("Düzenle", "Update", new { /* id=item.PrimaryKey */ }) |

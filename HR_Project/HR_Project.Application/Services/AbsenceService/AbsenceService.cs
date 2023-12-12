@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,6 +10,8 @@ using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace HR_Project.Application.Services.AbsenceService
 {
@@ -16,20 +19,35 @@ namespace HR_Project.Application.Services.AbsenceService
     {
 		private readonly IAbsenceRepository _absenceRepository;
 		private readonly IMapper _mapper;
+        private readonly UserManager<Personnel> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public AbsenceService(IAbsenceRepository absenceRepository, IMapper mapper)
-		{
+        public AbsenceService(IAbsenceRepository absenceRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
+        {
             _absenceRepository = absenceRepository;
-			_mapper = mapper;
-		}
+            _mapper = mapper;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
-		public async Task Create(AbsenceDTO model)
+        public async Task Create(AbsenceDTO model)
 		{
-			Absence absence = _mapper.Map<Absence>(model);
+            Personnel personnel = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
+            Absence absence = _mapper.Map<Absence>(model);
             absence.Status = Status.Inserted;
             absence.CreatedDate = DateTime.Now;
+            absence.PersonnelId = personnel.Id;
+			try
+			{
+                await _absenceRepository.Create(absence);
 
-			await _absenceRepository.Create(absence);
+            }
+			catch (Exception message)
+			{
+
+				throw message;
+			}
+            
 		}
 
 		public async Task Delete(int id)

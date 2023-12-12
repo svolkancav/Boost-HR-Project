@@ -36,15 +36,25 @@ namespace HR_Project.Presentation.APIService
 			var jsonData = JsonConvert.SerializeObject(data);
 			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-			var response = await _httpClient.PostAsync(endpoint, content);
-
-			if (!response.IsSuccessStatusCode)
+			
+			try
 			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
+                var response = await _httpClient.PostAsync(endpoint, content);
+				if (!response.IsSuccessStatusCode)
+				{
+					throw new Exception($"API isteği başarısız: {response.StatusCode}");
+				}
+				var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResponse>(responseContent);
+            }
+			catch (Exception message)
+			{
 
-			var responseContent = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<TResponse>(responseContent);
+				throw message;
+			}
+			
+
+			
 		}
 
 		//getbyid

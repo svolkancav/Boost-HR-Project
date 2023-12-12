@@ -48,7 +48,8 @@ namespace HR_Project.API.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, model.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    
                 };
 
                 //var userRoles = await _personnelService.GetRoles(model.Email);

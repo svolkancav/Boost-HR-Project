@@ -3,6 +3,8 @@ using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -15,11 +17,22 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 3)
         {
-            List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                
+                List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
+                List<AdvanceVM> selectedAdvences = advances.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.Amount.ToString().Contains(searchText)).ToList();
 
-            return View(advances);
+                return View(selectedAdvences.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
+                return View(advances.ToPagedList(pageNumber, pageSize));
+            }
+           
         }
 
 

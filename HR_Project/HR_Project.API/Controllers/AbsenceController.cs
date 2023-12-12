@@ -36,7 +36,7 @@ namespace HR_Project.API.Controllers
         public async Task<IActionResult> Create(AbsenceDTO model)
         {
             await _absenceService.Create(model);
-            return Ok();
+            return Ok(model);
         }
 
         [HttpPut]

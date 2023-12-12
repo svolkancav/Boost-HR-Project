@@ -34,7 +34,7 @@ namespace HR_Project.Presentation.Controllers
                     if (token != null)
                     {
 
-                        Response.Cookies.Append("access_token", token.Token, new CookieOptions
+                        Response.Cookies.Append("access-token", token.Token, new CookieOptions
                         {
                             HttpOnly = true,
                             Secure = true,
@@ -42,23 +42,24 @@ namespace HR_Project.Presentation.Controllers
                             Expires = token.Expiration
                         });
 
-
+                        
+                        
                         var handler = new JwtSecurityTokenHandler();
                         var jsonToken = handler.ReadToken(token.Token) as JwtSecurityToken;
 
                         var email = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
+                        
                         var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Email, email),
+                        {
+                            new Claim(ClaimTypes.Email, email),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                    };
+
+                        };
 
                         var identity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-
 
                         return RedirectToAction("Index", "Home");
                     }
@@ -80,7 +81,7 @@ namespace HR_Project.Presentation.Controllers
         {
             await HttpContext.SignOutAsync();
 
-            Response.Cookies.Delete("access_token");
+            Response.Cookies.Delete("access-token");
             return RedirectToAction("Login");
         }
     }

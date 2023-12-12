@@ -23,10 +23,10 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build ./HR_Project/HR_Project.Presentation/HR_Project.Presentation.csproj --configuration Release
+        run: dotnet build ./HR_Project/HR_Project.Presentation/HR_Project.API.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ./HR_Project/HR_Project.Presentation/HR_Project.Presentation.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ./HR_Project/HR_Project.Presentation/HR_Project.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

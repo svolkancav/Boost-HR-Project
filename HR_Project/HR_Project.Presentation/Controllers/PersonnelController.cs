@@ -3,6 +3,7 @@ using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -15,13 +16,22 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 5)
         {
-            List<PersonelVM> personnels = await _apiService.GetAsync<List<PersonelVM>>("personnel", HttpContext.Request.Cookies["access-token"]);
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                List<PersonelVM> personnels = await _apiService.GetAsync<List<PersonelVM>>("personnel", HttpContext.Request.Cookies["access-token"]);
+                List<PersonelVM> selectedPersonnels = personnels.Where(x => x.Name.ToLower().Contains(searchText.ToLower()) || x.Surname.ToString().ToLower().Contains(searchText.ToLower())).ToList();
 
-            return View(personnels);
+                return View(selectedPersonnels.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                List<PersonelVM> personnels = await _apiService.GetAsync<List<PersonelVM>>("personnel", HttpContext.Request.Cookies["access-token"]);
+                return View(personnels.ToPagedList(pageNumber, pageSize));
+            }
+
         }
-
         public IActionResult Create()
         {
             return View();

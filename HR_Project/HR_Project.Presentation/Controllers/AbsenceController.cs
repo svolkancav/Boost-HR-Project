@@ -40,6 +40,10 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AbsenceDTO model)
         {
+            if (!ModelState.IsValid)
+            {
+				return View(model);
+			}
             await _apiService.PostAsync<AbsenceDTO, AbsenceDTO>("Absence", model, HttpContext.Request.Cookies["access-token"]); //_apiService.PostAsync<AbsenceDTO,AbsenceDTO>... ikinci tip geri dönüş tipi. Ama API den geri dönüş modeli göndermiyoruz.
             return RedirectToAction("Index");
         }
@@ -54,6 +58,10 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateAbsenceDTO model)
         {
+            if (!ModelState.IsValid)
+            {
+				return View(model);
+			}
             await _apiService.UpdateAsync<UpdateAbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }

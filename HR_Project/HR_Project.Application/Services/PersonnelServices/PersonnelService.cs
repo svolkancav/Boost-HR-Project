@@ -87,9 +87,10 @@ namespace HR_Project.Application.Services.PersonelServices
                     Email = x.Email,
                     Address = x.Address,
                     BirthDate = x.BirthDate,
-                    Department = x.Department,
+                    //Department = x.Department,
                     HireDate = x.HireDate,
-                    ManagerId = x.ManagerId
+                    PhoneNumber = x.PhoneNumber,
+                    //ManagerId = x.ManagerId
 
                 },
                 where: x => x.Status != Domain.Enum.Status.Deleted,

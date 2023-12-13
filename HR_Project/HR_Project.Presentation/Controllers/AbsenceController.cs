@@ -15,7 +15,7 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
         // listelemek için
-        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 3)
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
         {
             if (!string.IsNullOrEmpty(searchText))
             {

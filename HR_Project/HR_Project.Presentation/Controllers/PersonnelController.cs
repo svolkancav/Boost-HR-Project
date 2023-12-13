@@ -18,7 +18,7 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> ListPersonnel(string searchText, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> ListPersonnel(string searchText, int pageNumber = 1, int pageSize = 10)
         {
             if (!string.IsNullOrEmpty(searchText))
             {

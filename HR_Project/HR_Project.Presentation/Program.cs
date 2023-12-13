@@ -23,6 +23,11 @@ builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 });
 //https://easy-hr-client.azurewebsites.net/api/
 
+builder.Services.AddHttpContextAccessor();
+
+
+
+
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.MinimumSameSitePolicy = SameSiteMode.None;

@@ -21,8 +21,7 @@ namespace HR_Project.Application.IoC.Models.DTOs
         public string? Region { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? HireDate { get; set; }
-        //Todo: Add Bloodtype enum
-        //public Bloodtype? Bloodtype { get; set; }
+        public BloodType? Bloodtype { get; set; }
 
         public int? DepartmentId { get; set; }
         public Department Department { get; set; }

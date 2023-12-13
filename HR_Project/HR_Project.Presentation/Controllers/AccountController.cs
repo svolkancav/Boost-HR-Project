@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using HR_Project.Domain.Entities.Concrete;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -42,20 +43,30 @@ namespace HR_Project.Presentation.Controllers
                             Expires = token.Expiration
                         });
 
-                        
-                        
+
+
                         var handler = new JwtSecurityTokenHandler();
                         var jsonToken = handler.ReadToken(token.Token) as JwtSecurityToken;
 
                         var email = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-                        var userId = jsonToken?.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier)?.Value;
+                        var userId = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                        var userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                        var userSurName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                        var imagePath = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Thumbprint)?.Value;
+                        var company = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Company")?.Value;
+                        var department = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Department")?.Value;
 
-                        
+
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Email, email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(ClaimTypes.NameIdentifier, userId),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(ClaimTypes.NameIdentifier, userId),
+                            new Claim(ClaimTypes.Name, userName),
+                            new Claim(ClaimTypes.Surname, userSurName),
+                            //new Claim(ClaimTypes.Thumbprint, imagePath),
+                            //new Claim("Company",company),
+                            //new Claim("Department",department),
 
                         };
 
@@ -84,7 +95,7 @@ namespace HR_Project.Presentation.Controllers
             await HttpContext.SignOutAsync();
 
             Response.Cookies.Delete("access-token");
-            return RedirectToAction("Login");
+            return RedirectToAction("Login","Account");
         }
     }
 }

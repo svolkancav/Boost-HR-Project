@@ -50,13 +50,21 @@ namespace HR_Project.API.Controllers
 
             if (user.Succeeded)
             {
+                
+
                 Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, model.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, personnel.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, personnel.Id.ToString()),
+                    new Claim(ClaimTypes.Name, personnel.Name),
+                    new Claim(ClaimTypes.Surname, personnel.Surname),
+                    //new Claim(ClaimTypes.Thumbprint, personnel.ImagePath),
+                    //new Claim("Company",personnel.CompanyId.ToString()),
+                    //new Claim("Department",personnel.DepartmentId.ToString()),
                 };
+
 
                 //var userRoles = await _personnelService.GetRoles(model.Email);
 

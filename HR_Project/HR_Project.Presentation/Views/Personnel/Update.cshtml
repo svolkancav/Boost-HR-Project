@@ -1,6 +1,7 @@
 ﻿@using HR_Project.Application.IoC.Models.DTOs;
+@using HR_Project.Common.Extensions;
 @using HR_Project.Common.Models.VMs;
-@using X.PagedList;
+@using HR_Project.Domain.Enum;
 @model PersonelDTO
 
 @{
@@ -8,95 +9,132 @@
     Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
-
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Adı
-            </th>
-            <th>
-                Soyadı
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Adres
-            </th>
-            <th>
-                Ünvan
-            </th>
-            <th>
-                Departman
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
-
-<div class="container rounded bg-white mt-3 mb-5 ">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-        </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profil Bilgilerim</h4>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Adı</label><input type="text" class="form-control" placeholder="adı" value="" asp-for="Name"></div>
-                    <div class="col-md-6"><label class="labels">Soyadı</label><input type="text" class="form-control" value="" placeholder="soyadı"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Telefon Numarası</label><input type="text" class="form-control" placeholder="Telefon numaranızı giriniz" value="" asp-for="PhoneNumber"></div>
-                    <div class="col-md-12"><label class="labels">Adres Satırı 1</label><input type="text" class="form-control" placeholder="Adres giriniz" value=""></div>
-                    <div class="col-md-12"><label class="labels">Şehir</label><input type="text" class="form-control" placeholder="Şehir giriniz" value=""></div>
-                    <div class="col-md-12"><label class="labels">İlçe</label><input type="text" class="form-control" placeholder="İlçe giriniz" value=""></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="Email giriniz" value=""></div>
-                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
-                </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+<form asp-action="Update">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="Id" type="hidden" />
+    <div class="container rounded bg-white mt-3 mb-5 ">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">@Model.Name</span><span class="text-black-50">@Model.Email</span><span> </span></div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profil Bilgilerim</h4>
+                    </div>
+
+                    <div class="row mt-2">
+
+                        <div class="col-md-6">
+                            <label class="labels">Adı</label>
+                            <input type="text" class="form-control" placeholder="adı" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="labels">Soyadı</label>
+                            <input type="text" class="form-control" placeholder="soyadı" asp-for="Surname">
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Telefon Numarası</label>
+                            <input type="text" class="form-control" placeholder="Telefon numaranızı giriniz" asp-for="PhoneNumber">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Adres Satırı 1</label>
+                            <input type="text" class="form-control" placeholder="Adres giriniz" asp-for="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Şehir</label>
+                            <input type="text" class="form-control" placeholder="Şehir giriniz" asp-for="City">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <label class="labels">İlçe</label>
+                            <input type="text" class="form-control" placeholder="İlçe giriniz" asp-for="Region">
+                            <span asp-validation-for="Region" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Doğum Tarihi</label>
+                            <input type="date" class="form-control" placeholder="Doğum tarihi giriniz" asp-for="BirthDate" disabled="disabled">
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Kan Grubu</label>
+
+                            @if (Model.Bloodtype != null)
+                            {
+                                <select class="form-control" disabled="disabled" asp-for="Bloodtype" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
+                                    <option value="-1">Kan Grubunuzu Giriniz</option>
+                                </select>
+                                <span asp-validation-for="Bloodtype" class="text-danger"></span>
+                            }
+                            else
+                            {
+                                <select class="form-control" asp-for="Bloodtype" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
+                                    <option value="-1">Kan Grubunuzu Giriniz</option>
+                                </select>
+                                <span asp-validation-for="Bloodtype" class="text-danger"></span>
+                            }
+                            
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <input type="submit" asp-action="Update" asp-controller="Personnel" value="Kaydet" class="btn btn-primary profile-button" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Ek Bilgiler</span></div><br>
+
+                    <div class="col-md-12">
+                        <label class="labels">Departman Adı</label>
+                        <input type="text" class="form-control" disabled="disabled" placeholder="Departman adı" asp-for="Department.Name">
+                        <span asp-validation-for="Department.Name" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="labels">Ünvan</label>
+                        <input type="text" class="form-control" disabled="disabled" placeholder="Ünvan giriniz" asp-for="Title">
+                        <span asp-validation-for="Bloodtype" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <input type="text" class="form-control" disabled ="disabled" placeholder="Email giriniz" asp-for="Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                        </div>
+                    <div class="col-md-12">
+                        <label class="labels">İşe Giriş Tarihi</label>
+                        <input type="date" disabled="disabled" class="form-control" placeholder="" asp-for="HireDate">
+                        <span asp-validation-for="HireDate" class="text-danger"></span>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
+</form>
+
+
+

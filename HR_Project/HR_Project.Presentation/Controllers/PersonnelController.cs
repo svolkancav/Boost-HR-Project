@@ -3,6 +3,7 @@ using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
@@ -10,13 +11,14 @@ namespace HR_Project.Presentation.Controllers
     public class PersonnelController : Controller
     {
         private readonly IAPIService _apiService;
+       
 
         public PersonnelController(IAPIService apiService)
         {
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> ListPersonnel(string searchText, int pageNumber = 1, int pageSize = 5)
         {
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -32,6 +34,7 @@ namespace HR_Project.Presentation.Controllers
             }
 
         }
+
         public IActionResult Create()
         {
             return View();
@@ -44,9 +47,11 @@ namespace HR_Project.Presentation.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update()
         {
-            PersonelVM personnel = await _apiService.GetAsync<PersonelVM>($"personnel/{id}", HttpContext.Request.Cookies["access-token"]);
+            var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
+            PersonelDTO personnel = await _apiService.GetByIdAsync<PersonelDTO>($"personnel",id, HttpContext.Request.Cookies["access-token"]);
             return View(personnel);
         }
 

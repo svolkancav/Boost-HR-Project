@@ -40,6 +40,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 Email = model.Email,
                 CreatedDate = DateTime.Now,
                 Title = model.Title,
+                PhoneNumber = model.PhoneNumber,
                 Surname = model.Surname,
 
             };

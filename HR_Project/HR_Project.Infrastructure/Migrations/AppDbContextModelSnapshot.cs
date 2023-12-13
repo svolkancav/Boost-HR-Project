@@ -30,8 +30,8 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<TimeSpan>("AbsenceDuration")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("AbsenceDuration")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Condition")
                         .HasColumnType("int");
@@ -233,7 +233,6 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -247,7 +246,6 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -271,7 +269,6 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("ManagerId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -295,6 +292,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")

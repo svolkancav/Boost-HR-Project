@@ -18,8 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://easy-hr-client.azurewebsites.net/api/");
+    opt.BaseAddress = new Uri("https://localhost:7258/api/");
+
 });
+//https://easy-hr-client.azurewebsites.net/api/
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -71,6 +73,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

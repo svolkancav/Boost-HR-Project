@@ -1,57 +1,56 @@
-﻿@model HR_Project.Common.Models.DTOs.UpdateAbsenceDTO
+﻿@using HR_Project.Common.Extensions;
+@using HR_Project.Domain.Enum;
+@model HR_Project.Common.Models.DTOs.UpdateAbsenceDTO
 
 @{
-    ViewData["Title"] = "Update";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+	ViewData["Title"] = "Update";
+	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
-<h1>Update</h1>
+<h1>İzni Güncelle</h1>
 
-<h4>AbsenceVM</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <input asp-for="Id" type="hidden" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Reason" class="control-label"></label>
-                <input asp-for="Reason" class="form-control" />
-                <span asp-validation-for="Reason" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeaveTypes" class="control-label"></label>
-                <input asp-for="LeaveTypes" class="form-control" />
-                <span asp-validation-for="LeaveTypes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AbsenceDuration" class="control-label"></label>
-                <input asp-for="AbsenceDuration" class="form-control" />
-                <span asp-validation-for="AbsenceDuration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Condition" class="control-label"></label>
-                <input asp-for="Condition" class="form-control" />
-                <span asp-validation-for="Condition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Update">
+			<input asp-for="Id" type="hidden" />
+			<input asp-for="Condition" type="hidden" />
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Reason" class="control-label"></label>
+				<input asp-for="Reason" class="form-control" />
+				<span asp-validation-for="Reason" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LeaveTypes" class="control-label">İzin Türü</label>
+				<select class="form-control" asp-for="LeaveTypes" asp-items="EnumHelper.GetEnumSelectList<LeaveTypes>()">
+					<option value="-1">İzin Türü</option>
+				</select>
+			</div>
+			<span asp-validation-for="LeaveTypes" class="text-danger"></span>
+			<div class="form-group">
+				<label asp-for="StartDate" class="control-label"></label>
+				<input asp-for="StartDate" class="form-control" />
+				<span asp-validation-for="StartDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="EndDate" class="control-label"></label>
+				<input asp-for="EndDate" class="form-control" />
+				<span asp-validation-for="EndDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="AbsenceDuration" class="control-label"></label>
+				<input asp-for="AbsenceDuration" class="form-control" />
+				<span asp-validation-for="AbsenceDuration" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Kaydet" class="btn btn-primary"  />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a class="h5" asp-action="Index">Listeye Geri Dön</a>
 </div>
 

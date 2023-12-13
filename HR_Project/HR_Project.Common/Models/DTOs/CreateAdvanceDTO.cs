@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HR_Project.Common.ValidationClass;
 using HR_Project.Domain.Enum;
 
 namespace HR_Project.Common.Models.DTOs
 {
 	public class CreateAdvanceDTO
 	{
+		[DateValidaditon(ErrorMessage = "Başlangıç tarihi bugünden önce olamaz.")]
 		public DateTime LastPaidDate { get; set; }
+		[DataType(DataType.Currency)]
+		[Display(Name = "Tutar")]
+		[Required]
 		public decimal Amount { get; set; }
+		[Display(Name = "Açıklama")]
+		[Required]
 		public string Reason { get; set; }
 		public ConditionType Condition { get; set; }
 

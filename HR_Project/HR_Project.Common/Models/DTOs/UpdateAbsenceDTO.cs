@@ -15,7 +15,7 @@ namespace HR_Project.Common.Models.DTOs
         public LeaveTypes LeaveTypes { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public TimeSpan AbsenceDuration { get; set; }
+        public DateTime AbsenceDuration { get; set; }
         public ConditionType Condition { get; set; }
     }
 }

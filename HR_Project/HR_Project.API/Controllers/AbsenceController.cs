@@ -25,6 +25,14 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpGet]
+        [Route("getbyid/{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var absence = await _absenceService.GetById(id);
+            return Ok(absence);
+        }
+
+        [HttpGet]
         [Route("{condition}")]
         public async Task<IActionResult> GetByCondition(ConditionType condition)
         {

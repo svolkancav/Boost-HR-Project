@@ -11,6 +11,7 @@ using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HR_Project.Application.Services.AdvanceService
 {
@@ -36,6 +37,7 @@ namespace HR_Project.Application.Services.AdvanceService
             advance.Status = Status.Inserted;
             advance.CreatedDate = DateTime.Now;
             advance.PersonnelId = personnel.Id;
+            advance.Condition = ConditionType.Pending;
 
             await _advanceRepository.Create(advance);
         }
@@ -62,6 +64,7 @@ namespace HR_Project.Application.Services.AdvanceService
         {
             return await _advanceRepository.GetFilteredList(x => new AdvanceVM
             {
+                Id = x.Id,
                 Amount = x.Amount,
                 LastPaidDate = x.LastPaidDate,
                 Condition = x.Condition,
@@ -73,6 +76,7 @@ namespace HR_Project.Application.Services.AdvanceService
         {
             return await _advanceRepository.GetFilteredList(x => new AdvanceVM
             {
+                Id = x.Id,
                 Amount = x.Amount,
                 LastPaidDate = x.LastPaidDate,
                 Condition = x.Condition,
@@ -80,9 +84,27 @@ namespace HR_Project.Application.Services.AdvanceService
             }, x => x.Status != Status.Deleted && x.Condition == condition);
         }
 
+        public async Task<UpdateAdvanceDTO> GetById(string id)
+        {
+            UpdateAdvanceDTO model = new UpdateAdvanceDTO();
+
+            Advance advance= await _advanceRepository.GetDefault(x => x.Id == Convert.ToInt32(id));
+
+            return _mapper.Map<UpdateAdvanceDTO>(advance);
+        }
+
         public async Task Update(UpdateAdvanceDTO model)
         {
-            // TODO: Implement Update
+            Advance advance = await _advanceRepository.GetDefault(x => x.Id == model.Id);
+
+            advance.Amount = model.Amount;
+            advance.Reason = model.Reason;
+            advance.LastPaidDate = model.LastPaidDate;
+            advance.ModifiedDate = DateTime.Now;
+            advance.Status = Status.Updated;
+
+            await _advanceRepository.Update(advance);
+
         }
     }
 }

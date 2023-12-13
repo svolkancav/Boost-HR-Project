@@ -9,6 +9,7 @@ namespace HR_Project.Common.Models.VMs
 {
 	public class AdvanceVM
 	{
+		public int Id { get; set; }
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }

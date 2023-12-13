@@ -24,6 +24,14 @@ namespace HR_Project.API.Controllers
 		}
 
 		[HttpGet]
+		[Route("getbyid/{id}")]
+		public async Task<IActionResult> GetById(string id)
+		{
+            var advance =await _advanceService.GetById(id);
+            return Ok(advance);
+        }
+
+		[HttpGet]
 		[Route("{condition}")]
 		public async Task<IActionResult> GetByCondition(ConditionType condition)
 		{

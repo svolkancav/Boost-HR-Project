@@ -21,7 +21,7 @@ namespace HR_Project.Presentation.Controllers
         {
             if (!string.IsNullOrEmpty(searchText))
             {
-                
+
                 List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
                 List<AdvanceVM> selectedAdvences = advances.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.Amount.ToString().Contains(searchText)).ToList();
 
@@ -32,7 +32,7 @@ namespace HR_Project.Presentation.Controllers
                 List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
                 return View(advances.ToPagedList(pageNumber, pageSize));
             }
-           
+
         }
 
 
@@ -44,14 +44,14 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAdvanceDTO model)
         {
-            await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]); 
+            await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }
 
 
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(string id)
         {
-            AdvanceVM advance = await _apiService.GetAsync<AdvanceVM>($"advance/{id}", HttpContext.Request.Cookies["access-token"]);
+            UpdateAdvanceDTO advance = await _apiService.GetByIdAsync<UpdateAdvanceDTO>("advance/getbyid", id, HttpContext.Request.Cookies["access-token"]);
             return View(advance);
         }
 
@@ -65,7 +65,7 @@ namespace HR_Project.Presentation.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _apiService.DeleteAsync<AbsenceDTO>($"advance", id, HttpContext.Request.Cookies["access-token"]);
+            await _apiService.DeleteAsync<UpdateAdvanceDTO>($"advance", id, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }
     }

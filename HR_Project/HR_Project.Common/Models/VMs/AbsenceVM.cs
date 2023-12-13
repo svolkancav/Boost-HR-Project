@@ -9,6 +9,7 @@ namespace HR_Project.Common.Models.VMs
 {
     public class AbsenceVM
     {
+        public int Id { get; set; }
         public string Reason { get; set; }
         public LeaveTypes LeaveTypes { get; set; }
         public DateTime StartDate { get; set; }

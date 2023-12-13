@@ -19,6 +19,7 @@ namespace HR_Project.Application.Mapper
             CreateMap<Advance, UpdateAdvanceDTO>().ReverseMap();
             CreateMap<Advance, CreateAdvanceDTO>().ReverseMap();
             CreateMap<Advance, AdvanceVM>().ReverseMap();
+            CreateMap<Absence, UpdateAbsenceDTO>().ReverseMap();
             CreateMap<Absence, AbsenceDTO>().ReverseMap();
             CreateMap<Absence, AbsenceVM>().ReverseMap();
             CreateMap<AbsenceVM, AbsenceDTO>().ReverseMap();

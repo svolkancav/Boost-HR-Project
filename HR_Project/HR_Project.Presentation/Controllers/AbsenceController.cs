@@ -45,23 +45,23 @@ namespace HR_Project.Presentation.Controllers
         }
 
         // güncelleme için
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(string id)
         {
-            AbsenceVM absence = await _apiService.GetAsync<AbsenceVM>($"absence/{id}", HttpContext.Request.Cookies["access-token"]);
+            UpdateAbsenceDTO absence = await _apiService.GetByIdAsync<UpdateAbsenceDTO>($"absence/getbyid",id, HttpContext.Request.Cookies["access-token"]);
             return View(absence);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(AbsenceDTO model)
+        public async Task<IActionResult> Update(UpdateAbsenceDTO model)
         {
-            await _apiService.UpdateAsync<AbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
+            await _apiService.UpdateAsync<UpdateAbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }
 
         // silme için
         public async Task<IActionResult> Delete(int id)
         {
-            await _apiService.DeleteAsync<AbsenceDTO>($"absence", id, HttpContext.Request.Cookies["access-token"]);
+            await _apiService.DeleteAsync<UpdateAbsenceDTO>($"absence", id, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }
     }

@@ -48,12 +48,14 @@ namespace HR_Project.Presentation.Controllers
                         var jsonToken = handler.ReadToken(token.Token) as JwtSecurityToken;
 
                         var email = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                        var userId = jsonToken?.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                         
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Email, email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, userId),
 
                         };
 

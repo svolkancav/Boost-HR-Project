@@ -1,0 +1,102 @@
+﻿@using HR_Project.Application.IoC.Models.DTOs;
+@using HR_Project.Common.Models.VMs;
+@using X.PagedList;
+@model PersonelDTO
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+}
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Adı
+            </th>
+            <th>
+                Soyadı
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Adres
+            </th>
+            <th>
+                Ünvan
+            </th>
+            <th>
+                Departman
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+
+<div class="container rounded bg-white mt-3 mb-5 ">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profil Bilgilerim</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Adı</label><input type="text" class="form-control" placeholder="adı" value="" asp-for="Name"></div>
+                    <div class="col-md-6"><label class="labels">Soyadı</label><input type="text" class="form-control" value="" placeholder="soyadı"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Telefon Numarası</label><input type="text" class="form-control" placeholder="Telefon numaranızı giriniz" value="" asp-for="PhoneNumber"></div>
+                    <div class="col-md-12"><label class="labels">Adres Satırı 1</label><input type="text" class="form-control" placeholder="Adres giriniz" value=""></div>
+                    <div class="col-md-12"><label class="labels">Şehir</label><input type="text" class="form-control" placeholder="Şehir giriniz" value=""></div>
+                    <div class="col-md-12"><label class="labels">İlçe</label><input type="text" class="form-control" placeholder="İlçe giriniz" value=""></div>
+                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="Email giriniz" value=""></div>
+                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

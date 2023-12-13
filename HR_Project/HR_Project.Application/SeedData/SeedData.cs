@@ -35,9 +35,10 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.BirthDate, i => i.Person.DateOfBirth)
                         .RuleFor(i => i.BloodType, i => i.PickRandom<BloodType>())
                         .RuleFor(i => i.PasswordHash, i => i.Internet.Password())
-                        .RuleFor(i => i.Title, i => i.PickRandom(titles));
+                        .RuleFor(i => i.Title, i => i.PickRandom(titles))
+                        .RuleFor(i => i.PhoneNumber, i => i.Person.Phone);
 
-                    var genereatedPersonnels = personnellFaker.Generate(10);
+                    var genereatedPersonnels = personnellFaker.Generate(50);
 
                     context.Personnels.AddRange(genereatedPersonnels);
 
@@ -56,7 +57,7 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.Condition, i => i.PickRandom<ConditionType>())
                         .RuleFor(i => i.LastPaidDate, i => i.Date.Recent(100));
 
-                    var genereatedAdvances = advancesFaker.Generate(10);
+                    var genereatedAdvances = advancesFaker.Generate(50);
 
                     context.Advances.AddRange(genereatedAdvances);
 
@@ -75,7 +76,7 @@ namespace HR_Project.Application.SeedData
                        .RuleFor(i => i.EndDate, i => i.Date.Recent(10))
                        .RuleFor(i => i.LeaveTypes, i => i.PickRandom<LeaveTypes>());
 
-                    var genereatedAbsences = absencesFaker.Generate(10);
+                    var genereatedAbsences = absencesFaker.Generate(50);
 
                     context.Absences.AddRange(genereatedAbsences);
 

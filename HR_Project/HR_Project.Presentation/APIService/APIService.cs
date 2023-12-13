@@ -58,7 +58,7 @@ namespace HR_Project.Presentation.APIService
 		}
 
 		//getbyid
-		public async Task<T> GetByIdAsync<T>(string endpoint, int id, string token)
+		public async Task<T> GetByIdAsync<T>(string endpoint, string id, string token)
 		{
 			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 

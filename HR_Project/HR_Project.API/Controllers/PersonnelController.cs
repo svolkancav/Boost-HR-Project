@@ -22,7 +22,16 @@ namespace HR_Project.API.Controllers
         public async Task<IActionResult> Get()
         {
             var personnels = await _personnelService.GetPersonels();
+            
             return Ok(personnels);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var personnel = await _personnelService.GetById(id);
+            return Ok(personnel);   
         }
 
         [HttpPost]

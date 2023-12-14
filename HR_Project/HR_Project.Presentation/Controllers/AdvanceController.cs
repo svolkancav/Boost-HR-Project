@@ -8,7 +8,7 @@ using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
 {
-    public class AdvanceController : Controller
+    public class AdvanceController : BaseController
     {
         private readonly IAPIService _apiService;
 
@@ -44,8 +44,17 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAdvanceDTO model)
         {
-            await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.PostAsync<CreateAdvanceDTO, CreateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+                return View(model);
+            }
         }
 
 
@@ -58,15 +67,33 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateAdvanceDTO model)
         {
-            await _apiService.UpdateAsync<UpdateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.UpdateAsync<UpdateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt güncelleme sırasında hata oluştu : {ex.Message}");
+                return View(model);
+            }
         }
 
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _apiService.DeleteAsync<UpdateAdvanceDTO>($"advance", id, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.DeleteAsync<UpdateAdvanceDTO>($"advance", id, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde silindi.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt silme sırasında hata oluştu : {ex.Message}");
+                return RedirectToAction("Index");
+            }
         }
     }
 }

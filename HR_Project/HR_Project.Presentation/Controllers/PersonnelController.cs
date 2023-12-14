@@ -8,7 +8,7 @@ using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
 {
-    public class PersonnelController : Controller
+    public class PersonnelController : BaseController
     {
         private readonly IAPIService _apiService;
        
@@ -58,15 +58,33 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(PersonelDTO model)
         {
-            await _apiService.UpdateAsync<PersonelDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.UpdateAsync<PersonelDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+                return View(model);
+            }
         }
 
         // silme için
         public async Task<IActionResult> Delete(int id)
         {
-            await _apiService.DeleteAsync<PersonelDTO>($"personnel", id, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.DeleteAsync<PersonelDTO>($"personnel", id, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde silindi.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt silinirken hata oluştu : {ex.Message}");
+                return RedirectToAction("Index");
+            }
         }
     }
 }

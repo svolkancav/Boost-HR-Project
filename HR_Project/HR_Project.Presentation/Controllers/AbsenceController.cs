@@ -6,7 +6,7 @@ using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
 {
-    public class AbsenceController : Controller
+    public class AbsenceController : BaseController
     {
         private readonly IAPIService _apiService;
 
@@ -40,37 +40,66 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AbsenceDTO model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-				return View(model);
-			}
-            await _apiService.PostAsync<AbsenceDTO, AbsenceDTO>("Absence", model, HttpContext.Request.Cookies["access-token"]); //_apiService.PostAsync<AbsenceDTO,AbsenceDTO>... ikinci tip geri dönüş tipi. Ama API den geri dönüş modeli göndermiyoruz.
-            return RedirectToAction("Index");
+                await _apiService.PostAsync<AbsenceDTO, AbsenceDTO>("Absence", model, HttpContext.Request.Cookies["access-token"]); //_apiService.PostAsync<AbsenceDTO,AbsenceDTO>... ikinci tip geri dönüş tipi. Ama API den geri dönüş modeli göndermiyoruz.
+                
+                Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
+                
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+
+                return View(model);
+            }
+
         }
 
         // güncelleme için
         public async Task<IActionResult> Update(string id)
         {
-            UpdateAbsenceDTO absence = await _apiService.GetByIdAsync<UpdateAbsenceDTO>($"absence/getbyid",id, HttpContext.Request.Cookies["access-token"]);
+            UpdateAbsenceDTO absence = await _apiService.GetByIdAsync<UpdateAbsenceDTO>($"absence/getbyid", id, HttpContext.Request.Cookies["access-token"]);
             return View(absence);
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(UpdateAbsenceDTO model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-				return View(model);
-			}
-            await _apiService.UpdateAsync<UpdateAbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+                await _apiService.UpdateAsync<UpdateAbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
+
+                Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt güncellenirken hata oluştu : {ex.Message}");
+
+                return View(model);
+            }
         }
 
         // silme için
         public async Task<IActionResult> Delete(int id)
         {
-            await _apiService.DeleteAsync<UpdateAbsenceDTO>($"absence", id, HttpContext.Request.Cookies["access-token"]);
-            return RedirectToAction("Index");
+            try
+            {
+                await _apiService.DeleteAsync<UpdateAbsenceDTO>($"absence", id, HttpContext.Request.Cookies["access-token"]);
+                Toastr("success", "Kayıt başarılı bir şekilde silindi.");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt silinirken hata oluştu : {ex.Message}");
+                return RedirectToAction("Index");
+            }
         }
+
+        
     }
 }

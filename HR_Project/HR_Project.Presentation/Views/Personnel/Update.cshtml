@@ -136,5 +136,21 @@
     </div>
 </form>
 
+@section Scripts {
+    @if (TempData.ContainsKey("Toastrsuccess"))
+    {
+        <script>
+            console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+            toastr.success('@TempData["Toastrsuccess"]');
+        </script>
+    }
+
+    @if (TempData.ContainsKey("Toastrerror"))
+    {
+        <script>
+            toastr.error('@TempData["Toastrerror"]');
+        </script>
+    }
+    }
 
 

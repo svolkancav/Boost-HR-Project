@@ -261,29 +261,27 @@
 
 	</script>
 
-
-	<script>
-		var dropdown = document.getElementById("pageSizeDropdown");
-
-		dropdown.addEventListener("change", function () {
-			var selectedPageSize = this.value;
-
-
-			var url = "/Absence/Index?pageSize=" + selectedPageSize;
-
-
-			window.location.href = url;
-		});
-
-		function confirmDelete(id) {
-			if (confirm("Silmek istediğinize emin misiniz?")) {
-				window.location.href = "/Absence/Delete/?id=" + id;
-			} else {
-
-			}
-		}
-	</script>
-
-
 </body>
+
+@*<script>
+	var dropdown1 = document.getElementById("pageSizeDropdown");
+
+	dropdown1.addEventListener("change", function () {
+		var selectedPageSize = this.value;
+
+
+		var url = "/Absence/Index?pageSize=" + selectedPageSize;
+
+
+		window.location.href = url;
+	});
+
+	function confirmDelete(id) {
+		if (confirm("Silmek istediğinize emin misiniz?")) {
+			window.location.href = "/Absence/Delete/?id=" + id;
+		} else {
+
+		}
+	}
+</script>*@
 

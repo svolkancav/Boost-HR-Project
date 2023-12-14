@@ -5,8 +5,8 @@
 @model IPagedList<AbsenceVM>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
 
@@ -14,242 +14,259 @@
 <body id="page-top">
 
 
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
+	<!-- Begin Page Content -->
+	<div class="container-fluid">
 
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">İzinler</h1>
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800">İzinler</h1>
 
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">İzin Listesi</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-9">
-                                <div class="dataTables_length" id="dataTable_length">
-                                    <p>
-                                        <a asp-action="Create">İzin Oluştur</a>
-                                    </p>
-                                    <label>
-                                        Göster
-                                        <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm" asp-for="@Model.PageSize" id="pageSizeDropdown">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3">
-                                <div id="dataTable_filter" class="dataTables_filter">
-                                    <label>
-                                        @using (Html.BeginForm())
-                                        {
-                                            <p>
-                                                Ara: @Html.TextBox("searchText")
-                                                <input type="submit" placeholder="İzin tipi veya açıklama gir" />
-                                            </p>
-                                        }
+		<!-- DataTales Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">İzin Listesi</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+						<div class="row">
+							<div class="col-sm-12 col-md-9">
+								<div class="dataTables_length" id="dataTable_length">
+									<p>
+										<a asp-action="Create">İzin Oluştur</a>
+									</p>
+									<label>
+										Göster
+										<select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm" asp-for="@Model.PageSize" id="pageSizeDropdown">
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+										</select>
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div id="dataTable_filter" class="dataTables_filter">
+									<label>
+										@using (Html.BeginForm())
+										{
+											<p>
+												Ara: @Html.TextBox("searchText")
+												<input type="submit" placeholder="İzin tipi veya açıklama gir" />
+											</p>
+										}
 
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+									</label>
+								</div>
+							</div>
+						</div>
 
-                    </div>
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                        <thead>
-                            <tr>
+					</div>
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+						<thead>
+							<tr>
 
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
-                                    İzin Türü
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
-                                    Açıklama
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
-                                    Başlangıç Tarihi
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
-                                    Bitiş Tarihi
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="AbsenceDuration: activate to sort column ascending" style="width: 140px;">
-                                    İzin Süresi
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-                                    aria-label="Condition.GetDisplayName(Model.Condition)"
-                                    style="width: 140px;">
-                                    Durumu
-                                </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 140px;">
-                                    İşlemler
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+									İzin Türü
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
+									Açıklama
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
+									Başlangıç Tarihi
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
+									Bitiş Tarihi
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="AbsenceDuration: activate to sort column ascending" style="width: 140px;">
+									İzin Süresi
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+									aria-label="Condition.GetDisplayName(Model.Condition)"
+									style="width: 140px;">
+									Durumu
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 140px;">
+									İşlemler
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
 
-                                    <td>
-                                        @item.LeaveTypes.GetDisplayName()
-                                    </td>
-                                    <td>
-                                        @item.Reason
-                                    </td>
-                                    <td>
-                                        @item.StartDate.ToShortDateString()
-                                    </td>
-                                    <td>
-                                        @item.EndDate.ToShortDateString()
-                                    </td>
-                                    <td>
-                                        @item.AbsenceDuration
-                                    </td>
-                                    <td>
-                                        @item.Condition.GetDisplayName()
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Düzenle", "Update", new {  id=item.Id  }) |
-                                        @Html.ActionLink("Sil", "Delete", new {  id=item.Id  })
-                                    </td>
-                                </tr>
-                            }
+									<td>
+										@item.LeaveTypes.GetDisplayName()
+									</td>
+									<td>
+										@item.Reason
+									</td>
+									<td>
+										@item.StartDate.ToShortDateString()
+									</td>
+									<td>
+										@item.EndDate.ToShortDateString()
+									</td>
+									<td>
+										@item.AbsenceDuration
+									</td>
+									<td>
+										@item.Condition.GetDisplayName()
+									</td>
 
-                    </table>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing page @(Model.PageNumber) to @Model.PageCount of @Model.TotalItemCount products</p>
-                        </div>
-                        <div class="col-md-6">
-                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                <ul class="pagination">
-                                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                                        <a class="page-link" aria-label="Previous" href="@(Model.HasPreviousPage ? Url.Action("Index", new { pageNumber = Model.PageNumber - 1 , pageSize=Model.PageSize, searchText=Context.Request.Query["searchText"] }) : "#")">
-                                            <span aria-hidden="true">Önceki</span>
-                                        </a>
-                                    </li>
-                                    @for (int i = 1; i <= Model.PageCount; i++)
-                                    {
-                                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                                            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] })">@i</a>
-                                        </li>
-                                    }
-                                    <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-                                        <a class="page-link" aria-label="Next" href="@(Model.HasNextPage ? Url.Action("Index", new { pageNumber = Model.PageNumber + 1, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] }) : "#")">
-                                            <span aria-hidden="true">Sonraki</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+									@{
+										if (item.Condition == ConditionType.Pending)
+										{
+											<td>
+												<a asp-action="Update" asp-route-id="@item.Id">Düzenle</a>
+												|
+												<a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+											</td>
+										}
+										else
+										{
+											<td>
+												<a disabled="disabled">Düzenle</a>
+												|
+												<a disabled="disabled">Sil</a>
+											</td>
+										}
+									}
 
 
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- /.container-fluid -->
-    <!-- End of Main Content -->
-    <!-- Footer -->
-    <!-- End of Footer -->
-    <!-- End of Content Wrapper -->
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+								</tr>
+							}
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+					</table>
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <script>
-        var dropdown = document.getElementById("pageSizeDropdown");
-
-        dropdown.addEventListener("change", function () {
-            var selectedPageSize = this.value;
-            var searchText = '@Context.Request.Query["searchText"]';
-
-            if (searchText) {
-                var url = "/Absence/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
-            } else {
-                var url = "/Absence/Index?pageSize=" + selectedPageSize;
-            }
-
-            window.location.href = url;
-        });
+					<div class="row">
+						<div class="col-md-6 align-self-center">
+							<p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing page @(Model.PageNumber) to @Model.PageCount of @Model.TotalItemCount products</p>
+						</div>
+						<div class="col-md-6">
+							<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+								<ul class="pagination">
+									<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+										<a class="page-link" aria-label="Previous" href="@(Model.HasPreviousPage ? Url.Action("Index", new { pageNumber = Model.PageNumber - 1 , pageSize=Model.PageSize, searchText=Context.Request.Query["searchText"] }) : "#")">
+											<span aria-hidden="true">Önceki</span>
+										</a>
+									</li>
+									@for (int i = 1; i <= Model.PageCount; i++)
+									{
+										<li class="page-item @(i == Model.PageNumber ? "active" : "")">
+											<a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] })">@i</a>
+										</li>
+									}
+									<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+										<a class="page-link" aria-label="Next" href="@(Model.HasNextPage ? Url.Action("Index", new { pageNumber = Model.PageNumber + 1, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] }) : "#")">
+											<span aria-hidden="true">Sonraki</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
 
 
-    </script>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- /.container-fluid -->
+	<!-- End of Main Content -->
+	<!-- Footer -->
+	<!-- End of Footer -->
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-    <script>
-        var dropdown = document.getElementById("pageSizeDropdown");
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        dropdown.addEventListener("change", function () {
-            var selectedPageSize = this.value;
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+
+	<script>
+		var dropdown = document.getElementById("pageSizeDropdown");
+
+		dropdown.addEventListener("change", function () {
+			var selectedPageSize = this.value;
+			var searchText = '@Context.Request.Query["searchText"]';
+
+			if (searchText) {
+				var url = "/Absence/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
+			} else {
+				var url = "/Absence/Index?pageSize=" + selectedPageSize;
+			}
+
+			window.location.href = url;
+		});
 
 
-            var url = "/Absence/Index?pageSize=" + selectedPageSize;
+	</script>
 
 
-            window.location.href = url;
-        });
+	<script>
+		var dropdown = document.getElementById("pageSizeDropdown");
 
-        function confirmDelete(id) {
-            if (confirm("Silmek istediğinize emin misiniz?")) {
-                window.location.href = "/Absence/Delete/?id=" + id;
-            } else {
+		dropdown.addEventListener("change", function () {
+			var selectedPageSize = this.value;
 
-            }
-        }
-    </script>
-    
+
+			var url = "/Absence/Index?pageSize=" + selectedPageSize;
+
+
+			window.location.href = url;
+		});
+
+		function confirmDelete(id) {
+			if (confirm("Silmek istediğinize emin misiniz?")) {
+				window.location.href = "/Absence/Delete/?id=" + id;
+			} else {
+
+			}
+		}
+	</script>
+
 
 </body>
 

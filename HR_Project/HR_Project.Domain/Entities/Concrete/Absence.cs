@@ -17,7 +17,7 @@ namespace HR_Project.Domain.Entities.Concrete
 		public int Id { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-        public DateTime AbsenceDuration { get; set; }
+        public long AbsenceDuration { get; set; }
 		public LeaveTypes LeaveTypes { get; set; }
 		public string Reason { get; set; }
 		public ConditionType Condition { get; set; }

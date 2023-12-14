@@ -11,7 +11,8 @@ namespace HR_Project.Common.ValidationClass
 	{
 		public override bool IsValid(object value)
 		{
-			if ((int)value >-1  )
+
+			if (value != null  )
 			{
 				return true;
 			}

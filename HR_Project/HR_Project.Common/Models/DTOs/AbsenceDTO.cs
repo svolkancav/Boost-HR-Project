@@ -28,7 +28,7 @@ namespace HR_Project.Common.Models.DTOs
         [DateCompare("StartDate", ErrorMessage = "Bitiş tarihi başlangıç tarihinden önce olamaz.")]
         public DateTime EndDate { get; set; }
         [Display(Name = "İzin Süresi")]
-        public DateTime AbsenceDuration { get; set; }
+        public long AbsenceDuration { get; set; }
         [Display(Name = "İzin Durumu")]
         public ConditionType Condition { get; set; }
     }

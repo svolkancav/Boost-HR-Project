@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HR_Project.Infrastructure.Migrations
 {
-    public partial class first : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,7 +76,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AbsenceDuration = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AbsenceDuration = table.Column<long>(type: "bigint", nullable: false),
                     LeaveTypes = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),

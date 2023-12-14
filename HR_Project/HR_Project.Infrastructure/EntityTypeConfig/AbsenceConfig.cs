@@ -21,6 +21,7 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
 			builder.Property(x=>x.Reason).IsRequired(true).HasMaxLength(300);
 			builder.Property(x=>x.Condition).IsRequired(true);
 			builder.Property(x=>x.PersonnelId).IsRequired(true);
+			builder.Property(x=>x.AbsenceDuration).HasColumnType("bigint").IsRequired();
 
 			builder.HasOne(x=>x.Personnel).WithMany(x=>x.Absences).HasForeignKey(x=>x.PersonnelId);
 

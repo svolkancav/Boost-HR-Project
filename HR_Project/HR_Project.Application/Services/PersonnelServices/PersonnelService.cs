@@ -111,13 +111,27 @@ namespace HR_Project.Application.Services.PersonelServices
 			throw new NotImplementedException();
 		}
 
-		public async Task Update(PersonelDTO model)
+		public async Task Update(UpdateProfileDTO model)
         {
-            bool isExist = await _personelRepository.Any(x => x.Id == model.Id);
+            var personel = await _personelRepository.GetDefault(x=>x.Id == model.Id);
+            //bool isExist = await _personelRepository.Any(x => x.Id == model.Id);
 
-            if (isExist)
+           
+
+            if (personel is not null)
             {
-                var personel = _mapper.Map<Personnel>(model);
+                
+                personel.Name = model.Name;
+                personel.PhoneNumber = model.PhoneNumber;
+                personel.Region = model.Region;
+                personel.Email = model.Email;
+                personel.Address = model.Address;
+                personel.BloodType = model.BloodType;
+                personel.Surname = model.Surname;
+                personel.City = model.City;
+                personel.ImagePath = model.ImagePath;
+
+
                 await _personelRepository.Update(personel);
             }
         }

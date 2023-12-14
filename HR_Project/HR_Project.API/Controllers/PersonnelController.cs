@@ -43,7 +43,7 @@ namespace HR_Project.API.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Update(PersonelDTO model)
+        public async Task<IActionResult> Update(UpdateProfileDTO model)
         {
             await _personnelService.Update(model);
             return Ok();

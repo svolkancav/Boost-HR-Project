@@ -1,8 +1,8 @@
 ﻿@using HR_Project.Application.IoC.Models.DTOs;
 @using HR_Project.Common.Extensions;
-@using HR_Project.Common.Models.VMs;
+@using HR_Project.Common.Models.DTOs;
 @using HR_Project.Domain.Enum;
-@model PersonelDTO
+@model UpdateProfileDTO
 
 @{
     ViewData["Title"] = "Index";
@@ -75,25 +75,29 @@
                         <div class="col-md-12">
                             <label class="labels">Kan Grubu</label>
 
-                            @if (Model.Bloodtype != null)
+                            @if (Model.BloodType != null)
                             {
-                                <select class="form-control" disabled="disabled" asp-for="Bloodtype" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
+                                <select class="form-control" disabled="disabled" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
                                     <option value="-1">Kan Grubunuzu Giriniz</option>
                                 </select>
-                                <span asp-validation-for="Bloodtype" class="text-danger"></span>
+                                <span asp-validation-for="BloodType" class="text-danger"></span>
                             }
                             else
                             {
-                                <select class="form-control" asp-for="Bloodtype" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
+                                <select class="form-control" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
                                     <option value="-1">Kan Grubunuzu Giriniz</option>
                                 </select>
-                                <span asp-validation-for="Bloodtype" class="text-danger"></span>
+                                <span asp-validation-for="BloodType" class="text-danger"></span>
                             }
                             
 
                         </div>
 
                     </div>
+                    <input type="hidden" asp-for="HireDate">
+@*                    <input type="hidden" asp-for="Department.Name">*@
+                    <input type="hidden" asp-for="Title">
+                    <input type="hidden" asp-for="Email">
 
                     <div class="mt-5 text-center">
                         <input type="submit" asp-action="Update" asp-controller="Personnel" value="Kaydet" class="btn btn-primary profile-button" />
@@ -104,17 +108,17 @@
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Ek Bilgiler</span></div><br>
 
-                    <div class="col-md-12">
+@*                    <div class="col-md-12">
                         <label class="labels">Departman Adı</label>
                         <input type="text" class="form-control" disabled="disabled" placeholder="Departman adı" asp-for="Department.Name">
                         <span asp-validation-for="Department.Name" class="text-danger"></span>
 
-                    </div>
+                    </div>*@
 
                     <div class="col-md-12">
                         <label class="labels">Ünvan</label>
                         <input type="text" class="form-control" disabled="disabled" placeholder="Ünvan giriniz" asp-for="Title">
-                        <span asp-validation-for="Bloodtype" class="text-danger"></span>
+                        <span asp-validation-for="BloodType" class="text-danger"></span>
 
                     </div>
 

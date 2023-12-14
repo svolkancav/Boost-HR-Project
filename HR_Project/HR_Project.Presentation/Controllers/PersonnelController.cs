@@ -50,25 +50,37 @@ namespace HR_Project.Presentation.Controllers
         public async Task<IActionResult> Update()
         {
             var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-           
-            PersonelDTO personnel = await _apiService.GetByIdAsync<PersonelDTO>($"personnel",id, HttpContext.Request.Cookies["access-token"]);
+
+            UpdateProfileDTO personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>($"personnel",id, HttpContext.Request.Cookies["access-token"]);
             return View(personnel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(PersonelDTO model)
+        public async Task<IActionResult> Update(UpdateProfileDTO model)
         {
             try
             {
-                await _apiService.UpdateAsync<PersonelDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+                if (ModelState.IsValid)
+                {
+
+
+                }
+                else
+                {
+                    
+                }
+                await _apiService.UpdateAsync<UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
-                return RedirectToAction("Index");
+                return RedirectToAction("Update");
+
             }
+
             catch (Exception ex)
             {
                 Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
                 return View(model);
             }
+
         }
 
         // silme için

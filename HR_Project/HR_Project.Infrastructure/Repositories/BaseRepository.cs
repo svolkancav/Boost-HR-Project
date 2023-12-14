@@ -77,8 +77,17 @@ namespace HR_Project.Infrastructure.Repositories
 
         public async Task Update(T entity)
         {
-            _context.Entry<T>(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Entry<T>(entity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+            
         }
     }
 }

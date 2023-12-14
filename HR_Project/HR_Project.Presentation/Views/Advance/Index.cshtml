@@ -209,4 +209,28 @@
 
     </script>
 
+
+
+    <script>
+        var dropdown = document.getElementById("pageSizeDropdown");
+
+        dropdown.addEventListener("change", function () {
+            var selectedPageSize = this.value;
+
+
+            var url = "/Advance/Index?pageSize=" + selectedPageSize;
+
+
+            window.location.href = url;
+        });
+
+        function confirmDelete(id) {
+            if (confirm("Silmek istediğinize emin misiniz?")) {
+                window.location.href = "/Advance/Delete/?id=" + id;
+            } else {
+
+            }
+        }
+    </script>
+
 </body>

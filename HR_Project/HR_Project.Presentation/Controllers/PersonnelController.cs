@@ -60,14 +60,9 @@ namespace HR_Project.Presentation.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-
-
-                }
-                else
-                {
-                    
+                    return View(model);
                 }
                 await _apiService.UpdateAsync<UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");

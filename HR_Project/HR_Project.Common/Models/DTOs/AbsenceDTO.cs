@@ -22,14 +22,17 @@ namespace HR_Project.Common.Models.DTOs
         public LeaveTypes LeaveTypes { get; set; }
         [Display(Name = "Başlangıç Tarihi")]
         [DateValidaditon(ErrorMessage = "Başlangıç tarihi bugünden önce olamaz.")]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         [Display(Name = "Bitiş Tarihi")]
         [DateValidaditon(ErrorMessage = "Bitiş tarihi bugünden önce olamaz.")]
         [DateCompare("StartDate", ErrorMessage = "Bitiş tarihi başlangıç tarihinden önce olamaz.")]
-        public DateTime EndDate { get; set; }
+		[DataType(DataType.Date)]
+		public DateTime EndDate { get; set; }
         [Display(Name = "İzin Süresi")]
-        public long AbsenceDuration { get; set; }
-        [Display(Name = "İzin Durumu")]
+        [AbsenceDurationValidation("StartDate", "EndDate")]
+        public double AbsenceDuration { get; set; }
+		[Display(Name = "İzin Durumu")]
         public ConditionType Condition { get; set; }
     }
 }

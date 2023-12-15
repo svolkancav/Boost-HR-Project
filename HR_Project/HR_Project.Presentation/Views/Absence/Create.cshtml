@@ -40,13 +40,13 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="EndDate" class="control-label">Bitiş Tarihi</label>
-				<input asp-for="EndDate" class="form-control" id="endDate" />
+				<input asp-for="EndDate" class="form-control datepicker" />
 				<span asp-validation-for="EndDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="AbsenceDuration" class="control-label">İzin Süresi</label>
-				<input class="form-control" id="absenceDurationText" readonly />
-				<input asp-for="AbsenceDuration" type="hidden" id="absenceDuration" />
+				<input asp-for="AbsenceDuration" class="form-control" />
+				<span asp-validation-for="AbsenceDuration" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">

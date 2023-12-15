@@ -42,6 +42,10 @@ namespace HR_Project.Presentation.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
                 await _apiService.PostAsync<AbsenceDTO, AbsenceDTO>("Absence", model, HttpContext.Request.Cookies["access-token"]); //_apiService.PostAsync<AbsenceDTO,AbsenceDTO>... ikinci tip geri dönüş tipi. Ama API den geri dönüş modeli göndermiyoruz.
                 
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
@@ -70,6 +74,10 @@ namespace HR_Project.Presentation.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
                 await _apiService.UpdateAsync<UpdateAbsenceDTO>("absence", model, HttpContext.Request.Cookies["access-token"]);
 
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");

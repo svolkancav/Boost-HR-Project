@@ -14,7 +14,7 @@ namespace HR_Project.Common.Models.VMs
         public LeaveTypes LeaveTypes { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public long AbsenceDuration { get; set; }
+        public double AbsenceDuration { get; set; }
         public ConditionType Condition { get; set; }
     }
 }

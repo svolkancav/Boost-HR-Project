@@ -22,11 +22,12 @@ namespace HR_Project.Common.Models.DTOs
         [Display(Name = "Masraf Tarihi")]
         public DateTime ExpenseDate { get; set; }
 
-        [DataType(DataType.Currency)]
+        
         [Display(Name = "Masraf Miktarı")]
         [Required(ErrorMessage = "Tutar alanı boş bırakılamaz.")]
         public double ExpenseAmount { get; set; }
 
+        [DataType(DataType.Currency)]
         [Display(Name = "Para Birimi")]
         [RequiredEnum(ErrorMessage = "Lütfen para birimini giriniz.")]
         public Currency Currency { get; set; }

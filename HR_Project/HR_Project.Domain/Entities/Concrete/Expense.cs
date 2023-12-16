@@ -31,6 +31,9 @@ namespace HR_Project.Domain.Entities.Concrete
         public Guid PersonnelId { get; set; }
         public Personnel Personnel { get; set; }
 
+        public int MasterExpenseId { get; set; }
+
+        public MasterExpense MasterExpense { get; set; }
 
 
 

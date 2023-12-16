@@ -7,10 +7,10 @@
 	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
-<h1>İzni Güncelle</h1>
+<h1 class="p-4">İzni Güncelle</h1>
 
 <hr />
-<div class="row">
+<div class="row p-4">
 	<div class="col-md-4">
 		<form asp-action="Update">
 			<input asp-for="Id" type="hidden" />
@@ -30,12 +30,12 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="StartDate" class="control-label">Başlangıç Tarihi</label>
-				<input asp-for="StartDate" class="form-control" id="startDate" />
+				<input asp-for="StartDate" class="form-control" id="startDate" type="date" />
 				<span asp-validation-for="StartDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="EndDate" class="control-label">Bitiş Tarihi</label>
-				<input asp-for="EndDate" class="form-control datepicker" />
+				<input asp-for="EndDate" class="form-control" type="date" />
 				<span asp-validation-for="EndDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
@@ -51,6 +51,6 @@
 </div>
 
 <div>
-	<a class="h5" asp-action="Index">Listeye Geri Dön</a>
+	<a class="h5 p-4" asp-action="Index">Listeye Geri Dön</a>
 </div>
 

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HR_Project.Domain.Enum;
 
+
 namespace HR_Project.Application.SeedData
 {
     public static class SeedData
@@ -22,10 +23,34 @@ namespace HR_Project.Application.SeedData
                 AppDbContext context = scope.ServiceProvider.GetService<AppDbContext>();
                 context.Database.Migrate();
 
-                var titles = new[] { "Yazılımcı", "Muhasebeci", "Satın Alma", "Pazarlama", "IT", "IK" };
+                var titles = new[] { "Mühendis", "Geliştirici", "Teknisyen", "Tekniker", "Baş Mühendis", "Uzman" };
+                var department = new[] { "IK", "IT", "Satın alma", "Muhasebe", "Finans", "İdari İşler" };
+
+                if (!context.Companies.Any())
+                {
+                    var companyFaker = new Faker<Company>()
+                        .RuleFor(i => i.Name, i => i.Name.JobArea())
+                        //.RuleFor(i => i.Region, i => i.Person.Address.Street)
+                        .RuleFor(i => i.City, i => i.Person.Address.City)
+                        .RuleFor(i => i.Country, i => i.Person.Address.State)
+                        .RuleFor(i => i.PersonnelCount, i => i.Random.Int(1, 50))
+                        .RuleFor(i => i.TaxOffice, i => i.Person.Address.Suite)
+                        .RuleFor(i => i.TaxNumber, i => i.Random.Int(123456, 456798).ToString())
+                        .RuleFor(i => i.Phone, i => i.Random.Int(123456, 456798).ToString());
+
+                    var generatedCompanies = companyFaker.Generate(7);
+                    context.Companies.AddRange(generatedCompanies);
+
+                    await context.SaveChangesAsync();
+                }
+
 
                 if (!context.Personnels.Any())
                 {
+                    List<Company> companies = new List<Company>();
+                    companies = await context.Companies.ToListAsync();
+                    List<Department> departments = new List<Department>();
+                    departments = await context.Departments.ToListAsync();
                     var personnellFaker = new Faker<Personnel>()
                         .RuleFor(i => i.Name, i => i.Person.FirstName)
                         .RuleFor(i => i.Surname, i => i.Person.LastName)
@@ -36,11 +61,35 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.BloodType, i => i.PickRandom<BloodType>())
                         .RuleFor(i => i.PasswordHash, i => i.Internet.Password())
                         .RuleFor(i => i.Title, i => i.PickRandom(titles))
-                        .RuleFor(i => i.PhoneNumber, i => i.Person.Phone);
+                        .RuleFor(i => i.PhoneNumber, i => i.Person.Phone)
+                        .RuleFor(i => i.CompanyId, i => i.PickRandom(companies).Id)
+                        .RuleFor(i => i.Nation, i => i.PickRandom<Nation>())
+                        .RuleFor(i => i.Gender, i => i.PickRandom<Gender>());
+                        
+                    
 
                     var genereatedPersonnels = personnellFaker.Generate(50);
 
                     context.Personnels.AddRange(genereatedPersonnels);
+
+                    await context.SaveChangesAsync();
+
+                }
+                if (!context.Departments.Any())
+                {
+                    List<Company> companies = new List<Company>();
+                    companies = await context.Companies.ToListAsync();
+                    List<Personnel> personnels = new List<Personnel>();
+                    personnels = await context.Personnels.ToListAsync();
+
+                    var departmentFaker = new Faker<Department>()
+                        .RuleFor(i => i.Name, i => i.PickRandom(department))
+                        .RuleFor(i => i.CompanyId, i => i.PickRandom(companies).Id)
+                        .RuleFor(i => i.Description, i => i.Lorem.Sentence(2))
+                        .RuleFor(i => i.ManagerId, i => i.PickRandom(personnels).Id);
+
+                    var generatedDepartment = departmentFaker.Generate(7);
+                    context.Departments.AddRange(generatedDepartment);
 
                     await context.SaveChangesAsync();
 
@@ -82,6 +131,10 @@ namespace HR_Project.Application.SeedData
 
                     await context.SaveChangesAsync();
                 }
+
+
+
+
             }
         }
     }

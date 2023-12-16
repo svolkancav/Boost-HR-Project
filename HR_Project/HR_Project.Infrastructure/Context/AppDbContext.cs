@@ -1,8 +1,10 @@
 ﻿using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Entities.Concrete.FileEntities;
 using HR_Project.Infrastructure.EntityTypeConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using File=HR_Project.Domain.Entities.Concrete.FileEntities.File;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,10 @@ namespace HR_Project.Infrastructure.Context
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<File> Files { get; set; }
+        public DbSet<PersonnelPicture> PersonnelPictures { get; set; }
+        public DbSet<CostPicture> CostPictures { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

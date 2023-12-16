@@ -1,0 +1,111 @@
+﻿@using HR_Project.Application.IoC.Models.DTOs;
+@using HR_Project.Common.Extensions;
+@using HR_Project.Common.Models.DTOs;
+@using HR_Project.Domain.Enum;
+@model UpdateProfileDTO
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+}
+
+<a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Include the jQuery Inputmask library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="Id" type="hidden" />
+    <div class="container rounded bg-white mt-3 mb-5 ">
+        <div class="row">
+
+
+
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Şirket Bilgilerim</h4>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Şirket Adı</label>
+                            <input type="text" class="form-control" placeholder="Şirket Adı" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+
+                        <div class="col-md-6">
+                            <label class="labels">Telefon Numarası</label>
+                            <input type="text" class="form-control" id="phoneNumberInput" asp-for="PhoneNumber">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+
+                        <br />
+                        <br />
+                        <br />
+                        <div class="col-md-12">
+                            <label class="labels">Şirket Adresi</label>
+                            <input type="text" class="form-control" placeholder="Adres" asp-for="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+</form>
+
+
+<!-- Initialize the input mask -->
+<script>
+    // Apply the input mask to the phone number field
+    $(document).ready(function () {
+        $('#phoneNumberInput').inputmask('(999) 999-9999');
+    });
+</script>
+
+
+
+
+@section Scripts {
+    @if (TempData.ContainsKey("Toastrsuccess"))
+    {
+        <script>
+            console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+            toastr.success('@TempData["Toastrsuccess"]');
+        </script>
+    }
+
+    @if (TempData.ContainsKey("Toastrerror"))
+    {
+        <script>
+            toastr.error('@TempData["Toastrerror"]');
+        </script>
+    }
+}

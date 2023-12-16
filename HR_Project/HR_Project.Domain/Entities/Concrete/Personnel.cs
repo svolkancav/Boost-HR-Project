@@ -22,6 +22,7 @@ namespace HR_Project.Domain.Entities.Concrete
             Personnels = new HashSet<Personnel>();
             Absences = new HashSet<Absence>();
             Advances = new HashSet<Advance>();
+            Expenses = new HashSet<Expense>();
             
         }
         public string Name { get; set; }
@@ -57,6 +58,7 @@ namespace HR_Project.Domain.Entities.Concrete
 		public ICollection<Personnel> Personnels { get; set; }
         public ICollection<Absence> Absences { get; set; }
         public ICollection<Advance> Advances { get; set; }
+        public ICollection<Expense> Expenses { get; set; }
 
     }
 }

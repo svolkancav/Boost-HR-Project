@@ -27,6 +27,11 @@ namespace HR_Project.Infrastructure.Context
         public DbSet<PersonnelPicture> PersonnelPictures { get; set; }
         public DbSet<CostPicture> CostPictures { get; set; }
 
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<MasterExpense> MasterExpenses { get; set; }
+
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -39,6 +44,9 @@ namespace HR_Project.Infrastructure.Context
             builder.ApplyConfiguration(new AbsenceConfig());
             builder.ApplyConfiguration(new CompanyConfig());
             builder.ApplyConfiguration(new DepartmentConfig());
+            builder.ApplyConfiguration(new ExpenseConfig());
+            builder.ApplyConfiguration(new MasterExpenseConfig());
+
 
             base.OnModelCreating(builder);
         }

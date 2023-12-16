@@ -30,7 +30,7 @@ namespace HR_Project.Domain.Entities.Concrete
         public string Title { get; set; }
 		public string? City { get; set; }
 		public string? Region { get; set; }
-        public string? ImagePath { get; set; }
+        public string? ImageId { get; set; }
 
 		public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }

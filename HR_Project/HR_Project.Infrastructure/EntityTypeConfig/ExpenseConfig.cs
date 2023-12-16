@@ -18,7 +18,7 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
             builder.Property(e => e.ExpenseDate).IsRequired(true);
             builder.Property(e => e.ExpenseAmount).IsRequired(true);
             builder.Property(e => e.Currency).IsRequired(true);
-            builder.Property(e => e.Explanation).IsRequired(true);
+            builder.Property(e => e.Reason).IsRequired(true);
             builder.Property(e => e.Condition).IsRequired(true);
             builder.Property(e => e.PersonnelId).IsRequired(true);
 

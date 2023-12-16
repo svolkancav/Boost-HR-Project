@@ -19,7 +19,7 @@ namespace HR_Project.Domain.Entities.Concrete
         }
         public int Id { get; set; }
 		public string Name { get; set; }
-		public string? Address { get; set; }
+		
 		public string? Phone { get; set; }
 		public string? City { get; set; }
 		public string? Country { get; set; }
@@ -28,6 +28,8 @@ namespace HR_Project.Domain.Entities.Concrete
         public string TaxNumber { get; set; }
 
         //Navigation
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
         public ICollection<Department> Departments { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
 	}

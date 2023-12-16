@@ -9,6 +9,7 @@ using HR_Project.Domain.Entities.Abstract;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
+using System.Globalization;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
@@ -28,11 +29,12 @@ namespace HR_Project.Domain.Entities.Concrete
         public string PhoneNumber { get; set; }
         public string? Address { get; set; }
         public string Title { get; set; }
-		public string? City { get; set; }
-		public string? Region { get; set; }
         public string? ImageId { get; set; }
+        public string? City { get; set; }
+        public Gender Gender { get; set; }
+        public Nation Nation { get; set; }
 
-		public DateTime? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }
         public BloodType? BloodType { get; set; }
 
@@ -42,8 +44,10 @@ namespace HR_Project.Domain.Entities.Concrete
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }= Status.Inserted;
 
-		//Navigation
+        //Navigation
 
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
         public int? DepartmentId { get; set; }
 		public Department Department { get; set; }
 		public Guid? ManagerId { get; set; }

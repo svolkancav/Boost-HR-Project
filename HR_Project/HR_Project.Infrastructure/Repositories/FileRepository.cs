@@ -14,7 +14,6 @@ namespace HR_Project.Infrastructure.Repositories
 		public FileRepository(AppDbContext context) : base(context)
 		{
 		}
-	}
-	{
+
 	}
 }

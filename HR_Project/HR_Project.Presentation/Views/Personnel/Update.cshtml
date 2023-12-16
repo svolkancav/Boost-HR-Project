@@ -61,10 +61,16 @@
 
                         <div class="col-md-12">
                             <label class="labels">İlçe</label>
-                            <input type="text" class="form-control" placeholder="İlçe giriniz" asp-for="Region">
-                            <span asp-validation-for="Region" class="text-danger"></span>
+                            <input type="text" class="form-control" placeholder="İlçe giriniz" asp-for="RegionName">
+                            <span asp-validation-for="RegionName" class="text-danger"></span>
                         </div>
-
+                        <div class="col-md-12">
+                            <label class="labels">Uyruk</label>
+                                <select class="form-control" disabled="disabled" asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
+                                <option value="-1">Uyruk Giriniz</option>
+                                </select>
+                                <span asp-validation-for="Nation" class="text-danger"></span>
+                        </div>
                         <div class="col-md-12">
                             <label class="labels">Doğum Tarihi</label>
                             <input type="date" class="form-control" placeholder="Doğum tarihi giriniz" asp-for="BirthDate" disabled="disabled">
@@ -119,7 +125,7 @@
                     <div class="col-md-12">
                         <label class="labels">Ünvan</label>
                         <input type="text" class="form-control" disabled="disabled" placeholder="Ünvan giriniz" asp-for="Title">
-                        <span asp-validation-for="BloodType" class="text-danger"></span>
+                        <span asp-validation-for="Title" class="text-danger"></span>
 
                     </div>
 
@@ -131,10 +137,30 @@
                         </div>
                     <div class="col-md-12">
                         <label class="labels">İşe Giriş Tarihi</label>
-                        <input type="date" disabled="disabled" class="form-control" placeholder="" asp-for="HireDate">
+                        <input type="date"  class="form-control" disabled="disabled" placeholder="" asp-for="HireDate">
                         <span asp-validation-for="HireDate" class="text-danger"></span>
 
                     </div>
+                    <div class="col-md-12">
+                        <label class="labels">Yöneticisi</label>
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="Manager.Name">
+                        <span asp-validation-for="Manager.Name" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Şirketi</label>
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="Company.Name">
+                        <span asp-validation-for="Company.Name" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Departmanı</label>
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="Department.Name">
+                        <span asp-validation-for="Department.Name" class="text-danger"></span>
+
+                    </div>
+
+                    
                 </div>
             </div>
         </div>

@@ -21,7 +21,8 @@ namespace HR_Project.Infrastructure.Context
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Department> Departments { get; set; }
-
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Region> Regions { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<PersonnelPicture> PersonnelPictures { get; set; }
         public DbSet<CostPicture> CostPictures { get; set; }

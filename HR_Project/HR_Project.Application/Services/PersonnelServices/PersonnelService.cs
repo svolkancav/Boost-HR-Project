@@ -87,10 +87,15 @@ namespace HR_Project.Application.Services.PersonelServices
                     Email = x.Email,
                     Address = x.Address,
                     BirthDate = x.BirthDate,
-                    //Department = x.Department,
+                    Department = x.Department,
                     HireDate = x.HireDate,
                     PhoneNumber = x.PhoneNumber,
-                    //ManagerId = x.ManagerId
+                    ManagerId = x.ManagerId,
+                    Region = x.Region,
+                    Nation = x.Nation,
+                    Gender = x.Gender,
+                    Company = x.Company,
+
 
                 },
                 where: x => x.Status != Domain.Enum.Status.Deleted,
@@ -123,13 +128,21 @@ namespace HR_Project.Application.Services.PersonelServices
                 
                 personel.Name = model.Name;
                 personel.PhoneNumber = model.PhoneNumber;
-                personel.Region = model.Region;
+                //personel.Region.Name = model.RegionName; //TODO: kontrol edilecek.
+                personel.City = model.City;
                 personel.Email = model.Email;
                 personel.Address = model.Address;
                 personel.BloodType = model.BloodType;
                 personel.Surname = model.Surname;
                 personel.City = model.City;
-                personel.ImagePath = model.ImagePath;
+                personel.Nation = model.Nation;
+                personel.Gender = model.Gender;
+                personel.Department = model.Department;
+                personel.Manager = model.Manager;
+                personel.Company = model.Company;
+                personel.Region = model.Region;
+
+                //personel.ImagePath = model.ImagePath;
 
 
                 await _personelRepository.Update(personel);

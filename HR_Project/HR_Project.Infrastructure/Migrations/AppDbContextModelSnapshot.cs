@@ -116,7 +116,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Advances");
                 });
 
-            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,8 +124,22 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -139,9 +153,6 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -150,19 +161,29 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("PersonnelCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Region")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("TaxNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxOffice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
 
                     b.ToTable("Companies");
                 });
@@ -211,6 +232,42 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -256,10 +313,13 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -278,6 +338,9 @@ namespace HR_Project.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("Nation")
+                        .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -298,8 +361,8 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Region")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -339,7 +402,31 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("RegionId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -473,6 +560,20 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.CostPicture", b =>
+                {
+                    b.HasBaseType("HR_Project.Domain.Entities.Concrete.FileEntities.File");
+
+                    b.HasDiscriminator().HasValue("CostPicture");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.PersonnelPicture", b =>
+                {
+                    b.HasBaseType("HR_Project.Domain.Entities.Concrete.FileEntities.File");
+
+                    b.HasDiscriminator().HasValue("PersonnelPicture");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Absence", b =>
                 {
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
@@ -493,6 +594,15 @@ namespace HR_Project.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Personnel");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
+                        .WithMany("Companies")
+                        .HasForeignKey("RegionId");
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Department", b =>
@@ -534,11 +644,28 @@ namespace HR_Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
+                        .WithMany("Personnels")
+                        .HasForeignKey("RegionId");
+
                     b.Navigation("Company");
 
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.City", "City")
+                        .WithMany("Regions")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -592,6 +719,11 @@ namespace HR_Project.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.City", b =>
+                {
+                    b.Navigation("Regions");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
                 {
                     b.Navigation("Departments");
@@ -609,6 +741,13 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Absences");
 
                     b.Navigation("Advances");
+
+                    b.Navigation("Personnels");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.Navigation("Companies");
 
                     b.Navigation("Personnels");
                 });

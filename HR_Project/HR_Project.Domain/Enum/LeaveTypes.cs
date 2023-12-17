@@ -38,6 +38,9 @@ namespace HR_Project.Domain.Enum
         BreastFeedingLeave = 13, //Günde 1.5 saat
         [Display(Name = "Yeni İş Arama İzni")]
         NewJobSearchPermit = 14, //Günde 2 saat
+        [Display(Name = "Askerlik İzni")]
+        SoldieryLeave = 15, 
+
 
     }
 }

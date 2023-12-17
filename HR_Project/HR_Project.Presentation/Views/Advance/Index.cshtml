@@ -101,7 +101,7 @@
                                         @item.LastPaidDate.ToShortDateString()
                                     </td>
                                     <td>
-                                        @item.Condition
+                                        @item.Condition.GetDisplayName()
                                     </td>
                                     @{
                                         if (item.Condition == ConditionType.Pending)

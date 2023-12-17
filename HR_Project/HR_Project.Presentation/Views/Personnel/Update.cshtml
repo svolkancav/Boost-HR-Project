@@ -24,16 +24,16 @@
                     </div>
 
                     <div class="row mt-2">
-
+                        <input type="hidden" asp-for="Name">
                         <div class="col-md-6">
                             <label class="labels">Adı</label>
-                            <input type="text" class="form-control" placeholder="adı" asp-for="Name">
+                            <input type="text" class="form-control" disabled="disabled" placeholder="adı" asp-for="Name">
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-
+                        <input type="hidden" asp-for="Surname">
                         <div class="col-md-6">
                             <label class="labels">Soyadı</label>
-                            <input type="text" class="form-control" placeholder="soyadı" asp-for="Surname">
+                            <input type="text" class="form-control" disabled="disabled" placeholder="soyadı" asp-for="Surname">
                             <span asp-validation-for="Surname" class="text-danger"></span>
                         </div>
 

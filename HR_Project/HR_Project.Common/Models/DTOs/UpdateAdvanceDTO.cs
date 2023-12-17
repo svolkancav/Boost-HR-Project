@@ -20,6 +20,10 @@ namespace HR_Project.Common.Models.DTOs
 		public decimal Amount { get; set; }
 		[Required]
 		public string Reason { get; set; }
+
+		[Display(Name = "Para Birimi")]
+		[RequiredEnum(ErrorMessage = "Lütfen para birimini giriniz.")]
+		public Currency Currency { get; set; }
 		public ConditionType Codition { get; set; }
 
 		public Guid PersonnelId { get; set; }

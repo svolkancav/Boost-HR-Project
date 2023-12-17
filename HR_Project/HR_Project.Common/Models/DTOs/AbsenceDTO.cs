@@ -21,8 +21,8 @@ namespace HR_Project.Common.Models.DTOs
         [RequiredEnum(ErrorMessage ="Lütfen İzin Türünü giriniz.")]
         public LeaveTypes LeaveTypes { get; set; }
         [Display(Name = "Başlangıç Tarihi")]
-        [DateValidaditon(ErrorMessage = "Başlangıç tarihi bugünden önce olamaz.")]
-        [DataType(DataType.Date)]
+        //[DateValidaditon(ErrorMessage = "Başlangıç tarihi bugünden önce olamaz.")]
+        //[DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         [Display(Name = "Bitiş Tarihi")]
         [DateValidaditon(ErrorMessage = "Bitiş tarihi bugünden önce olamaz.")]

@@ -17,6 +17,7 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
 			builder.Property(x => x.LastPaidDate).IsRequired(true);
 			builder.Property(x => x.Amount).IsRequired(true).HasColumnType("decimal(18,2)");
 			builder.Property(x => x.Reason).IsRequired(true).HasMaxLength(300);
+			builder.Property(x=>x.Currency).IsRequired(true);
 			builder.Property(x => x.Condition).IsRequired(true);
 			builder.Property(x => x.PersonnelId).IsRequired(true);
 

@@ -17,7 +17,8 @@ namespace HR_Project.Domain.Entities.Concrete
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }
-		public ConditionType Condition { get; set; }
+        public Currency Currency { get; set; }
+        public ConditionType Condition { get; set; }
 
 		public Guid PersonnelId { get; set; }
 		public Personnel Personnel { get; set; }

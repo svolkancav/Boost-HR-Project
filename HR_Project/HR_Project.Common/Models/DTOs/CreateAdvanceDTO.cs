@@ -20,7 +20,12 @@ namespace HR_Project.Common.Models.DTOs
 		[Display(Name = "Açıklama")]
 		[Required]
 		public string Reason { get; set; }
-		public ConditionType Condition { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Display(Name = "Para Birimi")]
+        [RequiredEnum(ErrorMessage = "Lütfen para birimini giriniz.")]
+        public Currency Currency { get; set; }
+        public ConditionType Condition { get; set; }
 
 		public Guid PersonnelId { get; set; }
 	}

@@ -91,6 +91,24 @@
 
     </div>
 
+
+    @section Scripts {
+        @if (TempData.ContainsKey("Toastrsuccess"))
+        {
+            <script>
+                console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+                toastr.success('@TempData["Toastrsuccess"]');
+            </script>
+        }
+
+        @if (TempData.ContainsKey("Toastrerror"))
+        {
+            <script>
+                toastr.error('@TempData["Toastrerror"]');
+            </script>
+        }
+    }
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="~/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -69,6 +69,9 @@
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
                                     Miktar
                                 </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
+                                    Para Birimi
+                                </th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
                                     Son Ödeme Tarihi
                                 </th>
@@ -89,7 +92,10 @@
                                         @item.Reason
                                     </td>
                                     <td>
-                                        @item.Amount TL
+                                        @item.Amount 
+                                    </td>
+                                    <td>
+                                        @item.Currency
                                     </td>
                                     <td>
                                         @item.LastPaidDate.ToShortDateString()

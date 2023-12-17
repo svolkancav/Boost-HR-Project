@@ -1,4 +1,6 @@
-﻿@model HR_Project.Common.Models.DTOs.UpdateAdvanceDTO
+﻿@using HR_Project.Common.Extensions;
+@using HR_Project.Domain.Enum;
+@model HR_Project.Common.Models.DTOs.UpdateAdvanceDTO
 
 @{
 	ViewData["Title"] = "Update";
@@ -24,6 +26,13 @@
 				<label asp-for="Amount" class="control-label">Miktar</label>
 				<input asp-for="Amount" class="form-control" />
 				<span asp-validation-for="Amount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Currency" class="control-label">Para Birimi</label>
+				<select class="form-control" asp-for="Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
+					<option value="-1">Para Birimi</option>
+				</select>
+				<span asp-validation-for="Currency" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LastPaidDate" class="control-label">Talep Edilen Tarih</label>

@@ -43,6 +43,7 @@ namespace HR_Project.Domain.Entities.Concrete
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }= Status.Inserted;
+        public AccountStatus AccountStatus { get; set; } = AccountStatus.Active;
 
         //Navigation
 

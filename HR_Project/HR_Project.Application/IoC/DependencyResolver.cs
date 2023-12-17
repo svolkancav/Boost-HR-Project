@@ -25,8 +25,8 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<AbsenceRepository>().As<IAbsenceRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AbsenceService>().As<IAbsenceService>().InstancePerLifetimeScope();
 
-            #region AutoMapper
-            builder.Register(context => new MapperConfiguration(cfg =>
+			#region AutoMapper
+			builder.Register(context => new MapperConfiguration(cfg =>
             {
                 //Register Mapper Profile
                 cfg.AddProfile<Mapping>(); /// AutoMapper klasörünün altına eklediğimiz Mapping classını bağlıyoruz.

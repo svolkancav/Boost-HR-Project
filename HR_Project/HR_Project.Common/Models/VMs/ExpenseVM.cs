@@ -22,5 +22,7 @@ namespace HR_Project.Common.Models.VMs
 
         public ConditionType Condition { get; set; }
 
+        public double AggregateAmount { get; set; }
+
     }
 }

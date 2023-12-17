@@ -2,7 +2,7 @@
 @using X.PagedList;
 @using HR_Project.Domain.Enum;
 @using HR_Project.Common.Extensions;
-@model IPagedList<AbsenceVM>
+@model IPagedList<Expense_MasterExpenseVM>
 
 @{
 	ViewData["Title"] = "Index";
@@ -18,12 +18,12 @@
 	<div class="container-fluid">
 
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">İzinler</h1>
+		<h1 class="h3 mb-2 text-gray-800">Masraflar</h1>
 
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">İzin Listesi</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Masraf Listesi</h6>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -32,7 +32,7 @@
 							<div class="col-sm-12 col-md-9">
 								<div class="dataTables_length" id="dataTable_length">
 									<p>
-										<a asp-action="Create">İzin Oluştur</a>
+										<a asp-action="Create">Masraf Oluştur</a>
 									</p>
 									<label>
 										Göster
@@ -52,7 +52,7 @@
 										{
 											<p>
 												Ara: @Html.TextBox("searchText")
-												<input type="submit" placeholder="İzin tipi veya açıklama gir" />
+												<input type="submit" placeholder="Masraf tipi veya açıklama gir" />
 											</p>
 										}
 
@@ -66,20 +66,20 @@
 						<thead>
 							<tr>
 
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
-									İzin Türü
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseType: activate to sort column ascending" style="width: 140px;">
+									Masraf Türü
 								</th>
 								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
 									Açıklama
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
-									Başlangıç Tarihi
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseDate: activate to sort column ascending" style="width: 140px;">
+									Masraf Tarihi
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
-									Bitiş Tarihi
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseAmount: activate to sort column ascending" style="width: 140px;">
+									Masraf Miktarı
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="AbsenceDuration: activate to sort column ascending" style="width: 140px;">
-									İzin Süresi
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
+									Para Birimi
 								</th>
 								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 									aria-label="Condition.GetDisplayName(Model.Condition)"
@@ -97,19 +97,19 @@
 								<tr>
 
 									<td>
-										@item.LeaveTypes.GetDisplayName()
+										@item.ExpenseType.GetDisplayName()
 									</td>
 									<td>
 										@item.Reason
 									</td>
 									<td>
-										@item.StartDate.ToShortDateString()
+										@item.ExpenseDate.ToShortDateString()
 									</td>
 									<td>
-										@item.EndDate.ToShortDateString()
+										@item.ExpenseAmount
 									</td>
 									<td>
-										@item.AbsenceDuration
+										@item.Currency
 									</td>
 									<td>
 										@item.Condition.GetDisplayName()
@@ -250,9 +250,9 @@
 			var searchText = '@Context.Request.Query["searchText"]';
 
 			if (searchText) {
-				var url = "/Absence/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
+				var url = "/Expense/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
 			} else {
-				var url = "/Absence/Index?pageSize=" + selectedPageSize;
+				var url = "/Expense/Index?pageSize=" + selectedPageSize;
 			}
 
 			window.location.href = url;
@@ -270,7 +270,7 @@
 		var selectedPageSize = this.value;
 
 
-		var url = "/Absence/Index?pageSize=" + selectedPageSize;
+		var url = "/Expense/Index?pageSize=" + selectedPageSize;
 
 
 		window.location.href = url;
@@ -278,10 +278,9 @@
 
 	function confirmDelete(id) {
 		if (confirm("Silmek istediğinize emin misiniz?")) {
-			window.location.href = "/Absence/Delete/?id=" + id;
+			window.location.href = "/Expense/Delete/?id=" + id;
 		} else {
 
 		}
 	}
 </script>
-

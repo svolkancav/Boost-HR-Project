@@ -1,3 +1,4 @@
+
 ﻿using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using System;
@@ -12,6 +13,7 @@ namespace HR_Project.Common.Models.DTOs
 {
     public class RegisterDTO
     {
+
 		[Display(Name = "Kullanıcı Adı")]
 		[Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
 		public string UserName { get; set; }
@@ -67,4 +69,4 @@ namespace HR_Project.Common.Models.DTOs
 		public DateTime BirthDate { get; set; }
 
 	}
-}
+

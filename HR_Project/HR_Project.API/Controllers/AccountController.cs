@@ -20,14 +20,13 @@ namespace HR_Project.API.Controllers
         private readonly IPersonnelService _personnelService;
         private readonly IConfiguration _configuration;
         private readonly UserManager<Personnel> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager)
         {
             _personnelService = personnelService;
             _configuration = configuration;
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            
         }
 
         [HttpPost("login")]
@@ -110,5 +109,7 @@ namespace HR_Project.API.Controllers
 
             return token;
         }
+
+
     }
 }

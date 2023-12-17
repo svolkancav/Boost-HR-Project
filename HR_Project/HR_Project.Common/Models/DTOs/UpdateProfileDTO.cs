@@ -38,6 +38,7 @@ namespace HR_Project.Common.Models.DTOs
         public int? CompanyId { get; set; }
         public Company Company { get; set; }
         public int? RegionId { get; set; }
+        public AccountStatus AccountStatus { get; set; }
 
         //[PictureFileExtension]
         //public IFormFile? UploadPath { get; set; }

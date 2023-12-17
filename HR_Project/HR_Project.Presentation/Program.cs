@@ -1,7 +1,9 @@
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using HR_Project.Application.IoC;
 using HR_Project.Application.SeedData;
+using HR_Project.Application.Services.EmailService;
 using HR_Project.Infrastructure.Context;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,7 +31,7 @@ builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 
 builder.Services.AddHttpContextAccessor();
 
-
+builder.Services.AddSingleton<EmailService>();
 
 
 builder.Services.Configure<CookiePolicyOptions>(options =>

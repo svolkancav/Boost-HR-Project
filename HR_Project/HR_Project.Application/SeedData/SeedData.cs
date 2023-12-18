@@ -132,6 +132,19 @@ namespace HR_Project.Application.SeedData
                     await context.SaveChangesAsync();
                 }
 
+                try
+                {
+                    string illerJSON = System.IO.File.ReadAllText(@"SeedData/iller.json");
+                    List<City> cities = Newtonsoft.Json.JsonConvert.DeserializeObject<List<City>>(illerJSON);
+                    context.Cities.AddRange(cities);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception (log, rethrow, or perform other actions)
+                    Console.WriteLine($"An error occurred while seeding cities from JSON: {ex.Message}");
+                }
+
 
 
 

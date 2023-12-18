@@ -55,6 +55,23 @@ namespace HR_Project.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MasterExpenses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AggregateAmount = table.Column<double>(type: "float", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MasterExpenses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -326,6 +343,42 @@ namespace HR_Project.Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpenseType = table.Column<int>(type: "int", nullable: false),
+                    ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpenseAmount = table.Column<double>(type: "float", nullable: false),
+                    Currency = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Condition = table.Column<int>(type: "int", nullable: false),
+                    PersonnelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MasterExpenseId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_AspNetUsers_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Expenses_MasterExpenses_MasterExpenseId",
+                        column: x => x.MasterExpenseId,
+                        principalTable: "MasterExpenses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Absences_PersonnelId",
                 table: "Absences",
@@ -412,6 +465,16 @@ namespace HR_Project.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Expenses_MasterExpenseId",
+                table: "Expenses",
+                column: "MasterExpenseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_PersonnelId",
+                table: "Expenses",
+                column: "PersonnelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Regions_CityId",
                 table: "Regions",
                 column: "CityId");
@@ -492,10 +555,16 @@ namespace HR_Project.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Expenses");
+
+            migrationBuilder.DropTable(
                 name: "Files");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "MasterExpenses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

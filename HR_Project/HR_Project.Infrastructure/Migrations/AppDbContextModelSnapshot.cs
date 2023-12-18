@@ -232,6 +232,60 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("ExpenseAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExpenseType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MasterExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PersonnelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterExpenseId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.File", b =>
                 {
                     b.Property<int>("Id")
@@ -266,6 +320,34 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Files");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("File");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.MasterExpense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("AggregateAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MasterExpenses");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
@@ -624,6 +706,25 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Manager");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Expense", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.MasterExpense", "MasterExpense")
+                        .WithMany("Expenses")
+                        .HasForeignKey("MasterExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
+                        .WithMany("Expenses")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterExpense");
+
+                    b.Navigation("Personnel");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Company", "Company")
@@ -736,11 +837,18 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Personnels");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.MasterExpense", b =>
+                {
+                    b.Navigation("Expenses");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.Navigation("Absences");
 
                     b.Navigation("Advances");
+
+                    b.Navigation("Expenses");
 
                     b.Navigation("Personnels");
                 });

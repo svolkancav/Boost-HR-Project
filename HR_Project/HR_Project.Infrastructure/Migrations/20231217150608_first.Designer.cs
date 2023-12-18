@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231216113247_mig1")]
-    partial class mig1
+    [Migration("20231217150608_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,7 +118,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Advances");
                 });
 
-            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,8 +126,22 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -155,6 +169,9 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -167,6 +184,8 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
 
                     b.ToTable("Companies");
                 });
@@ -215,6 +234,60 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("ExpenseAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExpenseType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MasterExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PersonnelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterExpenseId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.File", b =>
                 {
                     b.Property<int>("Id")
@@ -249,6 +322,34 @@ namespace HR_Project.Infrastructure.Migrations
                     b.ToTable("Files");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("File");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.MasterExpense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("AggregateAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MasterExpenses");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
@@ -296,6 +397,9 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
 
@@ -319,6 +423,9 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("Nation")
+                        .HasColumnType("int");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -338,8 +445,8 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Region")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -379,7 +486,31 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("RegionId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -549,6 +680,15 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Personnel");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
+                        .WithMany("Companies")
+                        .HasForeignKey("RegionId");
+
+                    b.Navigation("Region");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Department", b =>
                 {
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Company", "Company")
@@ -566,6 +706,25 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Expense", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.MasterExpense", "MasterExpense")
+                        .WithMany("Expenses")
+                        .HasForeignKey("MasterExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
+                        .WithMany("Expenses")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterExpense");
+
+                    b.Navigation("Personnel");
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
@@ -588,11 +747,28 @@ namespace HR_Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
+                        .WithMany("Personnels")
+                        .HasForeignKey("RegionId");
+
                     b.Navigation("Company");
 
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.City", "City")
+                        .WithMany("Regions")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -646,6 +822,11 @@ namespace HR_Project.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.City", b =>
+                {
+                    b.Navigation("Regions");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
                 {
                     b.Navigation("Departments");
@@ -658,11 +839,25 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Navigation("Personnels");
                 });
 
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.MasterExpense", b =>
+                {
+                    b.Navigation("Expenses");
+                });
+
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
                     b.Navigation("Absences");
 
                     b.Navigation("Advances");
+
+                    b.Navigation("Expenses");
+
+                    b.Navigation("Personnels");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Region", b =>
+                {
+                    b.Navigation("Companies");
 
                     b.Navigation("Personnels");
                 });

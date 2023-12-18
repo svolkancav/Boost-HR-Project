@@ -1,4 +1,5 @@
 ﻿using HR_Project.Domain.Entities.Abstract;
+using HR_Project.Domain.Entities.Concrete.FileEntities;
 using HR_Project.Domain.Enum;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace HR_Project.Domain.Entities.Concrete
         public int MasterExpenseId { get; set; }
 
         public MasterExpense MasterExpense { get; set; }
+
+        public int? ImageId { get; set; }
+        public CostPicture CostPicture { get; set; }
 
 
 

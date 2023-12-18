@@ -21,6 +21,7 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
 			builder.Property(x => x.CompanyId).IsRequired(false);
             builder.Property(x => x.DepartmentId).IsRequired(false);
             builder.Property(x => x.ManagerId).IsRequired(false);
+			builder.Property(x => x.ImageId).IsRequired(false);
 
 
 
@@ -30,6 +31,8 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
 
 			builder.HasMany(x => x.Personnels).WithOne(x => x.Manager).HasForeignKey(x => x.ManagerId).OnDelete(DeleteBehavior.NoAction);
 
+			builder.HasOne(x => x.PersonnelPicture).WithOne(x => x.Personnel).HasForeignKey<Personnel>(x => x.ImageId).OnDelete(DeleteBehavior.NoAction);
+			
 			base.Configure(builder);
 		}
 	}

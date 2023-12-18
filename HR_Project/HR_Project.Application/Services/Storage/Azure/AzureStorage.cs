@@ -54,7 +54,7 @@ namespace HR_Project.Application.Services.Storage.Azure
 
 				BlobClient blobClient = _blobContainerClient.GetBlobClient(fileNewName);
 				await blobClient.UploadAsync(file.OpenReadStream());
-				datas.Add((file.Name, containerName));
+				datas.Add((fileNewName, $"{containerName}/{fileNewName}"));
 			}
 
 			return datas;

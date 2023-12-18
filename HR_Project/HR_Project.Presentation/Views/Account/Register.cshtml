@@ -1,0 +1,170 @@
+﻿@using HR_Project.Common.Models.DTOs;
+@model RegisterDTO
+
+@{
+    Layout = null;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Easy-HR</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/startbootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container align-content-center align-items-center">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-register-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
+                                    </div>
+                                    <form class="user" asp-action="Register">
+                                        <div class="form-group" data-validate="Name">
+                                            <input type="text" class="form-control form-control-user" name="Name"
+                                                   id="exampleInputName" aria-describedby="NameHelp"
+                                                   placeholder="Name...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Surname">
+                                            <input type="text" class="form-control form-control-user" name="Surname"
+                                                   id="exampleInputUserSurname" aria-describedby="SurnameHelp"
+                                                   placeholder="Surname...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="UserName">
+                                            <input type="text" class="form-control form-control-user" name="UserName"
+                                                   id="exampleInputUserName" aria-describedby="UserNameHelp"
+                                                   placeholder="UserName...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Email">
+                                            <input type="text" class="form-control form-control-user" name="Email"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp"
+                                                   placeholder="Email...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Title">
+                                            <input type="text" class="form-control form-control-user" name="Title"
+                                                   id="exampleInputTitle" aria-describedby="TitleHelp"
+                                                   placeholder="Title...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="PhoneNumber">
+                                            <input type="text" class="form-control form-control-user" name="PhoneNumber"
+                                                   id="exampleInputPhoneNumber" aria-describedby="PhoneNumberHelp"
+                                                   placeholder="PhoneNumber...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="City">
+                                            <input type="text" class="form-control form-control-user" name="City"
+                                                   id="exampleInputCity" aria-describedby="CityHelp"
+                                                   placeholder="City...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Region">
+                                            <input type="text" class="form-control form-control-user" name="Region"
+                                                   id="exampleInputRegion" aria-describedby="RegionHelp"
+                                                   placeholder="Region...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="BloodType">
+                                            <input type="text" class="form-control form-control-user" name="BloodType"
+                                                   id="exampleInputBloodType" aria-describedby="BloodTypeHelp"
+                                                   placeholder="BloodType...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="BirthDate">
+                                            <input type="date" class="form-control form-control-user" name="BirthDate"
+                                                   id="exampleInputBirthDate" aria-describedby="BirthDateHelp"
+                                                   placeholder="BirthDate...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Password">
+                                            <input type="password" class="form-control form-control-user" name="Password"
+                                                   id="exampleInputPassword" placeholder="Şifre">
+                                        </div>
+
+                                        
+                                        <input type="submit" value="Üye Ol" class="btn btn-primary btn-user btn-block" />
+
+
+
+                                    </form>
+
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Hesap Oluştur!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @section Scripts {
+        @if (TempData.ContainsKey("Toastrsuccess"))
+        {
+            <script>
+                console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+                toastr.success('@TempData["Toastrsuccess"]');
+            </script>
+        }
+
+        @if (TempData.ContainsKey("Toastrerror"))
+        {
+            <script>
+                toastr.error('@TempData["Toastrerror"]');
+            </script>
+        }
+    }
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="~/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/startbootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/startbootstrap/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>

@@ -10,6 +10,7 @@ using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
 using System.Globalization;
+using HR_Project.Domain.Entities.Concrete.FileEntities;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
@@ -30,7 +31,7 @@ namespace HR_Project.Domain.Entities.Concrete
         public string PhoneNumber { get; set; }
         public string? Address { get; set; }
         public string Title { get; set; }
-        public string? ImageId { get; set; }
+        public int? ImageId { get; set; }
         public string? City { get; set; }
         public Gender Gender { get; set; }
         public Nation Nation { get; set; }
@@ -60,6 +61,7 @@ namespace HR_Project.Domain.Entities.Concrete
         public ICollection<Absence> Absences { get; set; }
         public ICollection<Advance> Advances { get; set; }
         public ICollection<Expense> Expenses { get; set; }
+        public PersonnelPicture PersonnelPicture { get; set; }
 
-    }
+	}
 }

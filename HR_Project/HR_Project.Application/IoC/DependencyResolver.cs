@@ -4,8 +4,12 @@ using HR_Project.Application.Mapper;
 using HR_Project.Application.Services.AbsenceService;
 using HR_Project.Application.Services.AdvanceService;
 using HR_Project.Application.Services.EmailService;
+using HR_Project.Application.Services.FileService;
 using HR_Project.Application.Services.PersonelServices;
+using HR_Project.Application.Services.Storage.Azure;
+using HR_Project.Domain.Entities.Concrete.FileEntities;
 using HR_Project.Domain.Repositories;
+using HR_Project.Domain.Services.StorageService;
 using HR_Project.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -27,6 +31,13 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<AbsenceRepository>().As<IAbsenceRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AbsenceService>().As<IAbsenceService>().InstancePerLifetimeScope();
             builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenseImageService>().As<IExpenseImageService>().InstancePerLifetimeScope();
+            builder.RegisterType<AzureStorage>().As<IStorage>().InstancePerLifetimeScope();
+            builder.RegisterType<FileRepository<PersonnelPicture>>().As<IFileRepository<PersonnelPicture>>().InstancePerLifetimeScope();
+            builder.RegisterType<FileRepository<CostPicture>>().As<IFileRepository<CostPicture>>().InstancePerLifetimeScope();
+
+
 
 			#region AutoMapper
 			builder.Register(context => new MapperConfiguration(cfg =>

@@ -46,6 +46,7 @@ namespace HR_Project.Infrastructure.Context
             builder.ApplyConfiguration(new DepartmentConfig());
             builder.ApplyConfiguration(new ExpenseConfig());
             builder.ApplyConfiguration(new MasterExpenseConfig());
+            builder.ApplyConfiguration(new FileConfig());
 
 
             base.OnModelCreating(builder);

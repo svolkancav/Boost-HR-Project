@@ -8,5 +8,7 @@ namespace HR_Project.Domain.Entities.Concrete.FileEntities
 {
     public class CostPicture : File
     {
+        public int ExpenseId { get; set; }
+        public Expense Expense { get; set; }
     }
 }

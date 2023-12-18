@@ -110,6 +110,14 @@ namespace HR_Project.API.Controllers
             return token;
         }
 
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register(RegisterDTO model)
+        {
+            IdentityResult result = await _personnelService.Register(model);
+            return (result.Succeeded) ? Ok(result) : BadRequest(result);
+        }
+
 
     }
 }

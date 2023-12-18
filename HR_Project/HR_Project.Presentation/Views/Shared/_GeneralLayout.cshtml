@@ -110,6 +110,27 @@
 				</div>
 			</li>
 
+			<!-- Nav Item - Avans İşlemleri Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSirket"
+				   aria-expanded="true" aria-controls="collapseSirket">
+					<i class="fas fa-thin fa-paper-plane"></i>
+					<span>Şirket İşlemleri</span>
+				</a>
+				<div id="collapseSirket" class="collapse" aria-labelledby="headingSirket"
+					 data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Şirket İşlemleri:</h6>
+						<a class="collapse-item" asp-controller="Company" asp-action="Index">Şirket Bilgileri</a>
+						<a class="collapse-item" asp-controller="Company" asp-action="Create">Şirket Kayıt</a>
+
+					</div>
+
+
+				</div>
+			</li>
+
+
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
@@ -387,7 +408,7 @@
 
 
 
-	
+
 
 
 	<!-- Bootstrap core JavaScript-->

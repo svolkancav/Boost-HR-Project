@@ -11,8 +11,8 @@ using System.Xml.Linq;
 
 namespace HR_Project.Common.Models.DTOs
 {
-    public class RegisterDTO
-    {
+	public class RegisterDTO
+	{
 
 		[Display(Name = "Kullanıcı Adı")]
 		[Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
@@ -69,4 +69,6 @@ namespace HR_Project.Common.Models.DTOs
 		public DateTime BirthDate { get; set; }
 
 	}
+
+}
 

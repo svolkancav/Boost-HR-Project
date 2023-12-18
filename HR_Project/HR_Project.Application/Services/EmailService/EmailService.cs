@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application.Services.EmailService
 {
-	public class EmailService
+	public class EmailService : IEmailService
 	{
 
 		public async Task SendEmailRegisterAsync(string toEmail, string subject, string body)

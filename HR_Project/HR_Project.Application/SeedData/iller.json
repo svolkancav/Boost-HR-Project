@@ -1,0 +1,492 @@
+[
+  {
+    "Cities": [
+      {
+        "City": {
+          "Id": 1,
+          "Name": "ADANA"
+        }
+      },
+      {
+        "City": {
+          "Id": 2,
+          "Name": "ADIYAMAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 3,
+          "Name": "AFYON"
+        }
+      },
+      {
+        "City": {
+          "Id": 4,
+          "Name": "AGRI"
+        }
+      },
+      {
+        "City": {
+          "Id": 5,
+          "Name": "AMASYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 6,
+          "Name": "ANKARA"
+        }
+      },
+      {
+        "City": {
+          "Id": 7,
+          "Name": "ANTALYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 8,
+          "Name": "ARTVIN"
+        }
+      },
+      {
+        "City": {
+          "Id": 9,
+          "Name": "AYDIN"
+        }
+      },
+      {
+        "City": {
+          "Id": 10,
+          "Name": "BALIKESIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 11,
+          "Name": "BILECIK"
+        }
+      },
+      {
+        "City": {
+          "Id": 12,
+          "Name": "BINGÖL"
+        }
+      },
+      {
+        "City": {
+          "Id": 13,
+          "Name": "BITLIS"
+        }
+      },
+      {
+        "City": {
+          "Id": 14,
+          "Name": "BOLU"
+        }
+      },
+      {
+        "City": {
+          "Id": 15,
+          "Name": "BURDUR"
+        }
+      },
+      {
+        "City": {
+          "Id": 16,
+          "Name": "BURSA"
+        }
+      },
+      {
+        "City": {
+          "Id": 17,
+          "Name": "ÇANAKKALE"
+        }
+      },
+      {
+        "City": {
+          "Id": 18,
+          "Name": "ÇANKIRI"
+        }
+      },
+      {
+        "City": {
+          "Id": 19,
+          "Name": "ÇORUM"
+        }
+      },
+      {
+        "City": {
+          "Id": 20,
+          "Name": "DENIZLI"
+        }
+      },
+      {
+        "City": {
+          "Id": 21,
+          "Name": "DIYARBAKIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 22,
+          "Name": "EDIRNE"
+        }
+      },
+      {
+        "City": {
+          "Id": 23,
+          "Name": "ELAZIG"
+        }
+      },
+      {
+        "City": {
+          "Id": 24,
+          "Name": "ERZINCAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 25,
+          "Name": "ERZURUM"
+        }
+      },
+      {
+        "City": {
+          "Id": 26,
+          "Name": "ESKISEHIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 27,
+          "Name": "GAZIANTEP"
+        }
+      },
+      {
+        "City": {
+          "Id": 28,
+          "Name": "GIRESUN"
+        }
+      },
+      {
+        "City": {
+          "Id": 29,
+          "Name": "GÜMÜSHANE"
+        }
+      },
+      {
+        "City": {
+          "Id": 30,
+          "Name": "HAKKARI"
+        }
+      },
+      {
+        "City": {
+          "Id": 31,
+          "Name": "HATAY"
+        }
+      },
+      {
+        "City": {
+          "Id": 32,
+          "Name": "ISPARTA"
+        }
+      },
+      {
+        "City": {
+          "Id": 33,
+          "Name": "IÇEL"
+        }
+      },
+      {
+        "City": {
+          "Id": 34,
+          "Name": "ISTANBUL"
+        }
+      },
+      {
+        "City": {
+          "Id": 35,
+          "Name": "IZMIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 36,
+          "Name": "KARS"
+        }
+      },
+      {
+        "City": {
+          "Id": 37,
+          "Name": "KASTAMONU"
+        }
+      },
+      {
+        "City": {
+          "Id": 38,
+          "Name": "KAYSERI"
+        }
+      },
+      {
+        "City": {
+          "Id": 39,
+          "Name": "KIRKLARELI"
+        }
+      },
+      {
+        "City": {
+          "Id": 40,
+          "Name": "KIRSEHIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 41,
+          "Name": "KOCAELI"
+        }
+      },
+      {
+        "City": {
+          "Id": 42,
+          "Name": "KONYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 43,
+          "Name": "KÜTAHYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 44,
+          "Name": "MALATYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 45,
+          "Name": "MANISA"
+        }
+      },
+      {
+        "City": {
+          "Id": 46,
+          "Name": "KAHRAMANMARAS"
+        }
+      },
+      {
+        "City": {
+          "Id": 47,
+          "Name": "MARDIN"
+        }
+      },
+      {
+        "City": {
+          "Id": 48,
+          "Name": "MUGLA"
+        }
+      },
+      {
+        "City": {
+          "Id": 49,
+          "Name": "MUS"
+        }
+      },
+      {
+        "City": {
+          "Id": 50,
+          "Name": "NEVSEHIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 51,
+          "Name": "NIGDE"
+        }
+      },
+      {
+        "City": {
+          "Id": 52,
+          "Name": "ORDU"
+        }
+      },
+      {
+        "City": {
+          "Id": 53,
+          "Name": "RIZE"
+        }
+      },
+      {
+        "City": {
+          "Id": 54,
+          "Name": "SAKARYA"
+        }
+      },
+      {
+        "City": {
+          "Id": 55,
+          "Name": "SAMSUN"
+        }
+      },
+      {
+        "City": {
+          "Id": 56,
+          "Name": "SIIRT"
+        }
+      },
+      {
+        "City": {
+          "Id": 57,
+          "Name": "SINOP"
+        }
+      },
+      {
+        "City": {
+          "Id": 58,
+          "Name": "SIVAS"
+        }
+      },
+      {
+        "City": {
+          "Id": 59,
+          "Name": "TEKIRDAG"
+        }
+      },
+      {
+        "City": {
+          "Id": 60,
+          "Name": "TOKAT"
+        }
+      },
+      {
+        "City": {
+          "Id": 61,
+          "Name": "TRABZON"
+        }
+      },
+      {
+        "City": {
+          "Id": 62,
+          "Name": "TUNCELI"
+        }
+      },
+      {
+        "City": {
+          "Id": 63,
+          "Name": "SANLIURFA"
+        }
+      },
+      {
+        "City": {
+          "Id": 64,
+          "Name": "USAK"
+        }
+      },
+      {
+        "City": {
+          "Id": 65,
+          "Name": "VAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 66,
+          "Name": "YOZGAT"
+        }
+      },
+      {
+        "City": {
+          "Id": 67,
+          "Name": "ZONGULDAK"
+        }
+      },
+      {
+        "City": {
+          "Id": 68,
+          "Name": "AKSARAY"
+        }
+      },
+      {
+        "City": {
+          "Id": 69,
+          "Name": "BAYBURT"
+        }
+      },
+      {
+        "City": {
+          "Id": 70,
+          "Name": "KARAMAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 71,
+          "Name": "KIRIKKALE"
+        }
+      },
+      {
+        "City": {
+          "Id": 72,
+          "Name": "BATMAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 73,
+          "Name": "SIRNAK"
+        }
+      },
+      {
+        "City": {
+          "Id": 74,
+          "Name": "BARTIN"
+        }
+      },
+      {
+        "City": {
+          "Id": 75,
+          "Name": "ARDAHAN"
+        }
+      },
+      {
+        "City": {
+          "Id": 76,
+          "Name": "IGDIR"
+        }
+      },
+      {
+        "City": {
+          "Id": 77,
+          "Name": "YALOVA"
+        }
+      },
+      {
+        "City": {
+          "Id": 78,
+          "Name": "KARABÜK"
+        }
+      },
+      {
+        "City": {
+          "Id": 79,
+          "Name": "KILIS"
+        }
+      },
+      {
+        "City": {
+          "Id": 80,
+          "Name": "OSMANIYE"
+        }
+      },
+      {
+        "City": {
+          "Id": 81,
+          "Name": "DÜZCE" 
+        }
+      }
+    ]
+  }
+]

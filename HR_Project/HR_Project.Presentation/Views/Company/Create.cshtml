@@ -8,8 +8,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
+<a href="~/lib/jquery/dist/jquery.min.map"></a>
 
-<a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <!-- Include the jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -60,6 +60,26 @@
                         <br />
                         <br />
                         <div class="col-md-12">
+                            <label class="labels">İl</label>
+                            <input type="text" class="form-control" placeholder="İl Seçiniz" asp-for="City">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+                        <div class="col-md-12">
+                            <label class="labels">İlçe</label>
+                            <input type="text" class="form-control" placeholder="İlçe Seçiniz" asp-for="Region">
+                            <span asp-validation-for="Region" class="text-danger"></span>
+                        </div>
+
+
+
+                        <br />
+                        <br />
+                        <br />
+                        <div class="col-md-12">
                             <label class="labels">Şirket Adresi</label>
                             <input type="text" class="form-control" placeholder="Adres" asp-for="Address">
                             <span asp-validation-for="Address" class="text-danger"></span>
@@ -67,17 +87,17 @@
                     </div>
 
 
-
-
-
-
-
-
-
-
-
                 </div>
+
+
+
+
+
+
+
+
             </div>
+        </div>
 
 </form>
 

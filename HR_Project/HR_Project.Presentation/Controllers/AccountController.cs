@@ -15,11 +15,11 @@ namespace HR_Project.Presentation.Controllers
 	public class AccountController : BaseController
 	{
 		private readonly IAPIService _apiService;
-		private readonly EmailService _emailService;
+		private readonly IEmailService _emailService;
 		private readonly UserManager<Personnel> _userManager;
 		private readonly IPasswordHasher<Personnel> _passwordHasher;
 
-		public AccountController(IAPIService apiService, EmailService emailService, UserManager<Personnel> userManager, IPasswordHasher<Personnel> passwordHasher)
+		public AccountController(IAPIService apiService, IEmailService emailService, UserManager<Personnel> userManager, IPasswordHasher<Personnel> passwordHasher)
 		{
 			_apiService = apiService;
 			_emailService = emailService;

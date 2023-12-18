@@ -3,9 +3,11 @@ using AutoMapper;
 using HR_Project.Application.Mapper;
 using HR_Project.Application.Services.AbsenceService;
 using HR_Project.Application.Services.AdvanceService;
+using HR_Project.Application.Services.EmailService;
 using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Domain.Repositories;
 using HR_Project.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<AdvanceServise>().As<IAdvanceServise>().InstancePerLifetimeScope();
             builder.RegisterType<AbsenceRepository>().As<IAbsenceRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AbsenceService>().As<IAbsenceService>().InstancePerLifetimeScope();
+            builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
 
 			#region AutoMapper
 			builder.Register(context => new MapperConfiguration(cfg =>

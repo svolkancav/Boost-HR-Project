@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Http;
+using HR_Project.Common.Extensions;
+using HR_Project.Common.ValidationClass;
 
 namespace HR_Project.Common.Models.DTOs
 {
@@ -69,7 +72,9 @@ namespace HR_Project.Common.Models.DTOs
 		public Gender Gender { get; set; }
 		public Nation Nation { get; set; }
 		public AccountStatus AccountStatus { get; set; }
-	}
+		[PictureFileExtension]
+        public IFormFile? UploadImage { get; set; }
+    }
 
 }
 

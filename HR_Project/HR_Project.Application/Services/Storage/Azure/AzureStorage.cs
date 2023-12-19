@@ -38,7 +38,7 @@ namespace HR_Project.Application.Services.Storage.Azure
 			return _blobContainerClient.GetBlobs().Any(b => b.Name == fileName);
 		}
 
-		public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string containerName, IFormFileCollection files)
+		public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string containerName, IFormFile file)
 		{
 
 			_blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -47,15 +47,14 @@ namespace HR_Project.Application.Services.Storage.Azure
 
 			List<(string fileName, string path)> datas = new List<(string fileName, string path)>();
 
-			foreach (var file in files)
-			{
+			
 
 				var fileNewName = await FileRenameAsync(containerName, file.FileName, HasFile);
 
 				BlobClient blobClient = _blobContainerClient.GetBlobClient(fileNewName);
 				await blobClient.UploadAsync(file.OpenReadStream());
 				datas.Add((fileNewName, $"{containerName}/{fileNewName}"));
-			}
+			
 
 			return datas;
 		}

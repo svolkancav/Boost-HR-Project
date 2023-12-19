@@ -1,10 +1,16 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
+using HR_Project.Application.IoC.Models.DTOs;
+
 using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Common;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
+
+using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -18,17 +24,17 @@ namespace HR_Project.API.Controllers
         private readonly IPersonnelService _personnelService;
         private readonly IConfiguration _configuration;
         private readonly UserManager<Personnel> _userManager;
-		private readonly IEmailService _emailService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IEmailService emailService)
-		{
-			_personnelService = personnelService;
-			_configuration = configuration;
-			_userManager = userManager;
-			_emailService = emailService;
-		}
+        public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
+        {
+            _personnelService = personnelService;
+            _configuration = configuration;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
-		[HttpPost("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
             //await _personnelService.Register(new RegisterDTO
@@ -37,7 +43,7 @@ namespace HR_Project.API.Controllers
             //    Surname = "admin",
             //    Title = "admin",
             //    Email = "admin",
-            //    PhoneNumber = "admin",
+            //    Phone = "admin",
             //    UserName = "admin",
             //    Password = "admin123",
 
@@ -109,6 +115,7 @@ namespace HR_Project.API.Controllers
             return token;
         }
 
+
         [HttpPost("Confirm")]
         public async Task<IActionResult> Confirm(MailConfirmDTO model)
         {
@@ -157,6 +164,7 @@ namespace HR_Project.API.Controllers
 
 			return BadRequest(result);
         }
+
 
 
     }

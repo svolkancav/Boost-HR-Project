@@ -6,6 +6,13 @@ using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 
+using HR_Project.Application.Services.EmailService;
+using System.Security.Policy;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using HR_Project.Application.Services.FileService;
+
+
 namespace HR_Project.Application.Services.PersonelServices
 {
     public class PersonnelService : IPersonnelService
@@ -14,14 +21,16 @@ namespace HR_Project.Application.Services.PersonelServices
         private readonly IMapper _mapper;
         private readonly SignInManager<Personnel> _signInManager;
         private readonly UserManager<Personnel> _userManager;
- 
+        private readonly IProfileImageService _profileImageService;
 
-		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager)
+
+		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService)
 		{
 			_personelRepository = personelRepository;
 			_mapper = mapper;
 			_signInManager = signInManager;
 			_userManager = userManager;
+			_profileImageService = profileImageService;
 		}
 
 		public async Task<IdentityResult> Register(RegisterDTO model)
@@ -48,7 +57,14 @@ namespace HR_Project.Application.Services.PersonelServices
 
             IdentityResult result = await _userManager.CreateAsync(user,model.Password);
             if (result.Succeeded)
+            {
                 await _signInManager.SignInAsync(user, isPersistent: false);
+
+                await _profileImageService.UploadFile(user.Id.ToString(),model.UploadImage);
+
+            }
+
+
 			
 			return result;
         }
@@ -145,7 +161,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 personel.Region = model.Region;
 
                 //personel.ImagePath = model.ImagePath;
-
+                _profileImageService.UploadFile(personel.Id.ToString(), model.UploadImage);
 
                 await _personelRepository.Update(personel);
             }

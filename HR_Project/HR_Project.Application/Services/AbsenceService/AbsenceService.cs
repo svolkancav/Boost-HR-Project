@@ -61,7 +61,7 @@ namespace HR_Project.Application.Services.AbsenceService
             }
             else if (absence == null)
             {
-                throw new ArgumentException("Böyle bir yazar mevcut değil!");
+                throw new ArgumentException("Böyle bir izin mevcut değil!");
             }
 
             absence.DeletedDate = DateTime.Now;
@@ -117,7 +117,7 @@ namespace HR_Project.Application.Services.AbsenceService
             abcense.ModifiedDate = DateTime.Now;
             abcense.Status = Status.Updated;
 
-            _absenceRepository.Update(abcense);
+            await _absenceRepository.Update(abcense);
 
         }
     }

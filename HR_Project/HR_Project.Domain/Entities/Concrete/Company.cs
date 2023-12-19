@@ -26,6 +26,7 @@ namespace HR_Project.Domain.Entities.Concrete
         public int PersonnelCount { get; set; }
         public string TaxOffice { get; set; }
         public string TaxNumber { get; set; }
+        public string? Address { get; set; }
 
         //Navigation
         public int? RegionId { get; set; }

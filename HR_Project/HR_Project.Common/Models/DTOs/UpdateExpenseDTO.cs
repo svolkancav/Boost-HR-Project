@@ -1,5 +1,6 @@
 ﻿using HR_Project.Common.ValidationClass;
 using HR_Project.Domain.Enum;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,5 +38,7 @@ namespace HR_Project.Common.Models.DTOs
 
         [Display(Name = "Masraf Durumu")]
         public ConditionType Condition { get; set; }
-    }
+		[ExpensePictureFile]
+		public IFormFile? UploadImage { get; set; }
+	}
 }

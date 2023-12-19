@@ -150,15 +150,21 @@ namespace HR_Project.Application.SeedData
                     }
 
                 }
+                if (!context.Regions.Any())
+                {
+                    var regionJson = File.ReadAllText("../HR_Project.Application/SeedData/ilceler.json");
+                    var regionData = JsonConvert.DeserializeObject<RegionData>(regionJson);
 
-                //if (!context.Regions.Any())
-                //{
-                //    var regionJson = File.ReadAllText("HR_Project/HR_Project.Application/SeedData/ilceler.json");
-                //    var regions = JsonConvert.DeserializeObject<List<Region>>(regionJson);
-                //    context.Regions.AddRange(regions);
-                //    await context.SaveChangesAsync();
+                    if (regionData != null && regionData.Regions.Any())
+                    {
+                        var regions = regionData.Regions.Select(regionWrapper => regionWrapper.Region).ToList();
+                        context.Regions.AddRange(regions.Select(x => new Region { Name = x.Name, CityId = x.CityId }));
+                        await context.SaveChangesAsync();
+                    }
+                }
 
-                //}
+
+
 
 
 
@@ -176,5 +182,16 @@ namespace HR_Project.Application.SeedData
     {
         [JsonProperty("City")]
         public City City { get; set; }
+    }
+
+    public class RegionData
+    {
+        public List<RegionWrapper> Regions { get; set; }
+    }
+
+    public class RegionWrapper
+    {
+        [JsonProperty("Region")]
+        public Region Region { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HR_Project.Application.Services.EmailService
+namespace HR_Project.Common
 {
 	public interface IEmailService 
 	{

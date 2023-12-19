@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using HR_Project.Domain.Entities.Concrete;
-using HR_Project.Application.Services.EmailService;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using HR_Project.Presentation.Models;
+using HR_Project.Common;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -109,19 +110,19 @@ namespace HR_Project.Presentation.Controllers
         public async Task<IActionResult> Register()
         {
 
-            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
-            var registerDTO = new RegisterDTO
-            {
-                CityList = cities.Select(c => new SelectListItem
-                {
-                    Value = c.CityId.ToString(),
-                    Text = c.Name
-                })
-                .ToList(),
+            //List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            //var registerDTO = new RegisterDTO
+            //{
+            //    CityList = cities.Select(c => new SelectListItem
+            //    {
+            //        Value = c.CityId.ToString(),
+            //        Text = c.Name
+            //    })
+            //    .ToList(),
 
-                Region = new List<SelectListItem>()
-            };
-            return View(registerDTO);
+            //    Region = new List<SelectListItem>()
+            //};
+            return View();
         }
 
 
@@ -135,30 +136,36 @@ namespace HR_Project.Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _apiService.PostAsync<RegisterDTO, RegisterDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+                RegisterResponse response = await _apiService.RegisterAsync(model);
+                var confirmationLink = Url.Action("Confirmation","Account", response, Request.Scheme);
+                // Send registration confirmation email
+                //"https://localhost:7034/Account/Confirmation", new { id = personnel.Id, token }, Request.Scheme
+                string subject = "Registration Confirmation";
+                string body = $"Lütfen hesabınızı doğrulamak için linke <a href='{confirmationLink}'>tıklayın</a>.";
 
-
+                await _emailService.SendEmailRegisterAsync(model.Email, subject, body);
                 return RedirectToAction("Login", "Account");
 
             }
-            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
-            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
-            model.CityList = cities.Select(c => new SelectListItem
-            {
-                Value = c.CityId.ToString(),
-                Text = c.Name
-            })
-                .ToList();
-            model.Region = regionList
-                .Where(d => d.CityId == model.CityId)
-                .Select(d => new SelectListItem
-                {
-                    Value = d.RegionId.ToString(),
-                    Text = d.Name
-                })
-                .ToList();
+            return View();
+            //List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            //List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            //model.CityList = cities.Select(c => new SelectListItem
+            //{
+            //    Value = c.CityId.ToString(),
+            //    Text = c.Name
+            //})
+            //    .ToList();
+            //model.Region = regionList
+            //    .Where(d => d.CityId == model.CityId)
+            //    .Select(d => new SelectListItem
+            //    {
+            //        Value = d.RegionId.ToString(),
+            //        Text = d.Name
+            //    })
+            //    .ToList();
 
-            return View(model);
+            //return View(model);
         }
 
 
@@ -168,65 +175,11 @@ namespace HR_Project.Presentation.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Confirmation(int id, string token)
+        public async Task<IActionResult> Confirmation(string id, string token)
         {
 
-
-            if (id == null || token == null)
-            {
-                return RedirectToAction("login", "account");
-            }
-
-            var user = await _apiService.GetByIdAsync<RegisterDTO>($"personnel/getbyid", id.ToString(), HttpContext.Request.Cookies["access-token"]);
-            RegisterDTO registerDTO = new RegisterDTO()
-            {
-                Email = user.Email,
-                AccountStatus = user.AccountStatus,
-                Gender = user.Gender,
-                Nation = user.Nation,
-                Name = user.Name,
-                PhoneNumber = user.PhoneNumber,
-                Surname = user.Surname,
-                Title = user.Title
-
-            };
-            if (user == null)
-            {
-                ViewBag.ErrorMessage = $"The User ID {id} is invalid";
-                return View("NotFound");
-            }
-
-
-
-            if (registerDTO is not null)
-            {
-                try
-                {
-                    if (!ModelState.IsValid)
-                    {
-                        return View();
-                    }
-                    registerDTO.AccountStatus = AccountStatus.Active;
-                    await _apiService.UpdateAsync<RegisterDTO>("personnel", registerDTO, HttpContext.Request.Cookies["access-token"]);
-                    Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
-                    return RedirectToAction("Login");
-                }
-                catch (Exception ex)
-                {
-                    Toastr("error", $"Kayıt güncellenirken hata oluştu : {ex.Message}");
-
-                    return View();
-                }
-
-            }
-            else
-            {
-                ViewBag.ErrorTitle = "Email cannot be confirmed";
-                return View("Error");
-            }
-
-
-
+            await _apiService.ConfirmAsync("Account/confirm", new MailConfirmDTO { Id=id,Token=token});
+            return RedirectToAction("Login", "Account");
 
         }
         [HttpGet]

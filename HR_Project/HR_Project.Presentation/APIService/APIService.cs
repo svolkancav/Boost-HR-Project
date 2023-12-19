@@ -142,7 +142,7 @@ namespace HR_Project.Presentation.APIService
 		}
 
 		//register
-		public async Task<bool> RegisterAsync(RegisterDTO registerModel)
+		public async Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel)
 		{
 			var jsonData = JsonConvert.SerializeObject(registerModel);
 			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -153,9 +153,9 @@ namespace HR_Project.Presentation.APIService
 			{
 				throw new Exception($"API isteği başarısız: {response.StatusCode}");
 			}
-
-			return true;
-		}
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<RegisterResponse>(responseContent);
+        }
 
 
 		public async Task<T> GetAsyncWoToken<T>(string endpoint)
@@ -171,6 +171,30 @@ namespace HR_Project.Presentation.APIService
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public async Task ConfirmAsync(string endpoint, MailConfirmDTO data)
+        {
+            var jsonData = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+
+            try
+            {
+                var response = await _httpClient.PostAsync(endpoint, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+
+
+
         }
     }
 

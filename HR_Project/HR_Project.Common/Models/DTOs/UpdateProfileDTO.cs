@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HR_Project.Common.Extensions;
 using HR_Project.Common.Models.VMs;
+using HR_Project.Common.ValidationClass;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Http;
@@ -25,9 +26,11 @@ namespace HR_Project.Common.Models.DTOs
         public DateTime? BirthDate { get; set; }
         public DateTime? HireDate { get; set; }
         public BloodType? BloodType { get; set; }
-        public string? ImagePath { get; set; }
+        public int? ImageId { get; set; }
+		[PictureFileExtension]
+		public IFormFile? UploadImage { get; set; }
 
-        public Gender Gender { get; set; }
+		public Gender Gender { get; set; }
         public Nation Nation { get; set; }
         //public string ManagerName { get; set; }
 

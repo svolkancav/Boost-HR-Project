@@ -65,7 +65,7 @@ namespace HR_Project.API.Controllers
 		[HttpPost("[action]")]
 		public async Task<IActionResult> UploadImage(string id)
 		{
-			await _profileImageService.UploadFile(id, Request.Form.Files);
+			await _profileImageService.UploadFile(id, Request.Form.Files.First());
 			return Ok();
 		}
 

@@ -1,4 +1,9 @@
-﻿using HR_Project.Common.Models.DTOs;
+﻿using AutoMapper;
+using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
+using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Enum;
+using HR_Project.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +14,66 @@ namespace HR_Project.Application.Services.CompanyService
 {
 	public class CompanyService : ICompanyService
 	{
-		private readonly ICompanyService _companyService;
+		private readonly ICompanyRepository _companyRepository;
+		private readonly IMapper _mapper;
 
-		public CompanyService(ICompanyService companyService)
+		public CompanyService(ICompanyRepository companyRepository, IMapper mapper)
 		{
-			_companyService = companyService;
+			_companyRepository = companyRepository;
+			_mapper = mapper;
 		}
 
 		public Task Create(CreateCompanyDTO model)
 		{
-			throw new NotImplementedException();
+			Company company= _mapper.Map<Company>(model);
+			company.CreatedDate = DateTime.Now;
+			company.Status = Status.Inserted;
+
+			return _companyRepository.Create(company);
+
 		}
 
-		public Task Delete(int id)
+		public async Task Delete(int id)
 		{
-			throw new NotImplementedException();
+			Company company =await _companyRepository.GetDefault(x => x.Id == id);
+
+			if (id == 0)
+			{
+				throw new ArgumentException("Id 0 Olamaz!");
+
+			}
+			else if (company == null)
+			{
+				throw new ArgumentException("Böyle bir şirket mevcut değil!");
+			}
+
+			company.DeletedDate = DateTime.Now;
+			company.Status = Status.Deleted;
+			await _companyRepository.Delete(company);
+
 		}
 
-		public Task<UpdateCompanyDTO> GetById(string id)
+		public async Task<UpdateCompanyDTO> GetById(string id)
 		{
-			throw new NotImplementedException();
+			Company company =await _companyRepository.GetDefault(x => x.Id == Convert.ToInt32(id));
+
+			return _mapper.Map<UpdateCompanyDTO>(company);
 		}
 
-		public Task Update(UpdateCompanyDTO model)
+		public async Task Update(UpdateCompanyDTO model)
 		{
-			throw new NotImplementedException();
+			Company company=await _companyRepository.GetDefault(x => x.Id == model.Id);
+
+			company.Phone=model.Phone;
+			company.Name=model.Name;
+			company.Address=model.Address;
+			company.TaxNumber=model.TaxNumber;
+			company.TaxOffice=model.TaxOffice;
+			company.PersonnelCount=model.PersonnelCount;
+			company.ModifiedDate=DateTime.Now;
+			company.Status=Status.Updated;
+
+			await _companyRepository.Update(company);
 		}
 	}
 }

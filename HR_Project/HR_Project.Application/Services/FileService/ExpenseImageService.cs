@@ -56,7 +56,7 @@ namespace HR_Project.Application.Services.FileService
 
 		}
 
-		public async Task<bool> UploadFile(string expenselId, IFormFileCollection file)
+		public async Task<bool> UploadFile(string expenselId, IFormFile file)
 		{
 			try
 			{

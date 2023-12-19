@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HR_Project.Application.Services.FileService;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
@@ -22,16 +23,18 @@ namespace HR_Project.Application.Services.ExpenseService
         private readonly IMapper _mapper;
         private readonly UserManager<Personnel> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IExpenseImageService _expenseImageService;
 
-        public ExpenseService(IExpenseRepository expenseRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
-        {
-            _expenseRepository = expenseRepository;
-            _mapper = mapper;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
-        }
+		public ExpenseService(IExpenseRepository expenseRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor, IExpenseImageService expenseImageService)
+		{
+			_expenseRepository = expenseRepository;
+			_mapper = mapper;
+			_userManager = userManager;
+			_httpContextAccessor = httpContextAccessor;
+			_expenseImageService = expenseImageService;
+		}
 
-        public async Task Create(ExpenseDTO model)
+		public async Task Create(ExpenseDTO model)
         {
             Personnel personnel = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
             Expense expense = _mapper.Map<Expense>(model);
@@ -40,6 +43,8 @@ namespace HR_Project.Application.Services.ExpenseService
             expense.PersonnelId = personnel.Id;
             try
             {
+                if(model.UploadImage != null)
+                    await _expenseImageService.UploadFile(expense.Id.ToString(), model.UploadImage);
                 await _expenseRepository.Create(expense);
 
             }
@@ -119,6 +124,9 @@ namespace HR_Project.Application.Services.ExpenseService
             expense.Condition = model.Condition;
             expense.ModifiedDate=DateTime.Now;
             expense.Status = Status.Updated;
+
+            if (model.UploadImage != null)
+				await _expenseImageService.UploadFile(expense.Id.ToString(), model.UploadImage);
 
             _expenseRepository.Update(expense);
         }

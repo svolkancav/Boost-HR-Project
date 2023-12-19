@@ -336,11 +336,12 @@
 										string name =
 										httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value;
 										string surName = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Surname).Value;
+										string pic= httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Thumbprint).Value;
 									}
 									@name @surName
 								</span>
 								<img class="img-profile rounded-circle"
-									 src="/startbootstrap/img/undraw_profile.svg">
+									 src="@pic">
 							</a>
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

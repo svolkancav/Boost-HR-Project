@@ -72,7 +72,7 @@ namespace HR_Project.Presentation.Controllers
                             new Claim(ClaimTypes.NameIdentifier, userId),
                             new Claim(ClaimTypes.Name, userName),
                             new Claim(ClaimTypes.Surname, userSurName),
-                            //new Claim(ClaimTypes.Thumbprint, imagePath),
+                            new Claim(ClaimTypes.Thumbprint, imagePath),
                             //new Claim("Company",company),
                             //new Claim("Department",department),
 

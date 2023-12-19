@@ -10,7 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HR_Project.Domain.Enum;
-
+using Newtonsoft.Json;
+using HR_Project.Common.Models.DTOs;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace HR_Project.Application.SeedData
 {
@@ -131,11 +133,48 @@ namespace HR_Project.Application.SeedData
 
                     await context.SaveChangesAsync();
                 }
+                if (!context.Cities.Any())
+                {
+
+                    var cityJson = File.ReadAllText("../HR_Project.Application/SeedData/iller.json");
+                    var cityDataList = JsonConvert.DeserializeObject<List<CityData>>(cityJson);
+
+                    if (cityDataList != null && cityDataList.Any())
+                    {
+                        var cities = cityDataList
+                            .SelectMany(cityData => cityData.Cities.Select(cityWrapper => cityWrapper.City))
+                            .ToList();
+
+                        context.Cities.AddRange(cities.Select(x => new City {Name = x.Name}));
+                        await context.SaveChangesAsync();
+                    }
+
+                }
+
+                //if (!context.Regions.Any())
+                //{
+                //    var regionJson = File.ReadAllText("HR_Project/HR_Project.Application/SeedData/ilceler.json");
+                //    var regions = JsonConvert.DeserializeObject<List<Region>>(regionJson);
+                //    context.Regions.AddRange(regions);
+                //    await context.SaveChangesAsync();
+
+                //}
+
 
 
 
 
             }
         }
+    }
+    public class CityData
+    {
+        public List<CityWrapper> Cities { get; set; }
+    }
+
+    public class CityWrapper
+    {
+        [JsonProperty("City")]
+        public City City { get; set; }
     }
 }

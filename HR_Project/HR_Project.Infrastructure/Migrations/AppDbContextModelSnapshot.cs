@@ -127,9 +127,21 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -381,8 +393,8 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<int?>("BloodType")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CompanyId")
                         .HasColumnType("int");
@@ -483,6 +495,8 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("DepartmentId");
@@ -517,9 +531,21 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -757,6 +783,10 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
                 {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Company", "Company")
                         .WithMany("Personnels")
                         .HasForeignKey("CompanyId")
@@ -783,6 +813,8 @@ namespace HR_Project.Infrastructure.Migrations
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
                         .WithMany("Personnels")
                         .HasForeignKey("RegionId");
+
+                    b.Navigation("City");
 
                     b.Navigation("Company");
 

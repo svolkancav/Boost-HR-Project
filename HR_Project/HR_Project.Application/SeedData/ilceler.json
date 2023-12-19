@@ -7306,6 +7306,293 @@
         "CityId": 76
       }
 
+    },
+
+
+
+    {
+      "Region": {
+        "id": 1027,
+        "Name": "MERKEZ",
+        "CityId": 77
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1028,
+        "Name": "ALTINOVA",
+        "CityId": 77
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1029,
+        "Name": "ARMUTLU",
+        "CityId": 77
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1030,
+        "Name": "ÇINARCIK",
+        "CityId": 77
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1031,
+        "Name": "ÇİFTLİKKÖY",
+        "CityId": 77
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1032,
+        "Name": "TERMAL",
+        "CityId": 77
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1033,
+        "Name": "MERKEZ",
+        "CityId": 78
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1034,
+        "Name": "EFLANİ",
+        "CityId": 78
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1035,
+        "Name": "ESKİPAZAR",
+        "CityId": 78
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1036,
+        "Name": "OVACIK",
+        "CityId": 78
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1037,
+        "Name": "SAFRANBOLU",
+        "CityId": 78
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1038,
+        "Name": "YENİCE",
+        "CityId": 78
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1039,
+        "Name": "MERKEZ",
+        "CityId": 79
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1040,
+        "Name": "ELBEYLİ",
+        "CityId": 79
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1041,
+        "Name": "MUSABEYLİ",
+        "CityId": 79
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1042,
+        "Name": "POLATELİ",
+        "CityId": 79
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1043,
+        "Name": "MERKEZ",
+        "CityId": 80
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1044,
+        "Name": "BAHÇE",
+        "CityId": 80
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1045,
+        "Name": "DÜZİÇİ",
+        "CityId": 80
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1046,
+        "Name": "HASANBEYLİ",
+        "CityId": 80
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1047,
+        "Name": "KADİRLİ",
+        "CityId": 80
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1048,
+        "Name": "SUMBAS",
+        "CityId": 80
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1049,
+        "Name": "TOPRAKKALE",
+        "CityId": 80
+      }
+
+    },
+
+
+    {
+      "Region": {
+        "id": 1050,
+        "Name": "MERKEZ",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1051,
+        "Name": "AKÇAKOCA",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1052,
+        "Name": "CUMAYERİ",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1053,
+        "Name": "ÇİLİMLİ",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1054,
+        "Name": "GÖLYAKA",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1055,
+        "Name": "GÜMÜŞOVA",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1056,
+        "Name": "KAYNAŞLI",
+        "CityId": 81
+      }
+
+    },
+
+    {
+      "Region": {
+        "id": 1057,
+        "Name": "YIĞILCA",
+        "CityId": 81
+      }
+
     }
 
 

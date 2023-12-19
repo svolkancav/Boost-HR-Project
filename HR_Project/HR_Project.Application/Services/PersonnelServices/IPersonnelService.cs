@@ -16,6 +16,7 @@ namespace HR_Project.Application.Services.PersonelServices
         Task Update(UpdateProfileDTO model);
         Task Delete(string id);
         Task<PersonelDTO> GetById(string id);
+        Task<PersonelDTO> GetByEmail(string email);
         Task<List<PersonelDTO>> GetPersonels();
         Task<SignInResult> Login(LoginDTO model);
         Task<string[]> GetRoles(string email);

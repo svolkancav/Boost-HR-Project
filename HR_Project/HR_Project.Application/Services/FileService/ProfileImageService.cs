@@ -67,12 +67,18 @@ namespace HR_Project.Application.Services.FileService
 			return $"{_configuration["BaseStorageUrl"]}/{picture.FilePath}";
 
 		}
-
+		public IFormFile ConvertImageToFormFile(Image image, string fileName)
+		{
+			using (var memoryStream = new MemoryStream())
+			{
+				image.Save(memoryStream, new JpegEncoder());
+				return new FormFile(memoryStream, 0, memoryStream.Length, "image", fileName);
+			}
+		}
 		public async Task<bool> UploadFile(string personnelId, IFormFile file)
 		{
 			try
 			{
-				IFormFile processedFile = file;
 				Personnel personnel = await _personnelRepository.GetDefault(x => x.Id == Guid.Parse(personnelId));
 
 				if (file != null)
@@ -81,43 +87,33 @@ namespace HR_Project.Application.Services.FileService
 					{
 						image.Mutate(x => x.Resize(256, 256));
 
-						using (var memoryStream = new MemoryStream())
+						IFormFile formFile = ConvertImageToFormFile(image, file.FileName);
+
+						List<(string fileName, string pathOrContainerName)> result = await _azureStorage.UploadAsync("profile-photos", formFile);
+
+						if (personnel.ImageId != null)
 						{
-							image.Save(memoryStream, new JpegEncoder());
+							var pic = await _fileRepository.GetDefault(x => x.Id == personnel.ImageId);
+							pic.Status = Status.Deleted;
+							pic.DeletedDate = DateTime.Now;
 
-							processedFile = new FormFile(memoryStream, 0, memoryStream.Length, "processedFile", file.FileName);
-
-							// Oluşturduğunuz IFormFile'ı kullanarak işlemleri gerçekleştirin
-							List<(string fileName, string pathOrContainerName)> result = await _azureStorage.UploadAsync("profile-photos", processedFile);
-
-
-
-
-							if (personnel.ImageId != null)
-							{
-								var pic = await _fileRepository.GetDefault(x => x.Id == personnel.ImageId);
-								pic.Status = Status.Deleted;
-								pic.DeletedDate = DateTime.Now;
-
-								await _fileRepository.Delete(pic);
-							}
-
-							PersonnelPicture picture = new PersonnelPicture()
-							{
-								FileName = result[0].fileName,
-								FilePath = result[0].pathOrContainerName,
-								PersonnelId = Guid.Parse(personnelId)
-							};
-
-							personnel.PersonnelPicture = picture;
-
-							await _fileRepository.Create(picture);
-
-
-							memoryStream.Seek(0, SeekOrigin.Begin);
-
-							return true;
+							await _fileRepository.Delete(pic);
 						}
+
+						PersonnelPicture picture = new PersonnelPicture()
+						{
+							FileName = result[0].fileName,
+							FilePath = result[0].pathOrContainerName,
+							PersonnelId = Guid.Parse(personnelId)
+						};
+
+						personnel.PersonnelPicture = picture;
+
+						await _fileRepository.Create(picture);
+
+
+						return true;
+
 					}
 				}
 				else
@@ -126,10 +122,15 @@ namespace HR_Project.Application.Services.FileService
 					PersonnelPicture picture = new PersonnelPicture()
 					{
 						FileName = personnel.Name + personnel.Id,
-						FilePath = "profile-photos/" + (personnel.Gender == Gender.Female ? "default_pic_woman.png" : "default_pic_man.png"),
+						FilePath = "default-photos/" + (personnel.Gender == Gender.Female ? "default_pic_woman.png" : "default_pic_man.png"),
 						PersonnelId = Guid.Parse(personnelId)
 					};
-					
+
+					await _fileRepository.Create(picture);
+
+					personnel.PersonnelPicture = picture;
+
+					await _personnelRepository.Delete(personnel);
 					return true;
 				}
 

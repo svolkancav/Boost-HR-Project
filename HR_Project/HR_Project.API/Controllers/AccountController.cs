@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 
 using HR_Project.Application.IoC.Models.DTOs;
-
+using HR_Project.Application.Services.FileService;
 using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Common;
 using HR_Project.Common.Models.DTOs;
@@ -25,16 +25,18 @@ namespace HR_Project.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<Personnel> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IProfileImageService _profileImageService;
 
-        public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
-        {
-            _personnelService = personnelService;
-            _configuration = configuration;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
-        }
+		public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor, IProfileImageService profileImageService)
+		{
+			_personnelService = personnelService;
+			_configuration = configuration;
+			_userManager = userManager;
+			_httpContextAccessor = httpContextAccessor;
+			_profileImageService = profileImageService;
+		}
 
-        [HttpPost("login")]
+		[HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
             //await _personnelService.Register(new RegisterDTO
@@ -43,7 +45,7 @@ namespace HR_Project.API.Controllers
             //    Surname = "admin",
             //    Title = "admin",
             //    Email = "admin",
-            //    Phone = "admin",
+            //    PhoneNumber = "admin",
             //    UserName = "admin",
             //    Password = "admin123",
 
@@ -54,8 +56,6 @@ namespace HR_Project.API.Controllers
 
             if (user.Succeeded)
             {
-                
-
                 Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
                 var authClaims = new List<Claim>
                 {
@@ -64,6 +64,7 @@ namespace HR_Project.API.Controllers
                     new Claim(ClaimTypes.NameIdentifier, personnel.Id.ToString()),
                     new Claim(ClaimTypes.Name, personnel.Name),
                     new Claim(ClaimTypes.Surname, personnel.Surname),
+                    new Claim(ClaimTypes.Thumbprint, await _profileImageService.GetFileById(personnel.Id.ToString()))
                     //new Claim(ClaimTypes.Thumbprint, personnel.ImagePath),
                     //new Claim("Company",personnel.CompanyId.ToString()),
                     //new Claim("Department",personnel.DepartmentId.ToString()),

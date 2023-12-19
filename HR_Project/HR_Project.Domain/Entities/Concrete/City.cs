@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
-    public class City : BaseEntity
+    public class City : BaseEntity, IEntity<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }

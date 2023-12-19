@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using HR_Project.Common.Extensions;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Common.ValidationClass;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HR_Project.Common.Models.DTOs
 {
@@ -45,6 +48,9 @@ namespace HR_Project.Common.Models.DTOs
         public Company Company { get; set; }
         public int? RegionId { get; set; }
         public Region? Region { get; set; }
+
+        public List<SelectListItem> Regions { get; set; }
+        public List<SelectListItem> CityList { get; set; }
         public AccountStatus AccountStatus { get; set; }
 
         //[PictureFileExtension]

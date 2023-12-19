@@ -5,15 +5,17 @@ using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
+
 using HR_Project.Application.Services.EmailService;
 using System.Security.Policy;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using HR_Project.Application.Services.FileService;
 
+
 namespace HR_Project.Application.Services.PersonelServices
 {
-	public class PersonnelService : IPersonnelService
+    public class PersonnelService : IPersonnelService
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
@@ -36,20 +38,24 @@ namespace HR_Project.Application.Services.PersonelServices
             //TODO auto mapper
             Personnel user = new Personnel
             {
-                UserName = model.Email,
-				Email = model.Email,
-				Name = model.Name,
-                CreatedDate = DateTime.Now,
+                UserName = model.UserName,
+                Email = model.Email,
+                PasswordHash = model.Password,
+                Name = model.Name,
+                Surname = model.Surname,
                 Title = model.Title,
                 PhoneNumber = model.PhoneNumber,
-                Surname = model.Surname,
-				Gender = model.Gender,
-				Nation = model.Nation,
-				AccountStatus = AccountStatus.Inactive
+                Gender = model.Gender,
+                Nation = model.Nation,
+                AccountStatus = AccountStatus.Inactive,
+                CityId = model.CityId,
+                RegionId = model.RegionId,
+                BirthDate = model.BirthDate,
+                BloodType = model.BloodType,
 
-			};
+            };
 
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            IdentityResult result = await _userManager.CreateAsync(user,model.Password);
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);

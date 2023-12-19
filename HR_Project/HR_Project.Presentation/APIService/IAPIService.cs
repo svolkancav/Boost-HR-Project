@@ -25,6 +25,7 @@ namespace HR_Project.Presentation.APIService
         Task<T> GetAsyncWoToken<T>(string endpoint);
 
         //register
-        //Task<bool> RegisterAsync(RegisterDTO registerModel);
+        Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel);
+		Task ConfirmAsync(string endpoint, MailConfirmDTO model);
     }
 }

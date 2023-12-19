@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using HR_Project.Application.IoC.Models.DTOs;
-using HR_Project.Application.Services.EmailService;
 using HR_Project.Application.Services.PersonelServices;
+using HR_Project.Common;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
-using HR_Project.Domain.Enum;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -35,17 +31,17 @@ namespace HR_Project.API.Controllers
 		[HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            await _personnelService.Register(new RegisterDTO
-            {
-                Name = "admin",
-                Surname = "admin",
-                Title = "admin",
-                Email = "admin",
-                PhoneNumber = "admin",
-                UserName = "admin",
-                Password = "admin123",
+            //await _personnelService.Register(new RegisterDTO
+            //{
+            //    Name = "admin",
+            //    Surname = "admin",
+            //    Title = "admin",
+            //    Email = "admin",
+            //    PhoneNumber = "admin",
+            //    UserName = "admin",
+            //    Password = "admin123",
 
-            });
+            //});
 
 
             var user = await _personnelService.Login(model);
@@ -113,42 +109,53 @@ namespace HR_Project.API.Controllers
             return token;
         }
 
+        [HttpPost("Confirm")]
+        public async Task<IActionResult> Confirm(MailConfirmDTO model)
+        {
+            Personnel personnel =  await _userManager.FindByIdAsync(model.Id);
+            var result = await _userManager.ConfirmEmailAsync(personnel, model.Token);
+
+            return Ok(result.Succeeded);
+        }
+
+
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
-			Personnel personnel = new Personnel()
-			{
-				Email = model.Email,
-				PasswordHash = model.Password,
-				Name = model.Name,
-				Surname = model.Surname,
-				Title = model.Title,
-				PhoneNumber = model.PhoneNumber,
-				Gender = model.Gender,
-				Nation = model.Nation,
-				AccountStatus = AccountStatus.Inactive,
-                CityId = model.CityId,
-                RegionId = model.RegionId,
-                
-                
-			};
+			//Personnel personnel = new Personnel()
+			//{
+   //             UserName = model.UserName,
+			//	Email = model.Email,
+			//	PasswordHash = model.Password,
+			//	Name = model.Name,
+			//	Surname = model.Surname,
+			//	Title = model.Title,
+			//	PhoneNumber = model.PhoneNumber,
+			//	Gender = model.Gender,
+			//	Nation = model.Nation,
+			//	AccountStatus = AccountStatus.Inactive,
+   //             CityId = model.CityId,
+   //             RegionId = model.RegionId,
+   //             BirthDate = model.BirthDate,
+   //             BloodType = model.BloodType,
+
+			//};
 
 			IdentityResult result = await _personnelService.Register(model);
 			if (result.Succeeded)
             {
-
+                Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
 				var token = await _userManager.GenerateEmailConfirmationTokenAsync(personnel);
-				var confirmationLink = Url.Action("Confirmation", "Account", new { id = personnel.Id, token }, Request.Scheme);
-				// Send registration confirmation email
-				string subject = "Registration Confirmation";
-				string body = "Kayıt işlemini gerçekleştirmek için linke tıklayınız: " + confirmationLink;
-
-				await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
-			}
+                
 
 
-			return (result.Succeeded) ? Ok(result) : BadRequest(result);
+                return Ok(new { id = personnel.Id, token });
+                //await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+            }
+
+
+			return BadRequest(result);
         }
 
 

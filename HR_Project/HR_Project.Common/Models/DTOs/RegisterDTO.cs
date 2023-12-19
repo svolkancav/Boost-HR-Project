@@ -15,17 +15,14 @@ namespace HR_Project.Common.Models.DTOs
 	public class RegisterDTO
 	{
 
-		[Display(Name = "Kullanıcı Adı")]
-		[Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
-		public string UserName { get; set; }
-
 
 		[Display(Name = "Email")]
 		[Required(ErrorMessage = "Email alanı boş bırakılamaz.")]
 		public string Email { get; set; }
 
+        public string UserName { get; set; }
 
-		[Display(Name = "Parola")]
+        [Display(Name = "Parola")]
 		[Required(ErrorMessage = "Parola alanı boş bırakılamaz.")]
 		public string Password { get; set; }
 
@@ -50,24 +47,20 @@ namespace HR_Project.Common.Models.DTOs
 		public string PhoneNumber { get; set; }
 
 
-		[Display(Name = "Şehir")]
-		[Required(ErrorMessage = "Şehir alanı boş bırakılamaz.")]
-		public string City { get; set; }
 
 
-		[Display(Name = "İlçe")]
-		[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
-		public List<SelectListItem> Region { get; set; }
-        public int RegionId { get; set; }
-        public int CityId { get; set; }
-        [Display(Name = "İl")]
-        [Required(ErrorMessage = "İl alanı boş bırakılamaz.")]
-        public List<SelectListItem> CityList { get; set; }
+		//[Display(Name = "İlçe")]
+		//[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
+		//public List<SelectListItem> Region { get; set; }
+        public int? RegionId { get; set; }
+        public int? CityId { get; set; }
+        //[Display(Name = "İl")]
+        //[Required(ErrorMessage = "İl alanı boş bırakılamaz.")]
+        //public List<SelectListItem> CityList { get; set; }
 
 
         [Display(Name = "Kan Grubu")]
-		[Required(ErrorMessage = "Kan Grubu alanı boş bırakılamaz.")]
-		public BloodType BloodType { get; set; }
+		public BloodType? BloodType { get; set; }
 
 
 		[Display(Name = "Doğum Günü")]

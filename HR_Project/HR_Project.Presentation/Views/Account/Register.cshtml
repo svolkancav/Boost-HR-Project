@@ -62,16 +62,15 @@
                                                    id="exampleInputUserSurname" aria-describedby="SurnameHelp"
                                                    placeholder="Soyadınız...">
                                         </div>
-                                        <div class="form-group" data-validate="UserName">
-                                            <input type="text" class="form-control form-control-user" name="UserName"
-                                                   id="exampleInputEmail" aria-describedby="UserNameHelp"
-                                                   placeholder="Kullanıcı Adı...">
-                                        </div>
 
                                         <div class="form-group" data-validate="Email">
                                             <input type="text" class="form-control form-control-user" name="Email"
                                                    id="exampleInputEmail" aria-describedby="emailHelp"
                                                    placeholder="Email...">
+                                        </div>
+                                        <div class="form-group" data-validate="UserName">
+                                            <input type="text" class="form-control form-control-user" name="UserName"
+                                                   id="exampleInputUserName" aria-describedby="UserNameHelp">
                                         </div>
 
                                         <div class="form-group" data-validate="Title">
@@ -86,12 +85,16 @@
                                                    placeholder="Telefon Numarası...">
                                         </div>
 
-                                        <div class="form-group">
-                                            <select asp-for="CityId" asp-items="@Model.CityList" class="form-control" id="cityDropdown" placeholder="İl..."></select>
+                                        <div class="form-group" data-validate="CityId">
+                                            <input type="text" class="form-control form-control-user" name="CityId"
+                                                   id="exampleInputCityId" aria-describedby="CityIdHelp"
+                                                   placeholder="İl...">
                                         </div>
 
-                                        <div class="form-group">
-                                            <select asp-for="RegionId" asp-items="@Model.Region" class="form-control" id="regionDropdown" placeholder="İlçe..."></select>
+                                        <div class="form-group" data-validate="RegionId">
+                                            <input type="text" class="form-control form-control-user" name="RegionId"
+                                                   id="exampleInputRegionId" aria-describedby="RegionIdHelp"
+                                                   placeholder="İlçe...">
                                         </div>
 
                                         <div class="form-group" data-validate="BloodType">
@@ -114,7 +117,7 @@
                                         <div class="form-group" data-validate="BirthDate">
                                             <input type="date" class="form-control form-control-user" name="BirthDate"
                                                    id="exampleInputBirthDate" aria-describedby="BirthDateHelp"
-                                                   placeholder="Doğrum Tarihi...">
+                                                   placeholder="Doğum Tarihi...">
                                         </div>
 
                                         <div class="form-group" data-validate="Password">
@@ -122,14 +125,14 @@
                                                    id="exampleInputPassword" placeholder="Şifre">
                                         </div>
 
-                                        
+
                                         <input type="submit" value="Üye Ol" class="btn btn-primary btn-user btn-block" />
 
 
 
                                     </form>
 
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -141,6 +144,7 @@
         </div>
 
     </div>
+
 
 
     @section Scripts {
@@ -158,27 +162,38 @@
                 toastr.error('@TempData["Toastrerror"]');
             </script>
         }
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
             $(document).ready(function () {
-                // İl değiştikçe ilçe listesini güncelle
                 $('#cityDropdown').change(function () {
-                    var cityId = $(this).val();
-                    $.ajax({
-                        url: '/Account/GetRegions',
-                        type: 'GET',
-                        data: { cityId: cityId },
-                        success: function (data) {
-                            $('#regionDropdown').empty();
-                            $.each(data, function (index, item) {
-                                $('#regionDropdown').append('<option value="' + item.value + '">' + item.text + '</option>');
-                            });
-                        }
-                    });
+                    var selectedCityId = $(this).val();
+                    if (selectedCityId) {
+                        $.ajax({
+                            url: '/Account/GetRegions',
+                            type: 'GET',
+                            data: { cityId: selectedCityId },
+                            success: function (data) {
+                                // Clear and populate the region dropdown
+                                $('#regionDropdown').empty();
+                                $.each(data, function (index, item) {
+                                    $('#regionDropdown').append($('<option>', {
+                                        value: item.value,
+                                        text: item.text
+                                    }));
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        // If no city selected, clear the region dropdown
+                        $('#regionDropdown').empty();
+                    }
                 });
             });
         </script>
-    }
 
+    };
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="~/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -188,6 +203,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="~/startbootstrap/js/sb-admin-2.min.js"></script>
+
+
 
 </body>
 

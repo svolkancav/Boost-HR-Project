@@ -63,6 +63,7 @@ builder.Services.AddIdentity<Personnel, IdentityRole<Guid>>(opt =>
 	opt.Password.RequireNonAlphanumeric = false;
 	opt.Password.RequiredLength = 3;
 	opt.Password.RequireLowercase = false;
+	
 
 }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 

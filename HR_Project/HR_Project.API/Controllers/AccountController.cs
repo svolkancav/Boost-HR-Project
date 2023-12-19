@@ -3,9 +3,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using HR_Project.Application.IoC.Models.DTOs;
+using HR_Project.Application.Services.EmailService;
 using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,29 +22,30 @@ namespace HR_Project.API.Controllers
         private readonly IPersonnelService _personnelService;
         private readonly IConfiguration _configuration;
         private readonly UserManager<Personnel> _userManager;
+		private readonly IEmailService _emailService;
 
-        public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager)
-        {
-            _personnelService = personnelService;
-            _configuration = configuration;
-            _userManager = userManager;
-            
-        }
+		public AccountController(IPersonnelService personnelService, IConfiguration configuration, UserManager<Personnel> userManager, IEmailService emailService)
+		{
+			_personnelService = personnelService;
+			_configuration = configuration;
+			_userManager = userManager;
+			_emailService = emailService;
+		}
 
-        [HttpPost("login")]
+		[HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            await _personnelService.Register(new RegisterDTO
-            {
-                //Name = "admin",
-                //Surname = "admin",
-                //Title = "admin",
-                //Email = "admin",
-                //PhoneNumber = "admin",
-                //UserName = "admin",
-                //Password = "admin123",
+            //await _personnelService.Register(new RegisterDTO
+            //{
+            //    Name = "admin",
+            //    Surname = "admin",
+            //    Title = "admin",
+            //    Email = "admin",
+            //    PhoneNumber = "admin",
+            //    UserName = "admin",
+            //    Password = "admin123",
 
-            });
+            //});
 
 
             var user = await _personnelService.Login(model);
@@ -114,8 +117,38 @@ namespace HR_Project.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
-            IdentityResult result = await _personnelService.Register(model);
-            return (result.Succeeded) ? Ok(result) : BadRequest(result);
+			Personnel personnel = new Personnel()
+			{
+				Email = model.Email,
+				PasswordHash = model.Password,
+				Name = model.Name,
+				Surname = model.Surname,
+				Title = model.Title,
+				PhoneNumber = model.PhoneNumber,
+				Gender = model.Gender,
+				Nation = model.Nation,
+				AccountStatus = AccountStatus.Inactive,
+                CityId = model.CityId,
+                RegionId = model.RegionId,
+                
+                
+			};
+
+			IdentityResult result = await _personnelService.Register(model);
+			if (result.Succeeded)
+            {
+
+				var token = await _userManager.GenerateEmailConfirmationTokenAsync(personnel);
+				var confirmationLink = Url.Action("Confirmation", "Account", new { id = personnel.Id, token }, Request.Scheme);
+				// Send registration confirmation email
+				string subject = "Registration Confirmation";
+				string body = "Kayıt işlemini gerçekleştirmek için linke tıklayınız: " + confirmationLink;
+
+				await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+			}
+
+
+			return (result.Succeeded) ? Ok(result) : BadRequest(result);
         }
 
 

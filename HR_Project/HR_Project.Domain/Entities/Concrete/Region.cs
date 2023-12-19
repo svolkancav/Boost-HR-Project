@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Domain.Entities.Concrete
 {
-    public class Region
+    public class Region : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

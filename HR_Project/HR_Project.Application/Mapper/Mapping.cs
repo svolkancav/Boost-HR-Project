@@ -24,6 +24,8 @@ namespace HR_Project.Application.Mapper
             CreateMap<Absence, AbsenceVM>().ReverseMap();
             CreateMap<AbsenceVM, AbsenceDTO>().ReverseMap();
             CreateMap<Personnel, UpdateProfileDTO>().ReverseMap();
+            CreateMap<City, CityDTO>().ReverseMap();
+            CreateMap<Region, RegionDTO>().ReverseMap();
 
         }
         

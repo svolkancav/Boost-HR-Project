@@ -20,7 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://easy-hr-client.azurewebsites.net/api/");
+    opt.BaseAddress = new Uri("https://localhost:7258/api/");
 	
 });
 ////https://localhost:7034/api/
@@ -31,7 +31,11 @@ builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddSingleton<EmailService>();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+	builder.RegisterModule(new DependencyResolver());
+});
 
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -51,6 +55,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -61,11 +66,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
-{
-    builder.RegisterModule(new DependencyResolver());
-});
 
 
 

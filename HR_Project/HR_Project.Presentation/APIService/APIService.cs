@@ -1,6 +1,7 @@
 ﻿using HR_Project.Common.Models.DTOs;
 using HR_Project.Presentation.Models;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -155,5 +156,23 @@ namespace HR_Project.Presentation.APIService
 
         //	return true;
         //}
+
+
+        public async Task<T> GetAsyncWoToken<T>(string endpoint)
+        {
+
+            var response = await _httpClient.GetAsync(endpoint);
+
+            if (!response.IsSuccessStatusCode)
+            {
+
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
     }
+
+    
 }

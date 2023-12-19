@@ -55,7 +55,7 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.Name, i => i.Person.FirstName)
                         .RuleFor(i => i.Surname, i => i.Person.LastName)
                         .RuleFor(i => i.Email, i => i.Person.Email)
-                        .RuleFor(i => i.City, i => i.Person.Address.City)
+                        //.RuleFor(i => i.CityId, i => i.)
                         .RuleFor(i => i.Address, i => i.Address.FullAddress())
                         .RuleFor(i => i.BirthDate, i => i.Person.DateOfBirth)
                         .RuleFor(i => i.BloodType, i => i.PickRandom<BloodType>())

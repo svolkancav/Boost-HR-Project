@@ -20,16 +20,19 @@ namespace HR_Project.Common.Models.DTOs
         public string Title { get; set; }
         public string PhoneNumber { get; set; }
         public string? Address { get; set; }
-		public string? City { get; set; }
+		
         public string? RegionName { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? HireDate { get; set; }
         public BloodType? BloodType { get; set; }
         public string? ImagePath { get; set; }
-        public Region? Region { get; set; }
+
         public Gender Gender { get; set; }
         public Nation Nation { get; set; }
         //public string ManagerName { get; set; }
+
+        public int? CityId { get; set; }
+        public City City { get; set; }
         public Guid? ManagerId { get; set; }
         public Personnel Manager { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
@@ -38,6 +41,7 @@ namespace HR_Project.Common.Models.DTOs
         public int? CompanyId { get; set; }
         public Company Company { get; set; }
         public int? RegionId { get; set; }
+        public Region? Region { get; set; }
         public AccountStatus AccountStatus { get; set; }
 
         //[PictureFileExtension]

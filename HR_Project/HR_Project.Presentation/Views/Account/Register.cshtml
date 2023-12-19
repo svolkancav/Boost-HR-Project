@@ -49,23 +49,23 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
                                     </div>
-                                    <form class="user" asp-action="Register">
+                                    <form class="user" asp-action="Register" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group" data-validate="Name">
                                             <input type="text" class="form-control form-control-user" name="Name"
                                                    id="exampleInputName" aria-describedby="NameHelp"
-                                                   placeholder="Name...">
+                                                   placeholder="Adınız...">
                                         </div>
 
                                         <div class="form-group" data-validate="Surname">
                                             <input type="text" class="form-control form-control-user" name="Surname"
                                                    id="exampleInputUserSurname" aria-describedby="SurnameHelp"
-                                                   placeholder="Surname...">
+                                                   placeholder="Soyadınız...">
                                         </div>
-
                                         <div class="form-group" data-validate="UserName">
                                             <input type="text" class="form-control form-control-user" name="UserName"
-                                                   id="exampleInputUserName" aria-describedby="UserNameHelp"
-                                                   placeholder="UserName...">
+                                                   id="exampleInputEmail" aria-describedby="UserNameHelp"
+                                                   placeholder="Kullanıcı Adı...">
                                         </div>
 
                                         <div class="form-group" data-validate="Email">
@@ -77,37 +77,44 @@
                                         <div class="form-group" data-validate="Title">
                                             <input type="text" class="form-control form-control-user" name="Title"
                                                    id="exampleInputTitle" aria-describedby="TitleHelp"
-                                                   placeholder="Title...">
+                                                   placeholder="Ünvan...">
                                         </div>
 
                                         <div class="form-group" data-validate="PhoneNumber">
                                             <input type="text" class="form-control form-control-user" name="PhoneNumber"
                                                    id="exampleInputPhoneNumber" aria-describedby="PhoneNumberHelp"
-                                                   placeholder="PhoneNumber...">
+                                                   placeholder="Telefon Numarası...">
                                         </div>
 
-                                        <div class="form-group" data-validate="City">
-                                            <input type="text" class="form-control form-control-user" name="City"
-                                                   id="exampleInputCity" aria-describedby="CityHelp"
-                                                   placeholder="City...">
+                                        <div class="form-group">
+                                            <select asp-for="CityId" asp-items="@Model.CityList" class="form-control" id="cityDropdown" placeholder="İl..."></select>
                                         </div>
 
-                                        <div class="form-group" data-validate="Region">
-                                            <input type="text" class="form-control form-control-user" name="Region"
-                                                   id="exampleInputRegion" aria-describedby="RegionHelp"
-                                                   placeholder="Region...">
+                                        <div class="form-group">
+                                            <select asp-for="RegionId" asp-items="@Model.Region" class="form-control" id="regionDropdown" placeholder="İlçe..."></select>
                                         </div>
 
                                         <div class="form-group" data-validate="BloodType">
                                             <input type="text" class="form-control form-control-user" name="BloodType"
                                                    id="exampleInputBloodType" aria-describedby="BloodTypeHelp"
-                                                   placeholder="BloodType...">
+                                                   placeholder="Kan Grubu...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Gender">
+                                            <input type="text" class="form-control form-control-user" name="Gender"
+                                                   id="exampleInputGender" aria-describedby="GenderHelp"
+                                                   placeholder="Cinsiyet...">
+                                        </div>
+                                        <div class="form-group" data-validate="Nation">
+                                            <input type="text" class="form-control form-control-user" name="Nation"
+                                                   id="exampleInputNation" aria-describedby="NationHelp"
+                                                   placeholder="Uyruk...">
                                         </div>
 
                                         <div class="form-group" data-validate="BirthDate">
                                             <input type="date" class="form-control form-control-user" name="BirthDate"
                                                    id="exampleInputBirthDate" aria-describedby="BirthDateHelp"
-                                                   placeholder="BirthDate...">
+                                                   placeholder="Doğrum Tarihi...">
                                         </div>
 
                                         <div class="form-group" data-validate="Password">
@@ -122,9 +129,7 @@
 
                                     </form>
 
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Hesap Oluştur!</a>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -153,6 +158,25 @@
                 toastr.error('@TempData["Toastrerror"]');
             </script>
         }
+        <script>
+            $(document).ready(function () {
+                // İl değiştikçe ilçe listesini güncelle
+                $('#cityDropdown').change(function () {
+                    var cityId = $(this).val();
+                    $.ajax({
+                        url: '/Account/GetRegions',
+                        type: 'GET',
+                        data: { cityId: cityId },
+                        success: function (data) {
+                            $('#regionDropdown').empty();
+                            $.each(data, function (index, item) {
+                                $('#regionDropdown').append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
     }
 
     <!-- Bootstrap core JavaScript-->

@@ -32,7 +32,6 @@ namespace HR_Project.Domain.Entities.Concrete
         public string? Address { get; set; }
         public string Title { get; set; }
         public int? ImageId { get; set; }
-        public string? City { get; set; }
         public Gender Gender { get; set; }
         public Nation Nation { get; set; }
 
@@ -49,6 +48,8 @@ namespace HR_Project.Domain.Entities.Concrete
 
         //Navigation
 
+        public int? CityId { get; set; }
+        public City City { get; set; }
         public int? RegionId { get; set; }
         public Region Region { get; set; }
         public int? DepartmentId { get; set; }

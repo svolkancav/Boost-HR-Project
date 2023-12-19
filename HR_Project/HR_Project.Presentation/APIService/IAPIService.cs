@@ -22,7 +22,9 @@ namespace HR_Project.Presentation.APIService
 		// login
 		Task<TokenResponse> LoginAsync(LoginDTO loginModel);
 
-		//register
-		//Task<bool> RegisterAsync(RegisterDTO registerModel);
-	}
+        Task<T> GetAsyncWoToken<T>(string endpoint);
+
+        //register
+        //Task<bool> RegisterAsync(RegisterDTO registerModel);
+    }
 }

@@ -3,7 +3,10 @@ using AutoMapper;
 using HR_Project.Application.Mapper;
 using HR_Project.Application.Services.AbsenceService;
 using HR_Project.Application.Services.AdvanceService;
+using HR_Project.Application.Services.CityService;
+using HR_Project.Application.Services.CompanyService;
 using HR_Project.Application.Services.EmailService;
+using HR_Project.Application.Services.ExpenseService;
 using HR_Project.Application.Services.FileService;
 using HR_Project.Application.Services.PersonelServices;
 using HR_Project.Application.Services.Storage.Azure;
@@ -26,14 +29,33 @@ namespace HR_Project.Application.IoC
         {
             builder.RegisterType<PersonelRepository>().As<IPersonelRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PersonnelService>().As<IPersonnelService>().InstancePerLifetimeScope();
+
             builder.RegisterType<AdvanceRepository>().As<IAdvanceRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AdvanceServise>().As<IAdvanceServise>().InstancePerLifetimeScope();
+
             builder.RegisterType<AbsenceRepository>().As<IAbsenceRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AbsenceService>().As<IAbsenceService>().InstancePerLifetimeScope();
-            builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
-            builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
+
+			builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
+			builder.RegisterType<CompanyService>().As<ICompanyService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<CityRepository>().As<ICityRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CityService>().As<ICityService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<RegionRepository>().As<IRegionRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<RegionService>().As<IRegionService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
+			builder.RegisterType<ExpenseService>().As<IExpenseService>().InstancePerLifetimeScope();
+
+			builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
+
+			builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
+
             builder.RegisterType<ExpenseImageService>().As<IExpenseImageService>().InstancePerLifetimeScope();
+
             builder.RegisterType<AzureStorage>().As<IStorage>().InstancePerLifetimeScope();
+
             builder.RegisterType<FileRepository<PersonnelPicture>>().As<IFileRepository<PersonnelPicture>>().InstancePerLifetimeScope();
             builder.RegisterType<FileRepository<CostPicture>>().As<IFileRepository<CostPicture>>().InstancePerLifetimeScope();
 

@@ -1,17 +1,12 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HR_Project.Application.Services.EmailService;
+using System.Security.Policy;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
@@ -21,34 +16,39 @@ namespace HR_Project.Application.Services.PersonelServices
         private readonly IMapper _mapper;
         private readonly SignInManager<Personnel> _signInManager;
         private readonly UserManager<Personnel> _userManager;
+ 
 
-        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager)
-        {
-            _personelRepository = personelRepository;
-            _mapper = mapper;
-            _signInManager = signInManager;
-            _userManager = userManager;
-        }
+		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager)
+		{
+			_personelRepository = personelRepository;
+			_mapper = mapper;
+			_signInManager = signInManager;
+			_userManager = userManager;
+		}
 
-        public async Task<IdentityResult> Register(RegisterDTO model)
+		public async Task<IdentityResult> Register(RegisterDTO model)
         {
             //TODO auto mapper
             Personnel user = new Personnel
             {
                 UserName = model.Email,
-                Name = model.Name,
-                Email = model.Email,
+				Email = model.Email,
+				Name = model.Name,
                 CreatedDate = DateTime.Now,
                 Title = model.Title,
                 PhoneNumber = model.PhoneNumber,
                 Surname = model.Surname,
+				Gender = model.Gender,
+				Nation = model.Nation,
+				AccountStatus = AccountStatus.Inactive
 
-            };
+			};
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
                 await _signInManager.SignInAsync(user, isPersistent: false);
-            return result;
+			
+			return result;
         }
 
         public async Task Create(PersonelDTO model)
@@ -68,8 +68,8 @@ namespace HR_Project.Application.Services.PersonelServices
 
         public async Task<PersonelDTO> GetById(string id)
         {
-            Personnel genre = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
-            var model = _mapper.Map<PersonelDTO>(genre);
+            Personnel personnel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
+            var model = _mapper.Map<PersonelDTO>(personnel);
 
             return model;
         }

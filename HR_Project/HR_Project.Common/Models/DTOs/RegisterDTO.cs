@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
 
 namespace HR_Project.Common.Models.DTOs
@@ -56,10 +57,15 @@ namespace HR_Project.Common.Models.DTOs
 
 		[Display(Name = "İlçe")]
 		[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
-		public Region Region { get; set; }
+		public List<SelectListItem> Region { get; set; }
+        public int RegionId { get; set; }
+        public int CityId { get; set; }
+        [Display(Name = "İl")]
+        [Required(ErrorMessage = "İl alanı boş bırakılamaz.")]
+        public List<SelectListItem> CityList { get; set; }
 
 
-		[Display(Name = "Kan Grubu")]
+        [Display(Name = "Kan Grubu")]
 		[Required(ErrorMessage = "Kan Grubu alanı boş bırakılamaz.")]
 		public BloodType BloodType { get; set; }
 

@@ -26,12 +26,21 @@ namespace HR_Project.Application.Services.CityService
 
         public async Task<List<CityDTO>> GetCities()
         {
-            return await _cityRepository.GetFilteredList(x => new CityDTO
+            try
             {
-                CityId = x.Id,
-                Name = x.Name,
-                Regions = x.Regions
-            }, x => x.Status != Status.Deleted);
+                return await _cityRepository.GetFilteredList(x => new CityDTO
+                {
+                    CityId = x.Id,
+                    Name = x.Name,
+                    Regions = x.Regions
+                }, x => x.Status != Status.Deleted);
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+           
         }
     }
 }

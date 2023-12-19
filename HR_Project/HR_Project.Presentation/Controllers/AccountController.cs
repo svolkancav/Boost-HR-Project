@@ -232,7 +232,7 @@ namespace HR_Project.Presentation.Controllers
         [HttpGet]
         public async Task<JsonResult> GetRegions(int cityId)
         {
-            List<RegionDTO> regionList = await _apiService.GetAsync<List<RegionDTO>>("region", HttpContext.Request.Cookies["access-token"]);
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
             var regions = regionList
                 .Where(d => d.CityId == cityId)
                 .Select(d => new SelectListItem

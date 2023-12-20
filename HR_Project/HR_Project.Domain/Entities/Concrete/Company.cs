@@ -21,8 +21,6 @@ namespace HR_Project.Domain.Entities.Concrete
 		public string Name { get; set; }
 		
 		public string? Phone { get; set; }
-		public string? City { get; set; }
-		public string? Country { get; set; }
         public int PersonnelCount { get; set; }
         public string TaxOffice { get; set; }
         public string TaxNumber { get; set; }
@@ -31,6 +29,9 @@ namespace HR_Project.Domain.Entities.Concrete
         //Navigation
         public int? RegionId { get; set; }
         public Region Region { get; set; }
+        public int? CityId { get; set; }
+        public City City { get; set; }
+
         public ICollection<Department> Departments { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
 	}

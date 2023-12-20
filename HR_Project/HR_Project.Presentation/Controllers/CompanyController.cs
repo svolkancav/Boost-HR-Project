@@ -25,5 +25,7 @@ namespace HR_Project.Presentation.Controllers
 			await _apiService.PostAsync<CreateCompanyDTO, CreateCompanyDTO>("company", model, HttpContext.Request.Cookies["access-token"]);
 			return RedirectToAction("Index");
 		}
+
+
 	}
 }

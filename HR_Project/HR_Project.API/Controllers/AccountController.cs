@@ -39,17 +39,19 @@ namespace HR_Project.API.Controllers
 		[HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            //await _personnelService.Register(new RegisterDTO
-            //{
-            //    Name = "admin",
-            //    Surname = "admin",
-            //    Title = "admin",
-            //    Email = "admin",
-            //    PhoneNumber = "admin",
-            //    UserName = "admin",
-            //    Password = "admin123",
+            await _personnelService.Register(new RegisterDTO
+            {
+                Name = "admin",
+                Surname = "admin",
+                Title = "admin",
+                Email = "admin",
+                PhoneNumber = "admin",
+                UserName = "admin",
+                Password = "admin123",
+                DepartmentId = 1,
+                CompanyId = 2,
 
-            //});
+            });
 
 
             var user = await _personnelService.Login(model);

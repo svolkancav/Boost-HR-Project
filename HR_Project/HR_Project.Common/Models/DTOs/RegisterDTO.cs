@@ -48,13 +48,15 @@ namespace HR_Project.Common.Models.DTOs
 		[Display(Name = "Telefon Numarası")]
 		[Required(ErrorMessage = "Telefon numarası alanı boş bırakılamaz.")]
 		public string PhoneNumber { get; set; }
+        public int? DepartmentId { get; set; }
+        public Department? Department { get; set; }
+        public int? CompanyId { get; set; }
+        public Company? Company { get; set; }
 
 
-
-
-		//[Display(Name = "İlçe")]
-		//[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
-		//public List<SelectListItem> Region { get; set; }
+        //[Display(Name = "İlçe")]
+        //[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
+        //public List<SelectListItem> Region { get; set; }
         public int? RegionId { get; set; }
         public int? CityId { get; set; }
         //[Display(Name = "İl")]

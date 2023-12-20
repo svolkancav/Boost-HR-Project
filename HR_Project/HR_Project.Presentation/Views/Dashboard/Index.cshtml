@@ -1,0 +1,110 @@
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Advances</h2>
+    <div class="row">
+        @foreach (var advance in ViewBag.Advances)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@advance.Reason</h5>
+                        <p class="card-text">Amount: @advance.Amount</p>
+                        <p class="card-text">Currency: @advance.Currency</p>
+                        <p class="card-text">Last Paid Date: @advance.LastPaidDate.ToShortDateString()</p>
+                        <p class="card-text">Condition: @advance.Condition.GetDisplayName()</p>
+                        @{
+                            if (advance.Condition == ConditionType.Pending)
+                            {
+                                <p>
+                                    <a asp-action="Update" asp-route-id="@advance.Id">Edit</a> |
+                                    <a asp-action="Delete" asp-route-id="@advance.Id">Delete</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    <span>Edit</span> |
+                                    <span>Delete</span>
+                                </p>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h2 class="mt-5">Absences</h2>
+    <div class="row">
+        @foreach (var absence in ViewBag.Absences)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@absence.LeaveTypes.GetDisplayName()</h5>
+                        <p class="card-text">Reason: @absence.Reason</p>
+                        <p class="card-text">Start Date: @absence.StartDate.ToShortDateString()</p>
+                        <p class="card-text">End Date: @absence.EndDate.ToShortDateString()</p>
+                        <p class="card-text">Duration: @absence.AbsenceDuration</p>
+                        <p class="card-text">Condition: @absence.Condition.GetDisplayName()</p>
+                        @{
+                            if (absence.Condition == ConditionType.Pending)
+                            {
+                                <p>
+                                    <a asp-action="Update" asp-route-id="@absence.Id">Edit</a> |
+                                    <a asp-action="Delete" asp-route-id="@absence.Id">Delete</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    <span>Edit</span> |
+                                    <span>Delete</span>
+                                </p>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h2 class="mt-5">Expenses</h2>
+    <div class="row">
+        @foreach (var expense in ViewBag.Expenses)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@expense.Title</h5>
+                        <p class="card-text">Description: @expense.Description</p>
+                        <p class="card-text">Amount: @expense.Amount</p>
+                        <p class="card-text">Currency: @expense.Currency</p>
+                        <p class="card-text">Expense Date: @expense.ExpenseDate.ToShortDateString()</p>
+                        @{
+                            if (expense.Condition == ConditionType.Pending)
+                            {
+                                <p>
+                                    <a asp-action="Update" asp-route-id="@expense.Id">Edit</a> |
+                                    <a asp-action="Delete" asp-route-id="@expense.Id">Delete</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    <span>Edit</span> |
+                                    <span>Delete</span>
+                                </p>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

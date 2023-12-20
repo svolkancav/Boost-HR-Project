@@ -74,7 +74,9 @@ namespace HR_Project.Common.Models.DTOs
         public DateTime HireDate { get; set; }
         public Gender Gender { get; set; }
 		public Nation Nation { get; set; }
-		public AccountStatus AccountStatus { get; set; }
+        public List<SelectListItem>? Regions { get; set; }
+        public List<SelectListItem>? CityList { get; set; }
+        public AccountStatus AccountStatus { get; set; }
 		[PictureFileExtension]
         public IFormFile? UploadImage { get; set; }
     }

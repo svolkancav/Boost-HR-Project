@@ -130,6 +130,26 @@
 				</div>
 			</li>
 
+			<!-- Nav Item - Personel Ekleme Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePersonnel"
+				   aria-expanded="true" aria-controls="collapsePersonnel">
+					<i class="fas fa-thin fa-paper-plane"></i>
+					<span>Personel İşlemleri</span>
+				</a>
+				<div id="collapsePersonnel" class="collapse" aria-labelledby="headingPersonnel"
+					 data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Personel İşlemleri:</h6>
+						<a class="collapse-item" asp-controller="Personnel" asp-action="ListPersonnel">Personel Listesi</a>
+						<a class="collapse-item" asp-controller="Personnel" asp-action="Create">Personel Kayıt</a>
+
+					</div>
+
+
+				</div>
+			</li>
+		
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">

@@ -110,19 +110,24 @@ namespace HR_Project.Presentation.Controllers
         public async Task<IActionResult> Register()
         {
 
-            //List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
-            //var registerDTO = new RegisterDTO
-            //{
-            //    CityList = cities.Select(c => new SelectListItem
-            //    {
-            //        Value = c.CityId.ToString(),
-            //        Text = c.Name
-            //    })
-            //    .ToList(),
-
-            //    Region = new List<SelectListItem>()
-            //};
-            return View();
+            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            RegisterDTO model = new RegisterDTO();
+            model.CityList = cities.Select(c => new SelectListItem
+            {
+                Value = c.CityId.ToString(),
+                Text = c.Name
+            })
+                .ToList();
+            model.Regions = regionList
+                //.Where(d => d.CityId == personnel.CityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+            return View(model);
         }
 
 
@@ -149,24 +154,7 @@ namespace HR_Project.Presentation.Controllers
 
             }
             return View(model);
-            //List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
-            //List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
-            //model.CityList = cities.Select(c => new SelectListItem
-            //{
-            //    Value = c.CityId.ToString(),
-            //    Text = c.Name
-            //})
-            //    .ToList();
-            //model.Region = regionList
-            //    .Where(d => d.CityId == model.CityId)
-            //    .Select(d => new SelectListItem
-            //    {
-            //        Value = d.RegionId.ToString(),
-            //        Text = d.Name
-            //    })
-            //    .ToList();
 
-            //return View(model);
         }
 
 

@@ -21,6 +21,7 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> ListPersonnel(string searchText, int pageNumber = 1, int pageSize = 10)
         {
             if (!string.IsNullOrEmpty(searchText))
@@ -38,15 +39,32 @@ namespace HR_Project.Presentation.Controllers
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            UpdateProfileDTO model = new UpdateProfileDTO();
+            model.CityList = cities.Select(c => new SelectListItem
+            {
+                Value = c.CityId.ToString(),
+                Text = c.Name
+            })
+                .ToList();
+            model.Regions = regionList
+                //.Where(d => d.CityId == personnel.CityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PersonelDTO model)
+        public async Task<IActionResult> Create(UpdateProfileDTO model)
         {
-            await _apiService.PostAsync<PersonelDTO, PersonelDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]); 
+            await _apiService.PostAsync<UpdateProfileDTO, UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]); 
             return RedirectToAction("Index");
         }
 
@@ -131,5 +149,5 @@ namespace HR_Project.Presentation.Controllers
 
             return Json(regions);
         }
-    }
+	}
 }

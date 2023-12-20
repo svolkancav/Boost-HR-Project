@@ -51,7 +51,6 @@ namespace HR_Project.Common.Models.DTOs
 
         public List<SelectListItem>? Regions { get; set; }
         public List<SelectListItem>? CityList { get; set; }
-        public AccountStatus AccountStatus { get; set; }
 
         //[PictureFileExtension]
         //public IFormFile? UploadPath { get; set; }

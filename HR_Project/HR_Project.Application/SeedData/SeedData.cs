@@ -106,7 +106,9 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.Amount, i => i.Random.Int(20, 500))
                         .RuleFor(i => i.Reason, i => i.Lorem.Sentence(1))
                         .RuleFor(i => i.Condition, i => i.PickRandom<ConditionType>())
+                        .RuleFor(i=>i.Currency, i=>i.PickRandom<Currency>())
                         .RuleFor(i => i.LastPaidDate, i => i.Date.Recent(100));
+                    
 
                     var genereatedAdvances = advancesFaker.Generate(50);
 

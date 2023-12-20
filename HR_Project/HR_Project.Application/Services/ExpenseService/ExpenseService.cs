@@ -38,6 +38,8 @@ namespace HR_Project.Application.Services.ExpenseService
         {
             Personnel personnel = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
             Expense expense = _mapper.Map<Expense>(model);
+            
+
             expense.Status = Status.Inserted;
             expense.CreatedDate = DateTime.Now;
             expense.PersonnelId = personnel.Id;

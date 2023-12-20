@@ -5,58 +5,221 @@
 @model HR_Project.Common.Models.VMs.Expense_MasterExpenseVM
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
-<div class="p-4">
-    <h1 class="h3 mb-2 text-gray-800">Masraf Oluştur</h1>
-</div>
-
-<hr />
-
-<div class="row p-4">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="ExpenseType" class="control-label">Masraf Türü</label>
-                <select class="form-control" asp-for="ExpenseType" asp-items="EnumHelper.GetEnumSelectList<ExpenseType>()">
-                    <option value="-1">Masraf Türü</option>
-                </select>
-                <span asp-validation-for="ExpenseType" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ExpenseDate" class="control-label">Masraf Tarihi</label>
-                <input asp-for="ExpenseDate" class="form-control" id="expenseDate" type="date" />
-                <span asp-validation-for="ExpenseDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ExpenseAmount" class="control-label">Masraf Miktarı</label>
-                <input asp-for="ExpenseAmount" class="form-control" />
-                <span asp-validation-for="ExpenseAmount" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Currency" class="control-label">Para Birimi</label>
-                <select class="form-control" asp-for="Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
-                    <option value="-1">Para Birimi</option>
-                </select>
-                <span asp-validation-for="Currency" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Reason" class="control-label">Açıklama</label>
-                <input asp-for="Reason" class="form-control" />
-                <span asp-validation-for="Reason" class="text-danger"></span>
-            </div>
-
-        </form>
 
 
-<div class="p-4">
-    <a asp-action="Index">Listeye Dön</a>
-</div>
+
+<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<h1 class="h3 mb-2 text-gray-800">Masraflar</h1>
+
+	<!-- DataTales Example -->
+	<div class="card shadow mb-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="card-body">
+				<div class="table-responsive">
+
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+						<thead>
+							<tr>
+
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseType: activate to sort column ascending" style="width: 140px;">
+									Masraf Türü
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
+									Açıklama
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseDate: activate to sort column ascending" style="width: 140px;">
+									Masraf Tarihi
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="ExpenseAmount: activate to sort column ascending" style="width: 140px;">
+									Masraf Miktarı
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
+									Para Birimi
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
+									
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="newRowTemplate" style="display:none;">
+								<td>
+									<div class="form-group">
+										<select class="form-control" asp-for="Expenses[0].ExpenseType" asp-items="EnumHelper.GetEnumSelectList<ExpenseType>()">
+											<option value="-1">Masraf Türü</option>
+										</select>
+										<span asp-validation-for="Expenses[0].ExpenseType" class="text-danger"></span>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<input asp-for="Expenses[0].Reason" class="form-control" />
+										<span asp-validation-for="Expenses[0].Reason" class="text-danger"></span>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<input asp-for="Expenses[0].ExpenseDate" class="form-control" id="expenseDate" type="date" />
+										<span asp-validation-for="Expenses[0].ExpenseDate" class="text-danger"></span>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<input asp-for="Expenses[0].ExpenseAmount" class="form-control" />
+										<span asp-validation-for="Expenses[0].ExpenseAmount" class="text-danger"></span>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<select class="form-control" asp-for="Expenses[0].Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
+											<option value="-1">Para Birimi</option>
+										</select>
+										<span asp-validation-for="Expenses[0].Currency" class="text-danger"></span>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<input type="button" value="Masrafı Sİl" class="btn btn-primary rowdel" />
+									</div>
+								</td>
+							</tr>
+						</tbody>
+
+						<div class="form-group">
+							<input type="button" value="Masraf Ekle" class="btn btn-primary" id="addRow" />
+						</div>
+					</table>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Oluştur" class="btn btn-primary" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+	@section Scripts
+		{
+		<script>
+			$(document).ready(function () {
+
+				function validateRow(row) {
+					var isValid = true;
+
+					// Iterate over input elements in the row
+					row.find("input, select").each(function () {
+						// Check if the element is required
+						var isRequired = $(this).attr("data-val-required") !== undefined;
+
+						// Check if the element has a value
+						var hasValue = $(this).val() !== null && $(this).val() !== "";
+
+						// Perform validation
+						if (isRequired && !hasValue) {
+							isValid = false;
+							// Handle validation error, e.g., add a CSS class or show an error message
+							// You can customize this part based on your UI requirements
+							$(this).addClass("is-invalid");
+						} else {
+							// Clear any previous validation error
+							$(this).removeClass("is-invalid");
+						}
+					});
+
+					return isValid;
+				}
+
+
+
+				$(document).on("click", "#addRow", function () {
+					var newRow = $("#newRowTemplate").clone();
+					newRow.removeAttr("id").removeAttr("style");
+
+					// Update input and select names
+					var rowCount = $("#dataTable tbody tr").length;
+					newRow.find("select, input").each(function () {
+						var nameAttr = $(this).attr("name");
+						if (nameAttr !== undefined) {
+							$(this).attr("name", nameAttr.replace("[0]", "[" + rowCount + "]"));
+						}
+					});
+
+					newRow.find(".btn-primary").val("Masrafı Sİl");
+					$("#dataTable tbody").append(newRow);
+					var lastRow = $("#dataTable tbody tr:last");
+					if (validateRow(lastRow)) {
+						$("#dataTable tbody").append(newRow);
+					}
+				});
+
+				$(document).on("click", ".rowdel", function () {
+					$(this).closest("tr").remove();
+				});
+			});
+
+		</script>
+	}
+
+
+
+
+
+	@* <div class="p-4">
+	<h1 class="h3 mb-2 text-gray-800">Masraf Oluştur</h1>
+	</div>
+
+	<hr />
+
+	<div class="row p-4">
+	<div class="col-md-4">
+	<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+	<div class="form-group">
+	<label asp-for="ExpenseType" class="control-label">Masraf Türü</label>
+	<select class="form-control" asp-for="ExpenseType" asp-items="EnumHelper.GetEnumSelectList<ExpenseType>()">
+	<option value="-1">Masraf Türü</option>
+	</select>
+	<span asp-validation-for="ExpenseType" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+	<label asp-for="ExpenseDate" class="control-label">Masraf Tarihi</label>
+	<input asp-for="ExpenseDate" class="form-control" id="expenseDate" type="date" />
+	<span asp-validation-for="ExpenseDate" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+	<label asp-for="ExpenseAmount" class="control-label">Masraf Miktarı</label>
+	<input asp-for="ExpenseAmount" class="form-control" />
+	<span asp-validation-for="ExpenseAmount" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+	<label asp-for="Currency" class="control-label">Para Birimi</label>
+	<select class="form-control" asp-for="Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
+	<option value="-1">Para Birimi</option>
+	</select>
+	<span asp-validation-for="Currency" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+	<label asp-for="Reason" class="control-label">Açıklama</label>
+	<input asp-for="Reason" class="form-control" />
+	<span asp-validation-for="Reason" class="text-danger"></span>
+	</div>
+
+	</form>
+
+
+	<div class="p-4">
+	<a asp-action="Index">Listeye Dön</a>
+	</div> *@

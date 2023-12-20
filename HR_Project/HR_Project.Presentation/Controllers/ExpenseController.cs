@@ -9,10 +9,11 @@ namespace HR_Project.Presentation.Controllers
     public class ExpenseController : BaseController
     {
         private readonly IAPIService _apiService;
+        private static Expense_MasterExpenseVM expenseModel= new Expense_MasterExpenseVM() {Expenses= new List<ExpenseDTO>() };
 
         public ExpenseController(IAPIService apiService)
         {
-            _apiService = apiService;
+			_apiService = apiService;
         }
 
         public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
@@ -36,12 +37,15 @@ namespace HR_Project.Presentation.Controllers
 
         public IActionResult Create()
         {
+
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(Expense_MasterExpenseVM model)
         {
+            
             try
             {
                 if (!ModelState.IsValid)

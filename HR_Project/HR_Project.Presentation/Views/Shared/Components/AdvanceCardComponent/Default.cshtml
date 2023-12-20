@@ -1,0 +1,62 @@
+﻿
+@model List<AdvanceVM>
+
+
+
+<div class="container-fluid">
+
+
+	<div class="card shadow mb-4">
+
+		<div class="card-body">
+			<div class="table-responsive">
+
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+					<thead>
+						<tr>
+							<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 200px;">
+								Açıklama
+							</th>
+							<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 200px;">
+								Miktar
+							</th>
+							<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
+								Para Birimi
+							</th>
+							<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 200px;">
+								Son Ödeme Tarihi
+							</th>
+							<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 200px;">
+								İşlemler
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+
+								<td>
+									@item.Reason
+								</td>
+								<td>
+									@item.Amount
+								</td>
+								<td>
+									@item.Currency.GetDisplayName()
+								</td>
+								<td>
+									@item.LastPaidDate.ToShortDateString()
+								</td>
+								<td>
+									<a asp-action="Update" asp-route-id="@item.Id">Düzenle</a>
+									|
+									<a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+								</td>
+							</tr>
+						}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

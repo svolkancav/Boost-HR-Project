@@ -4,6 +4,7 @@ using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
+using HR_Project.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,23 @@ namespace HR_Project.Application.Services.CompanyService
 			return _mapper.Map<UpdateCompanyDTO>(company);
 		}
 
-		public async Task Update(UpdateCompanyDTO model)
+        public async Task<List<CompanyVM>> GetCompanies()
+        {
+            return await _companyRepository.GetFilteredList(x => new CompanyVM
+            {
+				Name = x.Name,
+                Phone = x.Phone,
+                PersonnelCount = x.PersonnelCount,
+                TaxOffice = x.TaxOffice,
+                TaxNumber = x.TaxNumber,
+                Address = x.Address,
+                CityId = x.CityId,
+                RegionId = x.RegionId,
+
+            }, x => x.Status != Status.Deleted);
+        }
+
+        public async Task Update(UpdateCompanyDTO model)
 		{
 			Company company=await _companyRepository.GetDefault(x => x.Id == model.Id);
 

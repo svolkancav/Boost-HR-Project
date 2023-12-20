@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231220082402_first")]
+    [Migration("20231220104732_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,11 +161,8 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -202,6 +199,8 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("RegionId");
 
@@ -734,9 +733,15 @@ namespace HR_Project.Infrastructure.Migrations
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
                 {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
                     b.HasOne("HR_Project.Domain.Entities.Concrete.Region", "Region")
                         .WithMany("Companies")
                         .HasForeignKey("RegionId");
+
+                    b.Navigation("City");
 
                     b.Navigation("Region");
                 });

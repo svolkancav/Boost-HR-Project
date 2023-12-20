@@ -14,15 +14,14 @@ namespace HR_Project.Presentation.Controllers
     public class PersonnelController : BaseController
     {
         private readonly IAPIService _apiService;
-       
+
 
         public PersonnelController(IAPIService apiService)
         {
             _apiService = apiService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ListPersonnel(string searchText, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
         {
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -41,8 +40,11 @@ namespace HR_Project.Presentation.Controllers
 
         public async Task<IActionResult> Create()
         {
-            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
-            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            List<CityDTO> cities = await _apiService.GetAsync<List<CityDTO>>("city", HttpContext.Request.Cookies["access-token"]);
+            List<RegionDTO> regionList = await _apiService.GetAsync<List<RegionDTO>>("region", HttpContext.Request.Cookies["access-token"]);
+            List<UpdateProfileDTO> personnelList = await _apiService.GetAsync<List<UpdateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
+            List<DepartmentDTO> departments = await _apiService.GetAsync<List<DepartmentDTO>>("department", HttpContext.Request.Cookies["access-token"]);
+
             UpdateProfileDTO model = new UpdateProfileDTO();
             model.CityList = cities.Select(c => new SelectListItem
             {
@@ -58,19 +60,65 @@ namespace HR_Project.Presentation.Controllers
                     Text = d.Name
                 })
                 .ToList();
+            model.Departments = departments
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+            model.Managers = personnelList
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+
             return View(model);
+
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(UpdateProfileDTO model)
         {
-            await _apiService.PostAsync<UpdateProfileDTO, UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]); 
+            await _apiService.PostAsync<UpdateProfileDTO, UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Profil()
         {
             var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
+
+            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+
+            personnel.CityList = cities.Select(c => new SelectListItem
+            {
+                Value = c.CityId.ToString(),
+                Text = c.Name
+            })
+                .ToList();
+            personnel.Regions = regionList
+                //.Where(d => d.CityId == personnel.CityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+
+            return View(personnel);
+        }
+
+        public async Task<IActionResult> Update(string id)
+        {
 
             var personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
 
@@ -120,18 +168,18 @@ namespace HR_Project.Presentation.Controllers
         }
 
         // silme için
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             try
             {
                 await _apiService.DeleteAsync<PersonelDTO>($"personnel", id, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde silindi.");
-                return RedirectToAction("Index");
+                return RedirectToAction("ListPersonnel");
             }
             catch (Exception ex)
             {
                 Toastr("error", $"Kayıt silinirken hata oluştu : {ex.Message}");
-                return RedirectToAction("Index");
+                return RedirectToAction("ListPersonnel");
             }
         }
         [HttpGet]
@@ -149,5 +197,5 @@ namespace HR_Project.Presentation.Controllers
 
             return Json(regions);
         }
-	}
+    }
 }

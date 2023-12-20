@@ -51,8 +51,13 @@ namespace HR_Project.API.Controllers
             //    Password = "admin123",
             //    DepartmentId = 1,
             //    CompanyId = 2,
-            //    HireDate = DateTime.Now
-
+            //    HireDate = DateTime.Now,
+            //    CityId = 1,
+            //    RegionId = 1,
+            //    BloodType =Domain.Enum.BloodType.BRhNegative,
+            //    Gender = Domain.Enum.Gender.Male,
+            //    Nation = Domain.Enum.Nation.TR,
+            //    BirthDate = DateTime.Now,
 
             //});
 

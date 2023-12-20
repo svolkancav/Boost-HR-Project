@@ -1,4 +1,5 @@
 ﻿using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace HR_Project.Application.Services.CompanyService
 		Task Create(CreateCompanyDTO model);
 		Task Update(UpdateCompanyDTO model);
 		Task Delete(int id);
-		Task<UpdateCompanyDTO> GetById(string id);
+        Task<List<CompanyVM>> GetCompanies();
+        Task<UpdateCompanyDTO> GetById(string id);
 	}
 }

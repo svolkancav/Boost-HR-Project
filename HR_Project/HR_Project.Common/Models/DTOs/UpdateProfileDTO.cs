@@ -32,22 +32,22 @@ namespace HR_Project.Common.Models.DTOs
         public int? ImageId { get; set; }
 		[PictureFileExtension]
 		public IFormFile? UploadImage { get; set; }
+        public string ImagePath { get; set; }
 
-		public Gender Gender { get; set; }
+        public Gender Gender { get; set; }
         public Nation Nation { get; set; }
         //public string ManagerName { get; set; }
 
         public int? CityId { get; set; }
-        public City City { get; set; }
         public Guid? ManagerId { get; set; }
-        public Personnel Manager { get; set; }
+        public string ManagerName { get; set; }
         public ICollection<Personnel> Personnels { get; set; }
         public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public string DepartmentName { get; set; }
         public int? CompanyId { get; set; }
-        public Company Company { get; set; }
+        public string CompanyName { get; set; }
         public int? RegionId { get; set; }
-        public Region? Region { get; set; }
+        public string CityName { get; set; }
 
         public List<SelectListItem> Regions { get; set; }
         public List<SelectListItem> CityList { get; set; }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Common.Models.DTOs
 {
-	public class UpdateCompanyDTO
-	{
+    public class CompanyDTO
+    {
         public int Id { get; set; }
         public string Name { get; set; }
         public string? Phone { get; set; }
@@ -24,8 +24,5 @@ namespace HR_Project.Common.Models.DTOs
         public Region Region { get; set; }
         //public ICollection<Department> Departments { get; set; }
         //public ICollection<Personnel> Personnels { get; set; }
-
-
-        //public string Logo { get; set; }
     }
 }

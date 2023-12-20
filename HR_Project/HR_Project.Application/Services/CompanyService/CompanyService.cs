@@ -72,6 +72,8 @@ namespace HR_Project.Application.Services.CompanyService
 			company.PersonnelCount=model.PersonnelCount;
 			company.ModifiedDate=DateTime.Now;
 			company.Status=Status.Updated;
+			company.RegionId=model.RegionId;
+			company.CityId = model.CityId;
 
 			await _companyRepository.Update(company);
 		}

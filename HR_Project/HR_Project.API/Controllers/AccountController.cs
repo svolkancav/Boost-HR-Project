@@ -51,6 +51,8 @@ namespace HR_Project.API.Controllers
             //    Password = "admin123",
             //    DepartmentId = 1,
             //    CompanyId = 2,
+            //    HireDate = DateTime.Now
+
 
             //});
 
@@ -134,24 +136,7 @@ namespace HR_Project.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register()
         {
-            //Personnel personnel = new Personnel()
-            //{
-            //             UserName = model.UserName,
-            //	Email = model.Email,
-            //	PasswordHash = model.Password,
-            //	Name = model.Name,
-            //	Surname = model.Surname,
-            //	Title = model.Title,
-            //	PhoneNumber = model.PhoneNumber,
-            //	Gender = model.Gender,
-            //	Nation = model.Nation,
-            //	AccountStatus = AccountStatus.Inactive,
-            //             CityId = model.CityId,
-            //             RegionId = model.RegionId,
-            //             BirthDate = model.BirthDate,
-            //             BloodType = model.BloodType,
 
-            //};
 
             try
             {

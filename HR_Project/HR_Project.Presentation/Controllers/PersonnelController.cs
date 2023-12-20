@@ -58,7 +58,6 @@ namespace HR_Project.Presentation.Controllers
 
             List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
             List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
-            List<CompanyDTO> companyDTOs = await _apiService.GetAsync<List<CompanyDTO>>("company", HttpContext.Request.Cookies["access-token"]);
 
             personnel.CityList = cities.Select(c => new SelectListItem
             {

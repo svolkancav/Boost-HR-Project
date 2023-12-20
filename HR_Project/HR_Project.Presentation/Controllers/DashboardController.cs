@@ -13,34 +13,16 @@ namespace HR_Project.Presentation.Controllers
     public class DashboardController : Controller
     {
         private readonly IAPIService _apiService;
-        private readonly IAdvanceServise _advanceService;
-        private readonly IAbsenceService _absenceService;
-        private readonly IExpenseService _expenseService;
 
-        public DashboardController(
-            IAPIService apiService,
-            IAdvanceServise advanceService,
-            IAbsenceService absenceService,
-            IExpenseService expenseService)
+        public DashboardController(IAPIService apiService)
         {
             _apiService = apiService;
-            _advanceService = advanceService;
-            _absenceService = absenceService;
-            _expenseService = expenseService;
         }
 
         public async Task<IActionResult> Index()
         {
             try
             {
-                List<AdvanceVM> advances = await _advanceService.GetAdvances();
-                List<AbsenceVM> absences = await _absenceService.GetAbsences();
-                List<ExpenseVM> expenses = await _expenseService.GetExpenses();
-
-                ViewBag.Advances = advances;
-                ViewBag.Absences = absences;
-                ViewBag.Expenses = expenses;
-
                 return View();
             }
             catch (Exception ex)

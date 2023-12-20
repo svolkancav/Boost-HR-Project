@@ -41,16 +41,16 @@ namespace HR_Project.Common.Models.DTOs
         public int? CityId { get; set; }
         public Guid? ManagerId { get; set; }
         public string ManagerName { get; set; }
-        public ICollection<Personnel> Personnels { get; set; }
+        public ICollection<Personnel>? Personnels { get; set; }
         public int? DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public int? CompanyId { get; set; }
         public string CompanyName { get; set; }
         public int? RegionId { get; set; }
-        public string CityName { get; set; }
+        public string? CityName { get; set; }
 
-        public List<SelectListItem> Regions { get; set; }
-        public List<SelectListItem> CityList { get; set; }
+        public List<SelectListItem>? Regions { get; set; }
+        public List<SelectListItem>? CityList { get; set; }
         public AccountStatus AccountStatus { get; set; }
 
         //[PictureFileExtension]

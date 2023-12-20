@@ -18,7 +18,7 @@
                         <p class="card-text">Last Paid Date: @advance.LastPaidDate.ToShortDateString()</p>
                         <p class="card-text">Condition: @advance.Condition.GetDisplayName()</p>
                         @{
-                            if (advance.Condition == ConditionType.Pending)
+                            if (advance.Condition == AdvanPending)
                             {
                                 <p>
                                     <a asp-action="Update" asp-route-id="@advance.Id">Edit</a> |
@@ -107,5 +107,4 @@
             </div>
         }
     </div>
-</div>
-*@
+</div>*@

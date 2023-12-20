@@ -12,6 +12,7 @@ using HR_Project.Application.Services.FileService;
 using System.Web.Helpers;
 using HR_Project.Domain.Entities.Concrete.FileEntities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
@@ -22,15 +23,17 @@ namespace HR_Project.Application.Services.PersonelServices
         private readonly SignInManager<Personnel> _signInManager;
         private readonly UserManager<Personnel> _userManager;
         private readonly IProfileImageService _profileImageService;
+        private readonly IConfiguration _configuration;
 
 
-        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService)
+        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService, IConfiguration configuration)
         {
             _personelRepository = personelRepository;
             _mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
             _profileImageService = profileImageService;
+            _configuration = configuration;
         }
 
         public async Task<IdentityResult> Register(RegisterDTO model)
@@ -47,11 +50,11 @@ namespace HR_Project.Application.Services.PersonelServices
                 PhoneNumber = model.PhoneNumber,
                 Gender = model.Gender,
                 Nation = model.Nation,
-                AccountStatus = AccountStatus.Inactive,
                 CityId = model.CityId,
                 RegionId = model.RegionId,
                 BirthDate = model.BirthDate,
                 BloodType = model.BloodType,
+                HireDate = model.HireDate,
 
             };
 
@@ -174,9 +177,12 @@ namespace HR_Project.Application.Services.PersonelServices
                 personel.ManagerId = model.ManagerId;
                 personel.CompanyId = model.CompanyId;
                 personel.RegionId = model.RegionId;
+                personel.HireDate = model.HireDate;
+                
+                
 
                 //personel.ImagePath = model.ImagePath;
-                _profileImageService.UploadFile(personel.Id.ToString(), model.UploadImage);
+                await _profileImageService.UploadFile(personel.Id.ToString(), model.UploadImage);
 
                 await _personelRepository.Update(personel);
             }
@@ -203,15 +209,26 @@ namespace HR_Project.Application.Services.PersonelServices
         }
         public async Task<UpdateProfileDTO> FillDTO(string id)
         {
-           var personnel =  await _personelRepository.GetFilteredFirstOrDefault(
-                x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.Manager.Id, Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.Company.Id, DepartmentId = x.Department.Id, DepartmentName = x.Department.Name, CompanyName = x.Company.Name, ManagerName = x.Manager.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.Region.Id, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Id = x.Id, Email = x.Email, HireDate=x.HireDate, ImagePath = x.PersonnelPicture.FilePath},
+            try
+            {
+                var newPersonnel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
+
+                var personnel = await _personelRepository.GetFilteredFirstOrDefault(
+                x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.Manager.Id, Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.Company.Id, CompanyName = x.Company.Name, DepartmentId = x.Department.Id, DepartmentName = x.Department.Name, ManagerName = x.Manager.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.Region.Id, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}" , Id=x.Id},
                 where: x => x.Id == Guid.Parse(id),
-                include: x => x.Include(d => d.Department).Include(c => c.Company).Include(x => x.Personnels).Include(x => x.Region).Include(x => x.City).Include(x=>x.PersonnelPicture)
+                include: x => x.Include(d => d.Department).Include(c => c.Company).Include(x => x.Personnels).Include(x => x.Region).Include(x => x.City).Include(x => x.PersonnelPicture)
 
 
                 );
 
-            return personnel;
+                return personnel;
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+           
         }
     }
 }

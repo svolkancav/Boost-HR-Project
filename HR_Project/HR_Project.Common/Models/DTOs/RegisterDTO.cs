@@ -71,7 +71,8 @@ namespace HR_Project.Common.Models.DTOs
 		[Display(Name = "Doğum Günü")]
 		[Required(ErrorMessage = "Doğum Günü alanı boş bırakılamaz.")]
 		public DateTime BirthDate { get; set; }
-		public Gender Gender { get; set; }
+        public DateTime HireDate { get; set; }
+        public Gender Gender { get; set; }
 		public Nation Nation { get; set; }
 		public AccountStatus AccountStatus { get; set; }
 		[PictureFileExtension]

@@ -1,5 +1,6 @@
 ﻿using HR_Project.Application.Services.CompanyService;
 using HR_Project.Common.Models.DTOs;
+using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR_Project.API.Controllers
@@ -41,9 +42,20 @@ namespace HR_Project.API.Controllers
         
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var companies = await _companyService.GetCompanies();
+            return Ok(companies);
+        }
 
-
-
+        [HttpGet]
+        [Route("getbyid/{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var company = await _companyService.GetById(id);
+            return Ok(company);
+        }
 
     }
 }

@@ -24,5 +24,6 @@ namespace HR_Project.Application.Services.PersonelServices
         //RegisterDTO
         Task<IdentityResult> Register(RegisterDTO model);
         void Logout(string token);
+        Task<UpdateProfileDTO> FillDTO(string id);
     }
 }

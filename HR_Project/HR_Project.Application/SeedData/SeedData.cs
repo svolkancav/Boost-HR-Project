@@ -33,8 +33,8 @@ namespace HR_Project.Application.SeedData
                     var companyFaker = new Faker<Company>()
                         .RuleFor(i => i.Name, i => i.Name.JobArea())
                         //.RuleFor(i => i.Region, i => i.Person.Address.Street)
-                        .RuleFor(i => i.City, i => i.Person.Address.City)
-                        .RuleFor(i => i.Country, i => i.Person.Address.State)
+                        
+                        
                         .RuleFor(i => i.PersonnelCount, i => i.Random.Int(1, 50))
                         .RuleFor(i => i.TaxOffice, i => i.Person.Address.Suite)
                         .RuleFor(i => i.TaxNumber, i => i.Random.Int(123456, 456798).ToString())

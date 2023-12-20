@@ -1,9 +1,12 @@
 ﻿using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
+using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using X.PagedList;
 
 namespace HR_Project.Presentation.Controllers
@@ -51,7 +54,28 @@ namespace HR_Project.Presentation.Controllers
         {
             var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            UpdateProfileDTO personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>($"personnel",id, HttpContext.Request.Cookies["access-token"]);
+            var personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
+
+            List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            List<CompanyDTO> companyDTOs = await _apiService.GetAsync<List<CompanyDTO>>("company", HttpContext.Request.Cookies["access-token"]);
+
+            personnel.CityList = cities.Select(c => new SelectListItem
+            {
+                Value = c.CityId.ToString(),
+                Text = c.Name
+            })
+                .ToList();
+            personnel.Regions = regionList
+                //.Where(d => d.CityId == personnel.CityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+
             return View(personnel);
         }
 
@@ -92,6 +116,21 @@ namespace HR_Project.Presentation.Controllers
                 Toastr("error", $"Kayıt silinirken hata oluştu : {ex.Message}");
                 return RedirectToAction("Index");
             }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetRegions(int cityId)
+        {
+            List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
+            var regions = regionList
+                .Where(d => d.CityId == cityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+            return Json(regions);
         }
     }
 }

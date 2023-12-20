@@ -35,7 +35,8 @@ namespace HR_Project.API.Controllers
 		[Route("{id}")]
 		public async Task<IActionResult> GetById(string id)
 		{
-			var personnel = await _personnelService.GetById(id);
+			var personnel = await _personnelService.FillDTO(id);
+			
 			return Ok(personnel);
 		}
 

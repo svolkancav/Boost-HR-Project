@@ -2,7 +2,7 @@
 @using HR_Project.Common.Extensions;
 @using HR_Project.Common.Models.DTOs;
 @using HR_Project.Domain.Enum;
-@model UpdateProfileDTO
+@model CreateCompanyDTO
 
 @{
     ViewData["Title"] = "Index";
@@ -23,20 +23,11 @@
     <div class="container rounded bg-white mt-3 mb-5 ">
         <div class="row">
 
-
-
-
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Şirket Bilgilerim</h4>
+                        <h4 class="text-right">Şirket Bilgileri</h4>
                     </div>
-
-
-
-
-
-
 
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -49,10 +40,10 @@
                         <br />
                         <br />
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="labels">Telefon Numarası</label>
-                            <input type="text" class="form-control" id="phoneNumberInput" asp-for="PhoneNumber">
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <input type="text" class="form-control" id="phoneInput" asp-for="Phone">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
 
 
@@ -61,8 +52,8 @@
                         <br />
                         <div class="col-md-12">
                             <label class="labels">İl</label>
-                            <input type="text" class="form-control" placeholder="İl Seçiniz" asp-for="City">
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <input type="text" class="form-control" placeholder="İl Seçiniz" asp-for="CityId">
+                            <span asp-validation-for="CityId" class="text-danger"></span>
                         </div>
 
                         <br />
@@ -70,11 +61,9 @@
                         <br />
                         <div class="col-md-12">
                             <label class="labels">İlçe</label>
-                            <input type="text" class="form-control" placeholder="İlçe Seçiniz" asp-for="Region">
-                            <span asp-validation-for="Region" class="text-danger"></span>
+                            <input type="text" class="form-control" placeholder="İlçe Seçiniz" asp-for="RegionId">
+                            <span asp-validation-for="RegionId" class="text-danger"></span>
                         </div>
-
-
 
                         <br />
                         <br />
@@ -85,18 +74,37 @@
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
-
-
                 </div>
-
-
-
-
-
-
-
-
             </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Vergi</h4>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label class="labels">Vergi Dairesi</label>
+                    <input type="text" class="form-control" placeholder="Vergi Dairesi" asp-for="TaxOffice">
+                    <span asp-validation-for="TaxOffice" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label class="labels">Vergi Numarası</label>
+                    <input type="text" class="form-control" placeholder="Vergi Numarası" asp-for="TaxNumber">
+                    <span asp-validation-for="TaxNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label class="labels">Çalışan Sayısı</label>
+                    <input type="text" class="form-control" placeholder="Çalışan Sayısı" asp-for="PersonnelCount">
+                    <span asp-validation-for="PersonnelCount" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Oluştur" class="btn btn-primary" />
+        </div>
+
+        <div class="p-4">
+            <a asp-action="Index">Listeye Dön</a>
         </div>
 
 </form>

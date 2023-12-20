@@ -7,158 +7,180 @@ using System.Text;
 
 namespace HR_Project.Presentation.APIService
 {
-	public class APIService : IAPIService
-	{
-		private readonly HttpClient _httpClient;
+    public class APIService : IAPIService
+    {
+        private readonly HttpClient _httpClient;
 
-		public APIService(HttpClient httpClient)
-		{
-			_httpClient = httpClient;
-		}
+        public APIService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
-		public async Task<T> GetAsync<T>(string endpoint, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-			var response = await _httpClient.GetAsync(endpoint);
+        public async Task<T> GetAsync<T>(string endpoint, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync(endpoint);
 
-			if (!response.IsSuccessStatusCode)
-			{
+            if (!response.IsSuccessStatusCode)
+            {
 
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
 
-			var content = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<T>(content);
-		}
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
 
-		public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-			var jsonData = JsonConvert.SerializeObject(data);
-			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var jsonData = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-			
-			try
-			{
+
+            try
+            {
                 var response = await _httpClient.PostAsync(endpoint, content);
-				if (!response.IsSuccessStatusCode)
-				{
-					throw new Exception($"API isteği başarısız: {response.StatusCode}");
-				}
-				var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+                var responseContent = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<TResponse>(responseContent);
             }
-			catch (Exception message)
-			{
+            catch (Exception message)
+            {
 
-				throw message;
-			}
-			
+                throw message;
+            }
 
-			
-		}
 
-		//getbyid
-		public async Task<T> GetByIdAsync<T>(string endpoint, string id, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			var response = await _httpClient.GetAsync($"{endpoint}/{id}");
+        }
 
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
+        //getbyid
+        public async Task<T> GetByIdAsync<T>(string endpoint, string id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			var content = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<T>(content);
-		}
+            var response = await _httpClient.GetAsync($"{endpoint}/{id}");
 
-		//delete
-		public async Task<T> DeleteAsync<T>(string endpoint, int id, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
 
-			var response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
 
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
+        //delete
+        public async Task<T> DeleteAsync<T>(string endpoint, int id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			var content = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<T>(content);
-		}
+            var response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
 
-		//update
-		public async Task<T> UpdateAsync<T>(string endpoint, T data, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
 
-			var jsonData = JsonConvert.SerializeObject(data);
-			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
 
-			var response = await _httpClient.PutAsync(endpoint, content);
+        //update
+        public async Task<T> UpdateAsync<T>(string endpoint, T data, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
+            var jsonData = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-			var responseContent = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<T>(responseContent);
-		}
+            var response = await _httpClient.PutAsync(endpoint, content);
 
-		//get created model
-		public async Task<T> GetCreateModelAsync<T>(string endpoint, string token)
-		{
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
 
-			var response = await _httpClient.GetAsync($"{endpoint}");
-
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
-			var responseContent = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<T>(responseContent);
-		}
-
-		// login
-		public async Task<TokenResponse> LoginAsync(LoginDTO loginModel)
-		{
-			var jsonData = JsonConvert.SerializeObject(loginModel);
-			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-			var response = await _httpClient.PostAsync("Account/Login", content);
-
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
-
-			var responseContent = await response.Content.ReadAsStringAsync();
-			return JsonConvert.DeserializeObject<TokenResponse>(responseContent);
-		}
-
-		//register
-		public async Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel)
-		{
-			var jsonData = JsonConvert.SerializeObject(registerModel);
-			var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-			var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
-
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new Exception($"API isteği başarısız: {response.StatusCode}");
-			}
             var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<RegisterResponse>(responseContent);
+            return JsonConvert.DeserializeObject<T>(responseContent);
+        }
+
+        //get created model
+        public async Task<T> GetCreateModelAsync<T>(string endpoint, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.GetAsync($"{endpoint}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(responseContent);
+        }
+
+        // login
+        public async Task<TokenResponse> LoginAsync(LoginDTO loginModel)
+        {
+            var jsonData = JsonConvert.SerializeObject(loginModel);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("Account/Login", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TokenResponse>(responseContent);
+        }
+
+        //register
+        public async Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel)
+        {
+            //var jsonData = JsonConvert.SerializeObject(registerModel);
+            //var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            //var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
+
+            //if (!response.IsSuccessStatusCode)
+            //{
+            //	throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            //}
+            //         var responseContent = await response.Content.ReadAsStringAsync();
+            //         return JsonConvert.DeserializeObject<RegisterResponse>(responseContent);
+            using (var content = new MultipartFormDataContent())
+            {
+
+                if (registerModel.UploadImage != null)
+                {
+                    var imageContent = new StreamContent(registerModel.UploadImage.OpenReadStream());
+                    content.Add(imageContent, "UploadImage", registerModel.UploadImage.FileName);
+                }
+                registerModel.UploadImage = null;
+                content.Add(new StringContent(JsonConvert.SerializeObject(registerModel), Encoding.UTF8, "application/json"), "model");
+
+
+                var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<RegisterResponse>(responseContent);
+            }
         }
 
 
-		public async Task<T> GetAsyncWoToken<T>(string endpoint)
+        public async Task<T> GetAsyncWoToken<T>(string endpoint)
         {
 
             var response = await _httpClient.GetAsync(endpoint);
@@ -198,5 +220,5 @@ namespace HR_Project.Presentation.APIService
         }
     }
 
-    
+
 }

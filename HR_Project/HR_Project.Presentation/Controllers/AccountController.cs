@@ -134,6 +134,7 @@ namespace HR_Project.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
+            IFormFile uploadedFile = model.UploadImage;
             if (ModelState.IsValid)
             {
                 RegisterResponse response = await _apiService.RegisterAsync(model);
@@ -147,7 +148,7 @@ namespace HR_Project.Presentation.Controllers
                 return RedirectToAction("Login", "Account");
 
             }
-            return View();
+            return View(model);
             //List<CityDTO> cities = await _apiService.GetAsyncWoToken<List<CityDTO>>("city");
             //List<RegionDTO> regionList = await _apiService.GetAsyncWoToken<List<RegionDTO>>("region");
             //model.CityList = cities.Select(c => new SelectListItem

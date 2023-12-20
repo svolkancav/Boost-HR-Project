@@ -83,13 +83,14 @@ namespace HR_Project.Application.Services.FileService
 
 				if (file != null)
 				{
-					using (var image = Image.Load(file.OpenReadStream()))
-					{
-						image.Mutate(x => x.Resize(256, 256));
 
-						IFormFile formFile = ConvertImageToFormFile(image, file.FileName);
+					//using (var image = Image.Load(file.OpenReadStream()))
+					//{
+					//	image.Mutate(x => x.Resize(256, 256));
 
-						List<(string fileName, string pathOrContainerName)> result = await _azureStorage.UploadAsync("profile-photos", formFile);
+						//IFormFile formFile = ConvertImageToFormFile(fi, file.FileName);
+
+						List<(string fileName, string pathOrContainerName)> result = await _azureStorage.UploadAsync("profile-photos", file);
 
 						if (personnel.ImageId != null)
 						{
@@ -114,7 +115,7 @@ namespace HR_Project.Application.Services.FileService
 
 						return true;
 
-					}
+					//}
 				}
 				else
 				{

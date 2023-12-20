@@ -49,8 +49,13 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
                                     </div>
-                                    <form class="user" asp-action="Register" method="post">
+                                    <form class="user" asp-action="Register" method="post" enctype="multipart/form-data">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="UploadImage" class="control-label"></label>
+                                            <input asp-for="UploadImage" type="file" class="form-control" accept="image/*" />
+                                            <span asp-validation-for="UploadImage" class="text-danger"></span>
+                                        </div>
                                         <div class="form-group" data-validate="Name">
                                             <input type="text" class="form-control form-control-user" name="Name"
                                                    id="exampleInputName" aria-describedby="NameHelp"

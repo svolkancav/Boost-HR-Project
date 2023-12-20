@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace HR_Project.API.Controllers
 {
@@ -129,41 +130,62 @@ namespace HR_Project.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(RegisterDTO model)
+        public async Task<IActionResult> Register()
         {
-			//Personnel personnel = new Personnel()
-			//{
-   //             UserName = model.UserName,
-			//	Email = model.Email,
-			//	PasswordHash = model.Password,
-			//	Name = model.Name,
-			//	Surname = model.Surname,
-			//	Title = model.Title,
-			//	PhoneNumber = model.PhoneNumber,
-			//	Gender = model.Gender,
-			//	Nation = model.Nation,
-			//	AccountStatus = AccountStatus.Inactive,
-   //             CityId = model.CityId,
-   //             RegionId = model.RegionId,
-   //             BirthDate = model.BirthDate,
-   //             BloodType = model.BloodType,
+            //Personnel personnel = new Personnel()
+            //{
+            //             UserName = model.UserName,
+            //	Email = model.Email,
+            //	PasswordHash = model.Password,
+            //	Name = model.Name,
+            //	Surname = model.Surname,
+            //	Title = model.Title,
+            //	PhoneNumber = model.PhoneNumber,
+            //	Gender = model.Gender,
+            //	Nation = model.Nation,
+            //	AccountStatus = AccountStatus.Inactive,
+            //             CityId = model.CityId,
+            //             RegionId = model.RegionId,
+            //             BirthDate = model.BirthDate,
+            //             BloodType = model.BloodType,
 
-			//};
+            //};
 
-			IdentityResult result = await _personnelService.Register(model);
-			if (result.Succeeded)
+            try
             {
-                Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
-				var token = await _userManager.GenerateEmailConfirmationTokenAsync(personnel);
-                
+                var form = await Request.ReadFormAsync();
+                var jsonString = form["model"]; // JSON verisi
+
+                // JSON verisini RegisterDTO'ya çözme
+                var registerModel = JsonConvert.DeserializeObject<RegisterDTO>(jsonString);
+
+                // IFormFile'ı almak için
+                var file = form.Files.GetFile("UploadImage");
+
+                registerModel.UploadImage = file;
+
+                IdentityResult result = await _personnelService.Register(registerModel);
+                if (result.Succeeded)
+                {
+                    Personnel personnel = await _userManager.FindByEmailAsync(registerModel.Email);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(personnel);
 
 
-                return Ok(new { id = personnel.Id, token });
-                //await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+
+                    return Ok(new { id = personnel.Id, token });
+                    //await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+                }
+
+                return BadRequest(result);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
 
 
-			return BadRequest(result);
         }
 
 

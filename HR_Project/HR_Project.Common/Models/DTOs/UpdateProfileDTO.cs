@@ -50,6 +50,8 @@ namespace HR_Project.Common.Models.DTOs
         public string? CityName { get; set; }
 
         public List<SelectListItem>? Regions { get; set; }
+        public List<SelectListItem>? Departments { get; set; }
+        public List<SelectListItem>? Managers { get; set; }
         public List<SelectListItem>? CityList { get; set; }
 
         //[PictureFileExtension]

@@ -64,7 +64,7 @@
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item">
-				<a class="nav-link" asp-controller="Personnel" asp-action="Update">
+				<a class="nav-link" asp-controller="Personnel" asp-action="Profil">
 					<i class="fas fa-fw fa-cog"></i>
 					<span>Profil</span>
 				</a>
@@ -141,7 +141,7 @@
 					 data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Personel İşlemleri:</h6>
-						<a class="collapse-item" asp-controller="Personnel" asp-action="ListPersonnel">Personel Listesi</a>
+						<a class="collapse-item" asp-controller="Personnel" asp-action="Index">Personel Listesi</a>
 						<a class="collapse-item" asp-controller="Personnel" asp-action="Create">Personel Kayıt</a>
 
 					</div>
@@ -366,7 +366,7 @@
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								 aria-labelledby="userDropdown">
-								<a class="dropdown-item" asp-action="Update" asp-controller="Personnel">
+								<a class="dropdown-item" asp-action="Profil" asp-controller="Personnel">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 									Profil
 								</a>

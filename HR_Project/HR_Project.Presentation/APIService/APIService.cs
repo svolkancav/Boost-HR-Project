@@ -90,6 +90,22 @@ namespace HR_Project.Presentation.APIService
             return JsonConvert.DeserializeObject<T>(content);
         }
 
+        //delete
+        public async Task<T> DeleteAsync<T>(string endpoint, string id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API isteği başarısız: {response.StatusCode}");
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
+
         //update
         public async Task<T> UpdateAsync<T>(string endpoint, T data, string token)
         {

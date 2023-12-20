@@ -70,10 +70,10 @@
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Uyruk</label>
-                            <select class="form-control" disabled="disabled" asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
+                                <select class="form-control" disabled="disabled" asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
                                 <option value="-1">Uyruk Giriniz</option>
-                            </select>
-                            <span asp-validation-for="Nation" class="text-danger"></span>
+                                </select>
+                                <span asp-validation-for="Nation" class="text-danger"></span>
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Doğum Tarihi</label>
@@ -99,7 +99,7 @@
                                 </select>
                                 <span asp-validation-for="BloodType" class="text-danger"></span>
                             }
-
+                            
 
                         </div>
 
@@ -118,10 +118,10 @@
                     <input type="hidden" asp-for="Nation">
                     <input type="hidden" asp-for="Gender">
                     <input type="hidden" asp-for="BirthDate">
+                    
 
 
-
-
+                   
                 </div>
             </div>
             <div class="col-md-4">
@@ -138,39 +138,39 @@
 
                     <div class="col-md-12">
                         <label class="labels">Email</label>
-                        <input type="text" class="form-control" disabled="disabled" placeholder="Email giriniz" asp-for="Email">
+                        <input type="text" class="form-control" disabled ="disabled" placeholder="Email giriniz" asp-for="Email">
                         <span asp-validation-for="Email" class="text-danger"></span>
 
-                    </div>
+                        </div>
                     <div class="col-md-12">
                         <label class="labels">İşe Giriş Tarihi</label>
-                        <input type="date" class="form-control" disabled="disabled" placeholder="" asp-for="HireDate">
+                        <input type="date"  class="form-control" disabled="disabled" placeholder="" asp-for="HireDate">
                         <span asp-validation-for="HireDate" class="text-danger"></span>
 
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Yöneticisi</label>
-                        <input type="text" disabled="disabled" class="form-control" asp-for="ManagerName">
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="ManagerName">
                         <span asp-validation-for="ManagerName" class="text-danger"></span>
 
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Şirketi</label>
-                        <input type="text" disabled="disabled" class="form-control" asp-for="CompanyName">
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="CompanyName">
                         <span asp-validation-for="CompanyName" class="text-danger"></span>
 
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Departmanı</label>
-                        <input type="text" disabled="disabled" class="form-control" asp-for="DepartmentName">
+                        <input type="text" disabled="disabled" class="form-control"  asp-for="DepartmentName">
                         <span asp-validation-for="DepartmentName" class="text-danger"></span>
 
                     </div>
 
-
+                    
                 </div>
             </div>
-
+         
         </div>
         <div class="mt-5 text-center">
             <input type="submit" asp-action="Update" asp-controller="Personnel" value="Kaydet" class="btn btn-primary profile-button" />

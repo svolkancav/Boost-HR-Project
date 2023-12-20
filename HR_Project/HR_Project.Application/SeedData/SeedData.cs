@@ -51,13 +51,20 @@ namespace HR_Project.Application.SeedData
                 {
                     List<Company> companies = new List<Company>();
                     companies = await context.Companies.ToListAsync();
+
+                    List<Region> regions = new List<Region>();
+                    regions = await context.Regions.ToListAsync();
+
+                    List<City> cities = new List<City>();
+                    cities = await context.Cities.ToListAsync();
+
                     List<Department> departments = new List<Department>();
                     departments = await context.Departments.ToListAsync();
+
                     var personnellFaker = new Faker<Personnel>()
                         .RuleFor(i => i.Name, i => i.Person.FirstName)
                         .RuleFor(i => i.Surname, i => i.Person.LastName)
                         .RuleFor(i => i.Email, i => i.Person.Email)
-                        //.RuleFor(i => i.CityId, i => i.)
                         .RuleFor(i => i.Address, i => i.Address.FullAddress())
                         .RuleFor(i => i.BirthDate, i => i.Person.DateOfBirth)
                         .RuleFor(i => i.BloodType, i => i.PickRandom<BloodType>())
@@ -66,6 +73,9 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.PhoneNumber, i => i.Person.Phone)
                         .RuleFor(i => i.CompanyId, i => i.PickRandom(companies).Id)
                         .RuleFor(i => i.Nation, i => i.PickRandom<Nation>())
+                        .RuleFor(i=>i.RegionId, i=>i.PickRandom(regions).Id)
+                        .RuleFor(i=>i.CityId, i=>i.PickRandom(cities).Id)
+                        .RuleFor(i=>i.HireDate, i=>i.Person.DateOfBirth)
                         .RuleFor(i => i.Gender, i => i.PickRandom<Gender>());
                         
                     

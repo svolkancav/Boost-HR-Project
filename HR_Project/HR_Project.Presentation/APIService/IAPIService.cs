@@ -13,9 +13,10 @@ namespace HR_Project.Presentation.APIService
 
 		//delete
 		Task<T> DeleteAsync<T>(string endpoint, int id, string token);
+        Task<T> DeleteAsync<T>(string endpoint, string id, string token);
 
-		//update
-		Task<T> UpdateAsync<T>(string endpoint, T data, string token);
+        //update
+        Task<T> UpdateAsync<T>(string endpoint, T data, string token);
 
 		//get created model
 		Task<T> GetCreateModelAsync<T>(string endpoint, string token);

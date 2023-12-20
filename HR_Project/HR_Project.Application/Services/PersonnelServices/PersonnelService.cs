@@ -2,21 +2,15 @@
 using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Domain.Entities.Concrete;
-using HR_Project.Domain.Enum;
 using HR_Project.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Policy;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 using HR_Project.Application.Services.FileService;
-using System.Web.Helpers;
-using HR_Project.Domain.Entities.Concrete.FileEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
-    public class PersonnelService : IPersonnelService
+	public class PersonnelService : IPersonnelService
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
@@ -124,16 +118,16 @@ namespace HR_Project.Application.Services.PersonelServices
                     Email = x.Email,
                     Address = x.Address,
                     BirthDate = x.BirthDate,
-                    Department = x.Department,
                     HireDate = x.HireDate,
                     PhoneNumber = x.PhoneNumber,
                     ManagerId = x.ManagerId,
-                    Region = x.Region,
+					CompanyId = x.CompanyId,
+					DepartmentId = x.DepartmentId,
+					RegionId = x.RegionId,
+                    CityId = x.CityId,
                     Nation = x.Nation,
                     Gender = x.Gender,
-                    Company = x.Company,
-
-
+                    
                 },
                 where: x => x.Status != Domain.Enum.Status.Deleted,
                 orderBy: x => x.OrderBy(x => x.Name)

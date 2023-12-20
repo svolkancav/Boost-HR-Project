@@ -138,10 +138,11 @@
 
                     </div>
                     <div class="col-md-12">
-                        <label class="labels">Yöneticisi</label>
-                        <input type="text"  class="form-control" asp-for="ManagerName">
-                        <span asp-validation-for="ManagerName" class="text-danger"></span>
-
+                        <label class="labels" asp-for="ManagerId">Yönetici</label>
+                        <select asp-for="ManagerId" id="ManagerId" asp-items="Model.Managers" class="form-control">
+                            <option value="" selected disabled>Yönetici seçiniz</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Şirketi</label>
@@ -150,11 +151,14 @@
 
                     </div>
                     <div class="col-md-12">
-                        <label class="labels">Departmanı</label>
-                        <input type="text"  class="form-control" asp-for="DepartmentName">
-                        <span asp-validation-for="DepartmentName" class="text-danger"></span>
-
+                        <label class="labels" asp-for="DepartmentId">Departman</label>
+                        <select asp-for="DepartmentId" id="DepartmentId" asp-items="Model.Departments" class="form-control">
+                            <option value="" selected disabled>Departman seçiniz</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
+                   
+                </div>
 
                 </div>
             </div>

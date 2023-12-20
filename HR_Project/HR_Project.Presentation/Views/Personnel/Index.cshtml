@@ -1,11 +1,8 @@
-﻿@using HR_Project.Common.Extensions;
-@using HR_Project.Common.Models.VMs;
-@using HR_Project.Domain.Enum;
-@using X.PagedList;
-@model IPagedList<AdvanceVM>
+﻿@using X.PagedList;
+@model IPagedList<HR_Project.Common.Models.VMs.PersonelVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ListPersonnel";
     Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
 
@@ -16,7 +13,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Avanslar</h1>
+        <h1 class="h3 mb-2 text-gray-800">Personeller</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -30,7 +27,7 @@
                             <div class="col-sm-12 col-md-9">
                                 <div class="dataTables_length" id="dataTable_length">
                                     <p>
-                                        <a asp-action="Create">Avans Oluştur</a>
+                                        <a asp-action="Create">Personel Oluştur</a>
                                     </p>
                                     <label>
                                         Göster
@@ -50,7 +47,7 @@
                                         {
                                             <p>
                                                 Ara: @Html.TextBox("searchText")
-                                                <input type="submit" class="fa-search alert-light" placeholder="İzin tipi veya açıklama gir" />
+                                                <input type="submit" class="fa-search alert-light" placeholder="Personel Sorgula" />
                                             </p>
                                         }
 
@@ -65,19 +62,19 @@
                             <tr>
 
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
-                                    Açıklama
+                                    Adı
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
-                                    Miktar
+                                    Soyadı
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
-                                    Para Birimi
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 120px;">
+                                    Email
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
-                                    Son Ödeme Tarihi
+                                    Adresi
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
-                                    Durumu
+                                    Ünvanı
                                 </th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 140px;">
                                     İşlemler
@@ -90,38 +87,28 @@
                                 <tr>
 
                                     <td>
-                                        @item.Reason
+                                        @item.Name
                                     </td>
                                     <td>
-                                        @item.Amount 
+                                        @item.Surname
                                     </td>
                                     <td>
-                                        @item.Currency.GetDisplayName()
+                                        @item.Email
                                     </td>
                                     <td>
-                                        @item.LastPaidDate.ToShortDateString()
+                                        @item.Address
                                     </td>
                                     <td>
-                                        @item.Condition.GetDisplayName()
+                                        @item.Title
                                     </td>
-                                    @{
-                                        if (item.Condition == ConditionType.Pending)
-                                        {
-                                            <td>
-                                                <a asp-action="Update" asp-route-id="@item.Id">Düzenle</a>
-                                                |
-                                                <a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
-                                            </td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                <a disabled="disabled">Düzenle</a>
-                                                |
-                                                <a disabled="disabled">Sil</a>
-                                            </td>
-                                        }
-                                    }
+
+                                    <td>
+                                        <a asp-controller="Personnel" asp-action="Update" asp-route-id="@item.Id.ToString()">Düzenle</a>
+                                        |
+                                        <a asp-controller="Personnel" asp-action="Delete" asp-route-id="@item.Id.ToString()">Sil</a>
+                                    </td>
+
+                                    
                                 </tr>
                             }
 
@@ -168,6 +155,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+  
 
     @section Scripts {
         @if (TempData.ContainsKey("Toastrsuccess"))
@@ -212,9 +200,9 @@
             var searchText = '@Context.Request.Query["searchText"]';
 
             if (searchText) {
-                var url = "/Advance/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
+                var url = "/Personnel/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
             } else {
-                var url = "/Advance/Index?pageSize=" + selectedPageSize;
+                var url = "/Personnel/Index?pageSize=" + selectedPageSize;
             }
 
             window.location.href = url;
@@ -234,7 +222,7 @@
         var selectedPageSize = this.value;
 
 
-        var url = "/Advance/Index?pageSize=" + selectedPageSize;
+        var url = "/Personnel/Index?pageSize=" + selectedPageSize;
 
 
         window.location.href = url;
@@ -242,7 +230,7 @@
 
     function confirmDelete(id) {
         if (confirm("Silmek istediğinize emin misiniz?")) {
-            window.location.href = "/Advance/Delete/?id=" + id;
+            window.location.href = "/Personnel/Delete/?id=" + id;
         } else {
 
         }

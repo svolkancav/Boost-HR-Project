@@ -76,8 +76,10 @@ namespace HR_Project.Application.Services.AbsenceService
                 Id = x.Id,
                 Reason = x.Reason,
                 LeaveTypes = x.LeaveTypes,
-                Condition = x.Condition,
                 AbsenceDuration = x.AbsenceDuration,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
+                Condition = x.Condition,
             }, x => x.Status != Status.Deleted);
         }
 
@@ -88,8 +90,9 @@ namespace HR_Project.Application.Services.AbsenceService
                 Id = x.Id,
                 Reason = x.Reason,
                 LeaveTypes = x.LeaveTypes,
-                Condition = x.Condition,
                 AbsenceDuration = x.AbsenceDuration,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
             }, x => x.Status != Status.Deleted && x.Condition == condition);
         }
 

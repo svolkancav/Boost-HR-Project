@@ -28,7 +28,7 @@ namespace HR_Project.Domain.Entities.Concrete
 
 
         //Navigation 
-
+        //Todo: PersonnelId masterexpense taşınacak
         public Guid PersonnelId { get; set; }
         public Personnel Personnel { get; set; }
 

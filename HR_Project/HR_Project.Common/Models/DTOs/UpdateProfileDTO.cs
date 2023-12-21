@@ -21,6 +21,7 @@ namespace HR_Project.Common.Models.DTOs
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string Title { get; set; }
         public string PhoneNumber { get; set; }
         public string? Address { get; set; }
@@ -32,7 +33,7 @@ namespace HR_Project.Common.Models.DTOs
         public int? ImageId { get; set; }
 		[PictureFileExtension]
 		public IFormFile? UploadImage { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
         public Gender Gender { get; set; }
         public Nation Nation { get; set; }
@@ -40,12 +41,12 @@ namespace HR_Project.Common.Models.DTOs
 
         public int? CityId { get; set; }
         public Guid? ManagerId { get; set; }
-        public string ManagerName { get; set; }
+        public string? ManagerName { get; set; }
         public ICollection<Personnel>? Personnels { get; set; }
         public int? DepartmentId { get; set; }
-        public string DepartmentName { get; set; }
+        public string? DepartmentName { get; set; }
         public int? CompanyId { get; set; }
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
         public int? RegionId { get; set; }
         public string? CityName { get; set; }
 

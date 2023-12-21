@@ -12,7 +12,7 @@ namespace HR_Project.Application.Services.PersonelServices
     public interface IPersonnelService
     {
         // TODO: PersonelDTO geçici eklendi. DTO lar oluştuktan sonra yenileri eklenebilir.
-        Task Create(PersonelDTO model);
+        Task Create(UpdateProfileDTO model);
         Task Update(UpdateProfileDTO model);
         Task Delete(string id);
         Task<PersonelDTO> GetById(string id);

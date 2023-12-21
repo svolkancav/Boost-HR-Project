@@ -5,6 +5,7 @@ using HR_Project.Application.Services.AbsenceService;
 using HR_Project.Application.Services.AdvanceService;
 using HR_Project.Application.Services.CityService;
 using HR_Project.Application.Services.CompanyService;
+using HR_Project.Application.Services.DepartmentService;
 using HR_Project.Application.Services.ExpenseService;
 using HR_Project.Application.Services.FileService;
 using HR_Project.Application.Services.PersonelServices;
@@ -48,7 +49,10 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
 			builder.RegisterType<ExpenseService>().As<IExpenseService>().InstancePerLifetimeScope();
 
-			builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
+            builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<DepartmentService>().As<IDepartmentService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
 
 			builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
 

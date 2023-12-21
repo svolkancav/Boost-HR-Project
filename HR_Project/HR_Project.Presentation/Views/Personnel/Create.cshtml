@@ -31,13 +31,13 @@
                     </div>
 
                     <div class="row mt-2">
-                      
+
                         <div class="col-md-6">
                             <label class="labels">Adı</label>
-                            <input type="text" class="form-control"  placeholder="adı" asp-for="Name">
+                            <input type="text" class="form-control" placeholder="adı" asp-for="Name">
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <label class="labels">Soyadı</label>
                             <input type="text" class="form-control" placeholder="soyadı" asp-for="Surname">
@@ -76,36 +76,34 @@
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Uyruk</label>
-                            <select class="form-control"  asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
+                            <select class="form-control" asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
                                 <option value="-1">Uyruk Giriniz</option>
                             </select>
                             <span asp-validation-for="Nation" class="text-danger"></span>
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Doğum Tarihi</label>
-                            <input type="date" class="form-control" placeholder="Doğum tarihi giriniz" asp-for="BirthDate" >
+                            <input type="date" class="form-control" placeholder="Doğum tarihi giriniz" asp-for="BirthDate">
                             <span asp-validation-for="BirthDate" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Cinsiyet</label>
+
+                            <select class="form-control" asp-for="Gender" asp-items="EnumHelper.GetEnumSelectList<Gender>()">
+                                <option value="-1">Cinsiyet</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
 
                         </div>
 
                         <div class="col-md-12">
                             <label class="labels">Kan Grubu</label>
 
-                            @if (Model.BloodType != null)
-                            {
-                                <select class="form-control" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
-                                    <option value="-1">Kan Grubunuzu Giriniz</option>
-                                </select>
-                                <span asp-validation-for="BloodType" class="text-danger"></span>
-                            }
-                            else
-                            {
-                                <select class="form-control" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
-                                    <option value="-1">Kan Grubunuzu Giriniz</option>
-                                </select>
-                                <span asp-validation-for="BloodType" class="text-danger"></span>
-                            }
-
+                            <select class="form-control" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
+                                <option value="-1">Kan Grubunuzu</option>
+                            </select>
+                            <span asp-validation-for="BloodType" class="text-danger"></span>
 
                         </div>
 
@@ -132,6 +130,12 @@
 
                     </div>
                     <div class="col-md-12">
+                        <label class="labels">Şifre</label>
+                        <input type="text" class="form-control" placeholder="Şifre giriniz" asp-for="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-md-12">
                         <label class="labels">İşe Giriş Tarihi</label>
                         <input type="date" class="form-control" placeholder="" asp-for="HireDate">
                         <span asp-validation-for="HireDate" class="text-danger"></span>
@@ -145,28 +149,22 @@
                         <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
                     <div class="col-md-12">
-                        <label class="labels">Şirketi</label>
-                        <input type="text" class="form-control" asp-for="CompanyName">
-                        <span asp-validation-for="CompanyName" class="text-danger"></span>
-
-                    </div>
-                    <div class="col-md-12">
                         <label class="labels" asp-for="DepartmentId">Departman</label>
                         <select asp-for="DepartmentId" id="DepartmentId" asp-items="Model.Departments" class="form-control">
                             <option value="" selected disabled>Departman seçiniz</option>
                         </select>
                         <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
-                   
-                </div>
 
                 </div>
+
             </div>
+        </div>
 
-        </div>
-        <div class="mt-5 text-center">
-            <input type="submit" asp-action="Create" asp-controller="Personnel" value="Kaydet" class="btn btn-primary profile-button" />
-        </div>
+    </div>
+    <div class="mt-5 text-center">
+        <input type="submit" asp-action="Create" asp-controller="Personnel" value="Kaydet" class="btn btn-primary profile-button" />
+    </div>
     </div>
 </form>
 

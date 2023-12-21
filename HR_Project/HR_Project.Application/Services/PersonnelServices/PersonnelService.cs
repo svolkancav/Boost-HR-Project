@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
-	public class PersonnelService : IPersonnelService
+    public class PersonnelService : IPersonnelService
     {
         private readonly IPersonelRepository _personelRepository;
         private readonly IMapper _mapper;
@@ -75,10 +75,33 @@ namespace HR_Project.Application.Services.PersonelServices
             return result;
         }
 
-        public async Task Create(PersonelDTO model)
+        public async Task Create(UpdateProfileDTO model)
         {
-            Personnel personel = _mapper.Map<Personnel>(model);
-            await _personelRepository.Create(personel);
+            Personnel personnel = new Personnel
+            {
+                Id = model.Id,
+                Email = model.Email,
+                PasswordHash = model.Password,
+                Name = model.Name,
+                Surname = model.Surname,
+                Title = model.Title,
+                PhoneNumber = model.PhoneNumber,
+                Gender = model.Gender,
+                Nation = model.Nation,
+                CityId = model.CityId,
+                RegionId = model.RegionId,
+                BirthDate = model.BirthDate,
+                BloodType = model.BloodType,
+                HireDate = model.HireDate,
+                ManagerId = model.ManagerId,
+                DepartmentId = model.DepartmentId,
+                CompanyId = model.CompanyId,
+                Address = model.Address,
+
+
+            };
+
+            await _personelRepository.Create(personnel);
         }
 
         public async Task Delete(string id)
@@ -121,13 +144,13 @@ namespace HR_Project.Application.Services.PersonelServices
                     HireDate = x.HireDate,
                     PhoneNumber = x.PhoneNumber,
                     ManagerId = x.ManagerId,
-					CompanyId = x.CompanyId,
-					DepartmentId = x.DepartmentId,
-					RegionId = x.RegionId,
+                    CompanyId = x.CompanyId,
+                    DepartmentId = x.DepartmentId,
+                    RegionId = x.RegionId,
                     CityId = x.CityId,
                     Nation = x.Nation,
                     Gender = x.Gender,
-                    
+
                 },
                 where: x => x.Status != Domain.Enum.Status.Deleted,
                 orderBy: x => x.OrderBy(x => x.Name)
@@ -172,8 +195,8 @@ namespace HR_Project.Application.Services.PersonelServices
                 personel.CompanyId = model.CompanyId;
                 personel.RegionId = model.RegionId;
                 personel.HireDate = model.HireDate;
-                
-                
+
+
 
                 //personel.ImagePath = model.ImagePath;
                 await _profileImageService.UploadFile(personel.Id.ToString(), model.UploadImage);
@@ -208,7 +231,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 var newPersonnel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
 
                 var personnel = await _personelRepository.GetFilteredFirstOrDefault(
-                x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.Manager.Id, Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.Company.Id, CompanyName = x.Company.Name, DepartmentId = x.Department.Id, DepartmentName = x.Department.Name, ManagerName = x.Manager.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.Region.Id, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}" , Id=x.Id},
+                x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.Manager.Id, Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.Company.Id, CompanyName = x.Company.Name, DepartmentId = x.Department.Id, DepartmentName = x.Department.Name, ManagerName = x.Manager.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.Region.Id, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}", Id = x.Id },
                 where: x => x.Id == Guid.Parse(id),
                 include: x => x.Include(d => d.Department).Include(c => c.Company).Include(x => x.Personnels).Include(x => x.Region).Include(x => x.City).Include(x => x.PersonnelPicture)
 
@@ -222,7 +245,7 @@ namespace HR_Project.Application.Services.PersonelServices
 
                 throw message;
             }
-           
+
         }
     }
 }

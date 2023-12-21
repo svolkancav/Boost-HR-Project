@@ -41,7 +41,7 @@ namespace HR_Project.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(PersonelDTO model)
+		public async Task<IActionResult> Create(UpdateProfileDTO model)
 		{
 			await _personnelService.Create(model);
 			return Ok();

@@ -54,7 +54,7 @@ namespace HR_Project.API.Controllers
             //    HireDate = DateTime.Now,
             //    CityId = 1,
             //    RegionId = 1,
-            //    BloodType =Domain.Enum.BloodType.BRhNegative,
+            //    BloodType = Domain.Enum.BloodType.BRhNegative,
             //    Gender = Domain.Enum.Gender.Male,
             //    Nation = Domain.Enum.Nation.TR,
             //    BirthDate = DateTime.Now,

@@ -1,4 +1,5 @@
 ﻿using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;

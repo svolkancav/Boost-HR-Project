@@ -17,9 +17,9 @@ namespace HR_Project.Common.Models.DTOs
 {
 	public class RegisterDTO
 	{
+        public Guid Id { get; set; }
 
-
-		[Display(Name = "Email")]
+        [Display(Name = "Email")]
 		[Required(ErrorMessage = "Email alanı boş bırakılamaz.")]
 		public string Email { get; set; }
 
@@ -48,10 +48,12 @@ namespace HR_Project.Common.Models.DTOs
 		[Display(Name = "Telefon Numarası")]
 		[Required(ErrorMessage = "Telefon numarası alanı boş bırakılamaz.")]
 		public string PhoneNumber { get; set; }
+		public string Address { get; set; }
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
         public int? CompanyId { get; set; }
         public Company? Company { get; set; }
+        public Guid? ManagerId { get; set; }
 
 
         //[Display(Name = "İlçe")]
@@ -76,9 +78,13 @@ namespace HR_Project.Common.Models.DTOs
 		public Nation Nation { get; set; }
         public List<SelectListItem>? Regions { get; set; }
         public List<SelectListItem>? CityList { get; set; }
-        public AccountStatus AccountStatus { get; set; }
-		[PictureFileExtension]
+        public List<SelectListItem>? Managers { get; set; }
+        public List<SelectListItem>? Departments { get; set; }
+        public int? ImageId { get; set; }
+        [PictureFileExtension]
         public IFormFile? UploadImage { get; set; }
+        public string ImagePath { get; set; }
+
     }
 
 }

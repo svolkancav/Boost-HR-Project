@@ -1,139 +1,223 @@
-﻿@using HR_Project.Application.IoC.Models.DTOs;
-@using HR_Project.Common.Extensions;
+﻿@using HR_Project.Common.Extensions;
 @using HR_Project.Common.Models.DTOs;
 @using HR_Project.Domain.Enum;
 @model CreateCompanyDTO
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+    Layout = null;
+
 }
-<a href="~/lib/jquery/dist/jquery.min.map"></a>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<!-- Include the jQuery library -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<!-- Include the jQuery Inputmask library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input asp-for="Id" type="hidden" />
-    <div class="container rounded bg-white mt-3 mb-5 ">
-        <div class="row">
-
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Şirket Bilgileri</h4>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label class="labels">Şirket Adı</label>
-                            <input type="text" class="form-control" placeholder="Şirket Adı" asp-for="Name">
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-
-                        <br />
-                        <br />
-                        <br />
-
-                        <div class="col-md-12">
-                            <label class="labels">Telefon Numarası</label>
-                            <input type="text" class="form-control" id="phoneInput" asp-for="Phone">
-                            <span asp-validation-for="Phone" class="text-danger"></span>
-                        </div>
 
 
-                        <br />
-                        <br />
-                        <br />
-                        <div class="col-md-12">
-                            <label class="labels">İl</label>
-                            <input type="text" class="form-control" placeholder="İl Seçiniz" asp-for="CityId">
-                            <span asp-validation-for="CityId" class="text-danger"></span>
-                        </div>
+<!DOCTYPE html>
+<html lang="en">
 
-                        <br />
-                        <br />
-                        <br />
-                        <div class="col-md-12">
-                            <label class="labels">İlçe</label>
-                            <input type="text" class="form-control" placeholder="İlçe Seçiniz" asp-for="RegionId">
-                            <span asp-validation-for="RegionId" class="text-danger"></span>
-                        </div>
+<head>
 
-                        <br />
-                        <br />
-                        <br />
-                        <div class="col-md-12">
-                            <label class="labels">Şirket Adresi</label>
-                            <input type="text" class="form-control" placeholder="Adres" asp-for="Address">
-                            <span asp-validation-for="Address" class="text-danger"></span>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Easy-HR</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/startbootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container align-content-center align-items-center">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-register-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
+                                    </div>
+                                    <form class="user" asp-action="Create" method="post" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                                        <div class="form-group" data-validate="Name">
+                                            <input type="text" class="form-control form-control-user" name="Name"
+                                                   id="exampleInputName" aria-describedby="NameHelp"
+                                                   placeholder="Şirket Adı...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="TaxOffice">
+                                            <input type="text" class="form-control form-control-user" name="TaxOffice"
+                                                   id="exampleInputUserTaxOffice" aria-describedby="TaxOfficeeHelp"
+                                                   placeholder="Vergi Dairesi...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="TaxNumber">
+                                            <input type="text" class="form-control form-control-user" name="TaxNumber"
+                                                   id="exampleInputTaxNumber" aria-describedby="TaxNumberHelp"
+                                                   placeholder="Vergi Numarası...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="PersonnelCount">
+                                            <input type="text" class="form-control form-control-user" name="PersonnelCount"
+                                                   id="exampleInputTitle" aria-describedby="PersonnelCountHelp"
+                                                   placeholder="Personel Sayısı...">
+                                        </div>
+
+                                        <div class="form-group" data-validate="Phone">
+                                            <input type="text" class="form-control form-control-user" name="PhoneNumber"
+                                                   id="exampleInputPhoneNumber" aria-describedby="PhoneNumberHelp"
+                                                   placeholder="Telefon Numarası...">
+                                        </div>
+                                        <div class="form-group" data-validate="Email">
+                                            <input type="text" class="form-control form-control-user" name="Email"
+                                                   id="exampleInputEmail" aria-describedby="EmailrHelp"
+                                                   placeholder="Email...">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select asp-for="CityId" id="CityId" asp-items="Model.CityList" class="form-control form-select-sm">
+                                                <option value="">Şehir seçiniz</option>
+                                            </select>
+                                            <span asp-validation-for="CityId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select asp-for="RegionId" id="RegionId" asp-items="Model.Regions" class="form-control form-select-sm">
+                                                <option value="">İlçe seçiniz</option>
+                                            </select>
+                                            <span asp-validation-for="RegionId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group" data-validate="Address">
+                                            <input type="text" class="form-control form-control-user" name="Address"
+                                                   id="exampleInputTitle" aria-describedby="AddressHelp"
+                                                   placeholder="Adres Satırı...">
+                                        </div>
+
+
+                                        <input type="submit" value="Şirketi Kaydet" class="btn btn-primary btn-user btn-block" />
+
+
+
+                                    </form>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Vergi</h4>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Vergi Dairesi</label>
-                    <input type="text" class="form-control" placeholder="Vergi Dairesi" asp-for="TaxOffice">
-                    <span asp-validation-for="TaxOffice" class="text-danger"></span>
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Vergi Numarası</label>
-                    <input type="text" class="form-control" placeholder="Vergi Numarası" asp-for="TaxNumber">
-                    <span asp-validation-for="TaxNumber" class="text-danger"></span>
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Çalışan Sayısı</label>
-                    <input type="text" class="form-control" placeholder="Çalışan Sayısı" asp-for="PersonnelCount">
-                    <span asp-validation-for="PersonnelCount" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Oluştur" class="btn btn-primary" />
+
         </div>
 
-        <div class="p-4">
-            <a asp-action="Index">Listeye Dön</a>
-        </div>
-
-</form>
-
-
-<!-- Initialize the input mask -->
-<script>
-    // Apply the input mask to the phone number field
-    $(document).ready(function () {
-        $('#phoneNumberInput').inputmask('(999) 999-9999');
-    });
-</script>
+    </div>
 
 
 
+    @section Scripts {
+        @if (TempData.ContainsKey("Toastrsuccess"))
+        {
+            <script>
+                console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+                toastr.success('@TempData["Toastrsuccess"]');
+            </script>
+        }
 
-@section Scripts {
-    @if (TempData.ContainsKey("Toastrsuccess"))
-    {
+        @if (TempData.ContainsKey("Toastrerror"))
+        {
+            <script>
+                toastr.error('@TempData["Toastrerror"]');
+            </script>
+        }
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
-            console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
-            toastr.success('@TempData["Toastrsuccess"]');
+            $(document).ready(function () {
+                $('#cityDropdown').change(function () {
+                    var selectedCityId = $(this).val();
+                    if (selectedCityId) {
+                        $.ajax({
+                            url: '/Account/GetRegions',
+                            type: 'GET',
+                            data: { cityId: selectedCityId },
+                            success: function (data) {
+                                // Clear and populate the region dropdown
+                                $('#regionDropdown').empty();
+                                $.each(data, function (index, item) {
+                                    $('#regionDropdown').append($('<option>', {
+                                        value: item.value,
+                                        text: item.text
+                                    }));
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        // If no city selected, clear the region dropdown
+                        $('#regionDropdown').empty();
+                    }
+                });
+            });
         </script>
-    }
 
-    @if (TempData.ContainsKey("Toastrerror"))
-    {
-        <script>
-            toastr.error('@TempData["Toastrerror"]');
-        </script>
-    }
-}
+    };
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="~/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/startbootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/startbootstrap/js/sb-admin-2.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CityId').change(function () {
+                var selectedCityId = $(this).val();
+                $.ajax({
+                    url: '/Personnel/GetRegions',
+                    type: 'GET',
+                    data: { cityId: selectedCityId },
+                    success: function (data) {
+
+                        updateRegionsDropdown(data);
+                    },
+                    error: function () {
+                        console.error('Error fetching İlçeler.');
+                    }
+                });
+            });
+
+            function updateRegionsDropdown(regions) {
+                var regionDropdown = $('#RegionId');
+                regionDropdown.empty();
+                regionDropdown.append($('<option>').val('').text('İlçe seçiniz'));
+                $.each(regions, function (index, region) {
+                    regionDropdown.append($('<option>').val(region.value).text(region.text));
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

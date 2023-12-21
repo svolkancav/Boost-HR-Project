@@ -9,5 +9,7 @@ namespace HR_Project.Common
 	public interface IEmailService 
 	{
 		Task SendEmailRegisterAsync(string toEmail, string subject, string body);
-	}
+
+        Task SendConfirmationEmailAsync(string toEmail, int companyId);
+    }
 }

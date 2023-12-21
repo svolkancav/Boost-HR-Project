@@ -1,7 +1,10 @@
 ﻿using HR_Project.Application.Services.CompanyService;
 using HR_Project.Common.Models.DTOs;
+using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HR_Project.API.Controllers
 {
@@ -10,16 +13,19 @@ namespace HR_Project.API.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
+        private readonly UserManager<Personnel> _userManager;
 
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, UserManager<Personnel> userManager)
         {
             _companyService = companyService;
+            _userManager = userManager;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateCompanyDTO model)
         {
+           
             await _companyService.Create(model);
             return Ok();
         }
@@ -50,7 +56,7 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpGet]
-        [Route("getbyid/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             var company = await _companyService.GetById(id);

@@ -38,6 +38,7 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.PersonnelCount, i => i.Random.Int(1, 50))
                         .RuleFor(i => i.TaxOffice, i => i.Person.Address.Suite)
                         .RuleFor(i => i.TaxNumber, i => i.Random.Int(123456, 456798).ToString())
+                        .RuleFor(i=>i.Email, i=>i.Internet.Email())
                         .RuleFor(i => i.Phone, i => i.Random.Int(123456, 456798).ToString());
 
                     var generatedCompanies = companyFaker.Generate(7);

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace HR_Project.Application.Services.CompanyService
 {
@@ -26,11 +27,28 @@ namespace HR_Project.Application.Services.CompanyService
 
 		public Task Create(CreateCompanyDTO model)
 		{
-			Company company= _mapper.Map<Company>(model);
-			company.CreatedDate = DateTime.Now;
-			company.Status = Status.Inserted;
+			try
+			{
+				Company company = _mapper.Map<Company>(model);
+    //            Company company = new Company();
+				//company.Address = model.Address;
+				//company.TaxNumber = model.TaxNumber;
+				//company.Phone = model.Phone;
+				//company.CityId = model.CityId;
+				//company.Name = model.Name;
+				//company.RegionId = model.RegionId;
+				//company.Email = model.Email;
 
-			return _companyRepository.Create(company);
+                return _companyRepository.Create(company);
+            }
+			catch (Exception m)
+			{
+
+				throw m;
+			}
+			
+
+			
 
 		}
 
@@ -61,10 +79,11 @@ namespace HR_Project.Application.Services.CompanyService
 			return _mapper.Map<UpdateCompanyDTO>(company);
 		}
 
-        public async Task<List<CompanyVM>> GetCompanies()
+        public async Task<List<UpdateCompanyDTO>> GetCompanies()
         {
-            return await _companyRepository.GetFilteredList(x => new CompanyVM
+            return await _companyRepository.GetFilteredList(x => new UpdateCompanyDTO
             {
+				Id=x.Id,
 				Name = x.Name,
                 Phone = x.Phone,
                 PersonnelCount = x.PersonnelCount,
@@ -73,6 +92,7 @@ namespace HR_Project.Application.Services.CompanyService
                 Address = x.Address,
                 CityId = x.CityId,
                 RegionId = x.RegionId,
+				Email = x.Email
 
             }, x => x.Status != Status.Deleted);
         }
@@ -91,6 +111,7 @@ namespace HR_Project.Application.Services.CompanyService
 			company.Status=Status.Updated;
 			company.RegionId=model.RegionId;
 			company.CityId = model.CityId;
+			company.Email = model.Email;
 
 			await _companyRepository.Update(company);
 		}

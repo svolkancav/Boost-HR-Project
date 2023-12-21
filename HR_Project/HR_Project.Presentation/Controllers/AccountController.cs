@@ -150,7 +150,7 @@ namespace HR_Project.Presentation.Controllers
                 string body = $"Lütfen hesabınızı doğrulamak için linke <a href='{confirmationLink}'>tıklayın</a>.";
 
                 await _emailService.SendEmailRegisterAsync(model.Email, subject, body);
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Create", "Company");
 
             }
             return View(model);

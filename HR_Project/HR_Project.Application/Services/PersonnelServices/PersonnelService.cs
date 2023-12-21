@@ -228,7 +228,6 @@ namespace HR_Project.Application.Services.PersonelServices
         {
             try
             {
-                var newPersonnel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
 
                 var personnel = await _personelRepository.GetFilteredFirstOrDefault(
                 x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.Manager.Id, Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.Company.Id, CompanyName = x.Company.Name, DepartmentId = x.Department.Id, DepartmentName = x.Department.Name, ManagerName = x.Manager.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.Region.Id, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}", Id = x.Id },

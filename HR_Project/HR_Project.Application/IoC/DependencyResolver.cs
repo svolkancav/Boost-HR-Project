@@ -53,8 +53,9 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<DepartmentService>().As<IDepartmentService>().InstancePerLifetimeScope();
 
             builder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
+            builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
 
-			builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProfileImageService>().As<IProfileImageService>().InstancePerLifetimeScope();
 
             builder.RegisterType<ExpenseImageService>().As<IExpenseImageService>().InstancePerLifetimeScope();
 

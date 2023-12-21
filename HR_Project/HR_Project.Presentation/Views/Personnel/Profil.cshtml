@@ -202,11 +202,11 @@
         $('#CityId').change(function () {
             var selectedCityId = $(this).val();
             $.ajax({
-                url: '/Personnel/GetRegions', // Replace with your controller action
+                url: '/Personnel/GetRegions', 
                 type: 'GET',
                 data: { cityId: selectedCityId },
                 success: function (data) {
-                    // Assume you have a method to update the İlçe dropdown options
+                    
                     updateRegionsDropdown(data);
                 },
                 error: function () {

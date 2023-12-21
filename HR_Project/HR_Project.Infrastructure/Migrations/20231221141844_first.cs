@@ -134,6 +134,7 @@ namespace HR_Project.Infrastructure.Migrations
                     TaxOffice = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegionId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

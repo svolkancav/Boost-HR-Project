@@ -142,20 +142,19 @@
 
                     </div>
                     <div class="col-md-12">
-                        <label class="labels" asp-for="ManagerId">Yönetici</label>
-                        <select asp-for="ManagerId" id="ManagerId" asp-items="Model.Managers" class="form-control">
-                            <option value="" selected disabled>Yönetici seçiniz</option>
-                        </select>
-                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-12">
                         <label class="labels" asp-for="DepartmentId">Departman</label>
                         <select asp-for="DepartmentId" id="DepartmentId" asp-items="Model.Departments" class="form-control">
                             <option value="" selected disabled>Departman seçiniz</option>
                         </select>
                         <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
-
+                    <div class="col-md-12">
+                        <label class="labels" asp-for="ManagerId">İlçe</label>
+                        <select asp-for="ManagerId" id="ManagerId" asp-items="Model.Managers" class="form-control">
+                            <option value="-1" selected disabled>Yönetici seçiniz</option>
+                        </select>
+                        <span asp-validation-for="ManagerId" class="text-danger"></span>
+                    </div>
                 </div>
 
             </div>
@@ -184,5 +183,64 @@
         </script>
     }
     }
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#CityId').change(function () {
+            var selectedCityId = $(this).val();
+            $.ajax({
+                url: '/Personnel/GetRegions',
+                type: 'GET',
+                data: { cityId: selectedCityId },
+                success: function (data) {
+
+                    updateRegionsDropdown(data);
+                },
+                error: function () {
+                    console.error('Error fetching İlçeler.');
+                }
+            });
+        });
+
+        function updateRegionsDropdown(regions) {
+            var regionDropdown = $('#RegionId');
+            regionDropdown.empty();
+            regionDropdown.append($('<option>').val('').text('İlçe seçiniz'));
+            $.each(regions, function (index, region) {
+                regionDropdown.append($('<option>').val(region.value).text(region.text));
+            });
+        }
+    });
+</script>
+
+@*<script>
+    $(document).ready(function () {
+        $('#DepartmentId').change(function () {
+            var selectedDepartmentId = $(this).val();
+            $.ajax({
+                url: '/Personnel/GetManagersByDepartment',
+                type: 'GET',
+                data: { departmentId: selectedDepartmentId },
+                success: function (data) {
+                    updateManagersDropdown(data);
+                },
+                error: function () {
+                    console.error('Error fetching managers.');
+                }
+            });
+        });
+
+        function updateManagersDropdown(managers) {
+            var managerDropdown = $('#ManagerId');
+            managerDropdown.empty();
+            managerDropdown.append($('<option>').val('').text('Yönetici seçiniz')); // Clear dropdown and add default option
+
+            $.each(managers, function (index, manager) {
+                managerDropdown.append($('<option>').val(manager.value).text(manager.text));
+            });
+        }
+    });
+</script>*@
 
 

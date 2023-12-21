@@ -205,5 +205,21 @@ namespace HR_Project.Presentation.Controllers
 
             return Json(regions);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetManagersByDepartment(int departmentId)
+        {
+            List<UpdateProfileDTO> personnelList = await _apiService.GetAsync<List<UpdateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
+            var managers = personnelList
+                .Where(d => d.DepartmentId == departmentId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.ManagerId.ToString(),
+                    Text = d.ManagerName
+                })
+                .ToList();
+
+            return Json(managers);
+        }
     }
 }

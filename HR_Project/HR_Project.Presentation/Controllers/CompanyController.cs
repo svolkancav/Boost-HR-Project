@@ -4,22 +4,50 @@ using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using X.PagedList;
+using HR_Project.Domain.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Azure;
+using HR_Project.Common;
 
 namespace HR_Project.Presentation.Controllers
 {
 	public class CompanyController : BaseController
 	{
 		private readonly IAPIService _apiService;
+        private readonly IEmailService _emailService;
+        private readonly ITokenService _tokenService;
 
-		public CompanyController(IAPIService apiService)
-		{
-			_apiService = apiService;
-		}
-
-
-        public IActionResult Create()
+        public CompanyController(IAPIService apiService, IEmailService emailService, ITokenService tokenService)
         {
-            return View();
+            _apiService = apiService;
+            _emailService = emailService;
+            _tokenService = tokenService;
+        }
+
+
+        public async Task<IActionResult> Create()
+        {
+            List<CityDTO> cities = await _apiService.GetAsync<List<CityDTO>>("city", HttpContext.Request.Cookies["access-token"]);
+            List<RegionDTO> regionList = await _apiService.GetAsync<List<RegionDTO>>("region", HttpContext.Request.Cookies["access-token"]); 
+            
+            CreateCompanyDTO model = new CreateCompanyDTO();
+            model.CityList = cities.Select(c => new SelectListItem
+            {
+                Value = c.CityId.ToString(),
+                Text = c.Name
+            })
+                .ToList();
+            model.Regions = regionList
+                //.Where(d => d.CityId == personnel.CityId)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.RegionId.ToString(),
+                    Text = d.Name
+                })
+                .ToList();
+
+
+            return View(model);
         }
 
         [HttpPost]
@@ -36,7 +64,13 @@ namespace HR_Project.Presentation.Controllers
 
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
 
-                return RedirectToAction("Index");
+                List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
+                var selectedCompany = companies.FirstOrDefault(x => x.Name == model.Name);
+
+                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id); ;
+
+
+                return RedirectToAction("Login","Account");
 
             }
             catch (Exception ex)
@@ -94,5 +128,20 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Confirm([FromQuery] int companyId)
+        {
+
+                var company = await _apiService.GetByIdAsync<UpdateCompanyDTO>("company", companyId.ToString(), HttpContext.Request.Cookies["access-token"]);
+                // Token doğrulandı, şirketi aktif hale getir
+                // companyId parametresini kullanarak şirketi bulup aktifleştirme işlemlerini gerçekleştirin
+                string body = $"Şirketiniz onaylandı. Lütfen giriş yapınız.<a href='https://localhost:7034/'>tıklayın</a>. ";
+                string subject = "Registration Confirmation";
+                await _emailService.SendEmailRegisterAsync(company.Email, subject, body);
+                return RedirectToAction("Login", "Account");
+      
+        }
     }
+
 }
+

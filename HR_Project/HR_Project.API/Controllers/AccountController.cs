@@ -46,6 +46,7 @@ namespace HR_Project.API.Controllers
             //    Surname = "admin",
             //    Title = "admin",
             //    Email = "admin",
+            //    Address ="asdasdasdasd",
             //    PhoneNumber = "admin",
             //    UserName = "admin",
             //    Password = "admin123",

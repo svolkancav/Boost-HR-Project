@@ -105,6 +105,11 @@
                                             </select>
                                             <span asp-validation-for="RegionId" class="text-danger"></span>
                                         </div>
+                                        <div class="form-group" data-validate="Address">
+                                            <input type="text" class="form-control form-control-user" name="Address"
+                                                   id="exampleInputTitle" aria-describedby="AddressHelp"
+                                                   placeholder="Adres Satırı...">
+                                        </div>
                                         <div class="form-group">
                                             <select class="form-control form-select-sm" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
                                                 <option value="-1">Kan Grubunuzu Giriniz</option>
@@ -128,11 +133,13 @@
                                         </div>
 
                                         <div class="form-group" data-validate="BirthDate">
+                                            <label>Doğum Tarihi</label>
                                             <input type="date" class="form-control form-control-user" name="BirthDate"
                                                    id="exampleInputBirthDate" aria-describedby="BirthDateHelp"
                                                    placeholder="Doğum Tarihi ...">
                                         </div>
                                         <div class="form-group" data-validate="HireDate">
+                                            <label>İşe Başlama Tarihi</label>
                                             <input type="date" class="form-control form-control-user" name="HireDate"
                                                    id="exampleInputHireDate" aria-describedby="HireDateHelp"
                                                    placeholder="İşe Giriş Tarihi...">
@@ -221,7 +228,35 @@
     <!-- Custom scripts for all pages-->
     <script src="~/startbootstrap/js/sb-admin-2.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CityId').change(function () {
+                var selectedCityId = $(this).val();
+                $.ajax({
+                    url: '/Personnel/GetRegions',
+                    type: 'GET',
+                    data: { cityId: selectedCityId },
+                    success: function (data) {
 
+                        updateRegionsDropdown(data);
+                    },
+                    error: function () {
+                        console.error('Error fetching İlçeler.');
+                    }
+                });
+            });
+
+            function updateRegionsDropdown(regions) {
+                var regionDropdown = $('#RegionId');
+                regionDropdown.empty();
+                regionDropdown.append($('<option>').val('').text('İlçe seçiniz'));
+                $.each(regions, function (index, region) {
+                    regionDropdown.append($('<option>').val(region.value).text(region.text));
+                });
+            }
+        });
+    </script>
 
 </body>
 

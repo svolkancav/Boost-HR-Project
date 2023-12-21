@@ -13,7 +13,7 @@ namespace HR_Project.Application.Services.CompanyService
 		Task Create(CreateCompanyDTO model);
 		Task Update(UpdateCompanyDTO model);
 		Task Delete(int id);
-        Task<List<CompanyVM>> GetCompanies();
+        Task<List<UpdateCompanyDTO>> GetCompanies();
         Task<UpdateCompanyDTO> GetById(string id);
 	}
 }

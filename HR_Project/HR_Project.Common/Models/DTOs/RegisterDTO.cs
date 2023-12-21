@@ -1,21 +1,14 @@
 
-﻿using HR_Project.Domain.Entities.Concrete;
+using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
-using HR_Project.Common.Extensions;
 using HR_Project.Common.ValidationClass;
 
 namespace HR_Project.Common.Models.DTOs
 {
-	public class RegisterDTO
+    public class RegisterDTO
 	{
         public Guid Id { get; set; }
 
@@ -83,7 +76,7 @@ namespace HR_Project.Common.Models.DTOs
         public int? ImageId { get; set; }
         [PictureFileExtension]
         public IFormFile? UploadImage { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
     }
 

@@ -34,27 +34,37 @@ namespace HR_Project.Application.Services.ExpenseService
 			_expenseImageService = expenseImageService;
 		}
 
-		public async Task Create(ExpenseDTO model)
+		public async Task Create(Expense_MasterExpenseVM model)
         {
             Personnel personnel = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
+
             Expense expense = _mapper.Map<Expense>(model);
+
+            List<Expense> expenses = new List<Expense>();
+            
+            MasterExpense masterExpense = new MasterExpense();
+
+            masterExpense.Status = Status.Inserted;
+            masterExpense.CreatedDate = DateTime.Now;
+            masterExpense.Expenses = new List<Expense>();
+
             
 
             expense.Status = Status.Inserted;
             expense.CreatedDate = DateTime.Now;
             expense.PersonnelId = personnel.Id;
-            try
-            {
-                if(model.UploadImage != null)
-                    await _expenseImageService.UploadFile(expense.Id.ToString(), model.UploadImage);
-                await _expenseRepository.Create(expense);
+            //try
+            //{
+            //    if(model.UploadImage != null)
+            //        await _expenseImageService.UploadFile(expense.Id.ToString(), model.UploadImage);
+            //    await _expenseRepository.Create(expense);
 
-            }
-            catch (Exception message)
-            {
+            //}
+            //catch (Exception message)
+            //{
 
-                throw message;
-            }
+            //    throw message;
+            //}
         }
 
         public async Task Delete(int id)

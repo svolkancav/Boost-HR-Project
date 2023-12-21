@@ -1,5 +1,7 @@
-﻿using HR_Project.Common.Models.DTOs;
+﻿using HR_Project.Common.Extensions;
+using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
+using HR_Project.Domain.Enum;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -37,23 +39,32 @@ namespace HR_Project.Presentation.Controllers
 
         public IActionResult Create()
         {
-
-            return View();
+			ViewBag.EnumValues = new
+			{
+				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+				Currencies = EnumHelper.GetEnumSelectList<Currency>()
+			};
+			return View();
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Create(Expense_MasterExpenseVM model)
         {
-            
-            try
+			ViewBag.EnumValues = new
+			{
+				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+				Currencies = EnumHelper.GetEnumSelectList<Currency>()
+			};
+
+			try
             {
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
 
-                await _apiService.PostAsync<Expense_MasterExpenseVM, Expense_MasterExpenseVM>("masterExpense", model, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.PostAsync<Expense_MasterExpenseVM, Expense_MasterExpenseVM>("Expense", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
                 return RedirectToAction("Index");
             }

@@ -44,52 +44,61 @@
 									Para Birimi
 								</th>
 								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 140px;">
-									
+
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr id="newRowTemplate" style="display:none;">
-								<td>
-									<div class="form-group">
-										<select class="form-control" asp-for="Expenses[0].ExpenseType" asp-items="EnumHelper.GetEnumSelectList<ExpenseType>()">
-											<option value="-1">Masraf Türü</option>
-										</select>
-										<span asp-validation-for="Expenses[0].ExpenseType" class="text-danger"></span>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input asp-for="Expenses[0].Reason" class="form-control" />
-										<span asp-validation-for="Expenses[0].Reason" class="text-danger"></span>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input asp-for="Expenses[0].ExpenseDate" class="form-control" id="expenseDate" type="date" />
-										<span asp-validation-for="Expenses[0].ExpenseDate" class="text-danger"></span>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input asp-for="Expenses[0].ExpenseAmount" class="form-control" />
-										<span asp-validation-for="Expenses[0].ExpenseAmount" class="text-danger"></span>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control" asp-for="Expenses[0].Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
-											<option value="-1">Para Birimi</option>
-										</select>
-										<span asp-validation-for="Expenses[0].Currency" class="text-danger"></span>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input type="button" value="Masrafı Sİl" class="btn btn-primary rowdel" />
-									</div>
-								</td>
-							</tr>
+							@if (Model != null)
+							{
+								for (var i = 0; i < Model.Expenses.Count; i++)
+								{
+									<tr>
+										<td>
+											<div class="form-group">
+												<select class="form-control" asp-for="Expenses[i].ExpenseType" asp-items="EnumHelper.GetEnumSelectList<ExpenseType>()">
+													<option value="-1">Masraf Türü</option>
+												</select>
+												<span asp-validation-for="Expenses[i].ExpenseType" class="text-danger"></span>
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input asp-for="Expenses[i].Reason" class="form-control" />
+												<span asp-validation-for="Expenses[i].Reason" class="text-danger"></span>
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input asp-for="Expenses[i].ExpenseDate" class="form-control" id="expenseDate" type="date" />
+												<span asp-validation-for="Expenses[i].ExpenseDate" class="text-danger"></span>
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input asp-for="Expenses[i].ExpenseAmount" class="form-control" />
+												<span asp-validation-for="Expenses[i].ExpenseAmount" class="text-danger"></span>
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<select class="form-control" asp-for="Expenses[i].Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">
+													<option value="-1">Para Birimi</option>
+												</select>
+												<span asp-validation-for="Expenses[i].Currency" class="text-danger"></span>
+											</div>
+										</td>
+										
+										<td>
+											<div class="form-group">
+												<input type="button" value="Masrafı Sİl" class="btn btn-primary rowdel" />
+
+											</div>
+										</td>
+									</tr>
+								}
+							}
+
 						</tbody>
 
 						<div class="form-group">
@@ -109,60 +118,66 @@
 	@section Scripts
 		{
 		<script>
+			var enumValues = @Html.Raw(Json.Serialize(ViewBag.EnumValues));
 			$(document).ready(function () {
 
-				function validateRow(row) {
-					var isValid = true;
-
-					// Iterate over input elements in the row
-					row.find("input, select").each(function () {
-						// Check if the element is required
-						var isRequired = $(this).attr("data-val-required") !== undefined;
-
-						// Check if the element has a value
-						var hasValue = $(this).val() !== null && $(this).val() !== "";
-
-						// Perform validation
-						if (isRequired && !hasValue) {
-							isValid = false;
-							// Handle validation error, e.g., add a CSS class or show an error message
-							// You can customize this part based on your UI requirements
-							$(this).addClass("is-invalid");
-						} else {
-							// Clear any previous validation error
-							$(this).removeClass("is-invalid");
-						}
-					});
-
-					return isValid;
-				}
-
-
-
 				$(document).on("click", "#addRow", function () {
-					var newRow = $("#newRowTemplate").clone();
-					newRow.removeAttr("id").removeAttr("style");
-
-					// Update input and select names
 					var rowCount = $("#dataTable tbody tr").length;
-					newRow.find("select, input").each(function () {
-						var nameAttr = $(this).attr("name");
-						if (nameAttr !== undefined) {
-							$(this).attr("name", nameAttr.replace("[0]", "[" + rowCount + "]"));
-						}
-					});
+					var newRow = $("<tr>");
 
-					newRow.find(".btn-primary").val("Masrafı Sİl");
+					newRow.append('<td><div class="form-group">' +
+						'<select class="form-control" name="Expenses[' + rowCount + '].ExpenseType">' +
+						'<option value="-1">Masraf Türü</option>' +
+						(getEnumOptions(enumValues.expenseTypes)) +
+						'</select>' +
+						'<span class="text-danger" data-valmsg-for="Expenses[' + rowCount + '].ExpenseType" data-valmsg-replace="true"></span></div></td>');
+
+
+					newRow.append('<td><div class="form-group">' +
+						'<input class="form-control" name="Expenses[' + rowCount + '].Reason" />' +
+						'<span class="text-danger" data-valmsg-for="Expenses[' + rowCount + '].Reason" data-valmsg-replace="true"></span></div></td>');
+
+					newRow.append('<td><div class="form-group">' +
+						'<input class="form-control" name="Expenses[' + rowCount + '].ExpenseDate" id="expenseDate" type="date" />' +
+						'<span class="text-danger" data-valmsg-for="Expenses[' + rowCount + '].ExpenseDate" data-valmsg-replace="true"></span></div></td>');
+
+					newRow.append('<td><div class="form-group">' +
+						'<input class="form-control" name="Expenses[' + rowCount + '].ExpenseAmount" />' +
+						'<span class="text-danger" data-valmsg-for="Expenses[' + rowCount + '].ExpenseAmount" data-valmsg-replace="true"></span></div></td>');
+
+					newRow.append('<td><div class="form-group">' +
+						'<select class="form-control" name="Expenses[' + rowCount + '].Currency" asp-items="EnumHelper.GetEnumSelectList<Currency>()">' +
+						'<option value="-1">Para Birimi</option>' +
+						(getEnumOptions(enumValues.currencies)) +
+						'</select>' +
+						'<span class="text-danger" data-valmsg-for="Expenses[' + rowCount + '].Currency" data-valmsg-replace="true"></span></div></td>');
+
+					newRow.append('<td><div class="form-group">' +
+						'<input type="button" value="Masrafı Sİl" class="btn btn-primary rowdel" />' +
+						'</div></td>');
+
 					$("#dataTable tbody").append(newRow);
-					var lastRow = $("#dataTable tbody tr:last");
-					if (validateRow(lastRow)) {
-						$("#dataTable tbody").append(newRow);
-					}
 				});
 
 				$(document).on("click", ".rowdel", function () {
 					$(this).closest("tr").remove();
 				});
+
+				function getEnumOptions(enumValues) {
+					var options = "";
+					if (enumValues) {
+						for (var i = 0; i < enumValues.length; i++) {
+							var value = enumValues[i].value;
+							var text = enumValues[i].text;
+							console.log(text);
+							console.log(value);
+							options += '<option value="' + value + '">' + text + '</option>';
+							console.log(options);
+						}
+					}
+					return options;
+				}
+
 			});
 
 		</script>

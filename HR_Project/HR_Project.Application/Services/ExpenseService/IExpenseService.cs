@@ -11,7 +11,7 @@ namespace HR_Project.Application.Services.ExpenseService
 {
     public interface IExpenseService
     {
-        Task Create(ExpenseDTO model);
+        Task Create(Expense_MasterExpenseVM model);
         Task Update(UpdateExpenseDTO model);
 
         Task Delete(int id);

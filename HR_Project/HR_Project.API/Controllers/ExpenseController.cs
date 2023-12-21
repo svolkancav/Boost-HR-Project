@@ -42,9 +42,9 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ExpenseDTO model)
+        public async Task<IActionResult> Create(Expense_MasterExpenseVM model)
         {
-            await _expenseService.Create(model);
+            //await _expenseService.Create(model);
             return Ok(model);
         }
 

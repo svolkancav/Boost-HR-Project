@@ -110,7 +110,27 @@
 				</div>
 			</li>
 
-			<!-- Nav Item - Avans İşlemleri Collapse Menu -->
+			<!-- Nav Item - Masraf İşlemleri Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasraf"
+				   aria-expanded="true" aria-controls="collapseMasraf">
+					<i class="fas fa-thin fa-paper-plane"></i>
+					<span>Masraf İşlemleri</span>
+				</a>
+				<div id="collapseMasraf" class="collapse" aria-labelledby="headingMasraf"
+					 data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Masraf İşlemleri:</h6>
+						<a class="collapse-item" asp-controller="Expense" asp-action="Index">Masraf Bilgileri</a>
+						<a class="collapse-item" asp-controller="Expense" asp-action="Create">Masraf Kayıt</a>
+
+					</div>
+
+
+				</div>
+			</li>
+
+			<!-- Nav Item - Şirket İşlemleri Collapse Menu -->
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSirket"
 				   aria-expanded="true" aria-controls="collapseSirket">

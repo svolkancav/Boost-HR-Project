@@ -196,3 +196,32 @@
     }
 
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#CityId').change(function () {
+            var selectedCityId = $(this).val();
+            $.ajax({
+                url: '/Personnel/GetRegions', // Replace with your controller action
+                type: 'GET',
+                data: { cityId: selectedCityId },
+                success: function (data) {
+                    // Assume you have a method to update the İlçe dropdown options
+                    updateRegionsDropdown(data);
+                },
+                error: function () {
+                    console.error('Error fetching İlçeler.');
+                }
+            });
+        });
+
+        function updateRegionsDropdown(regions) {
+            var regionDropdown = $('#RegionId');
+            regionDropdown.empty();
+            regionDropdown.append($('<option>').val('').text('İlçe seçiniz'));
+            $.each(regions, function (index, region) {
+                regionDropdown.append($('<option>').val(region.value).text(region.text));
+            });
+        }
+    });
+</script>

@@ -8,6 +8,7 @@ using HR_Project.Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Azure;
 using HR_Project.Common;
+using System.Security.Claims;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -24,7 +25,17 @@ namespace HR_Project.Presentation.Controllers
             _tokenService = tokenService;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var personnelId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<CompanyDTO> companies = await _apiService.GetAsync<List<CompanyDTO>>("company", HttpContext.Request.Cookies["access-token"]);
 
+            var personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>("personnel", personnelId, HttpContext.Request.Cookies["access-token"]);
+
+            var selectedCompany = companies.Find(x => x.Id == personnel.CompanyId);
+
+            return View(selectedCompany);
+        }
         public async Task<IActionResult> Create()
         {
             List<CityDTO> cities = await _apiService.GetAsync<List<CityDTO>>("city", HttpContext.Request.Cookies["access-token"]);

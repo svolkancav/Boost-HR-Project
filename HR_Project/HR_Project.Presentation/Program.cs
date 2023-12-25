@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://easy-hr-client.azurewebsites.net/api/");
+    opt.BaseAddress = new Uri("https://localhost:7258/api/");
 	
 });
 ////https://localhost:7034/api/
@@ -69,7 +69,7 @@ if (!app.Environment.IsDevelopment())
 
 
 //TODO: SeedData
-SeedData.Seed(app);
+//SeedData.Seed(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,4 +1,5 @@
-﻿using HR_Project.Common.Extensions;
+﻿using System.Security.Claims;
+using HR_Project.Common.Extensions;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Enum;
@@ -11,7 +12,6 @@ namespace HR_Project.Presentation.Controllers
     public class ExpenseController : BaseController
     {
         private readonly IAPIService _apiService;
-        private static Expense_MasterExpenseVM expenseModel= new Expense_MasterExpenseVM() {Expenses= new List<ExpenseDTO>() };
 
         public ExpenseController(IAPIService apiService)
         {
@@ -23,14 +23,13 @@ namespace HR_Project.Presentation.Controllers
             if (!string.IsNullOrEmpty(searchText))
             {
 
-                List<Expense_MasterExpenseVM> expense_MasterExpenses = await _apiService.GetAsync<List<Expense_MasterExpenseVM>>("masterExpense", HttpContext.Request.Cookies["access-token"]);
-                List<Expense_MasterExpenseVM> selectedExpense_MasterExpenses = expense_MasterExpenses.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.ExpenseAmount.ToString().Contains(searchText)).ToList();
+                List<MasterExpenseVM> expense_MasterExpenses = await _apiService.GetAsync<List<MasterExpenseVM>>("Expense", HttpContext.Request.Cookies["access-token"]);
 
-                return View(selectedExpense_MasterExpenses.ToPagedList(pageNumber, pageSize));
+                return View(expense_MasterExpenses.ToPagedList(pageNumber, pageSize));
             }
             else
             {
-                List<Expense_MasterExpenseVM> expense_MasterExpenses = await _apiService.GetAsync<List<Expense_MasterExpenseVM>>("masterExpense", HttpContext.Request.Cookies["access-token"]);
+                List<MasterExpenseVM> expense_MasterExpenses = await _apiService.GetAsync<List<MasterExpenseVM>>("Expense", HttpContext.Request.Cookies["access-token"]);
                 return View(expense_MasterExpenses.ToPagedList(pageNumber, pageSize));
             }
 
@@ -49,22 +48,23 @@ namespace HR_Project.Presentation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(Expense_MasterExpenseVM model)
+        public async Task<IActionResult> Create(MasterExpenseDTO model)
         {
-			ViewBag.EnumValues = new
-			{
-				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
-				Currencies = EnumHelper.GetEnumSelectList<Currency>()
-			};
+			model.PersonnelId = Guid.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
 			try
-            {
+			{
                 if (!ModelState.IsValid)
                 {
-                    return View(model);
+					ViewBag.EnumValues = new
+					{
+						ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+						Currencies = EnumHelper.GetEnumSelectList<Currency>()
+					};
+					return View(model);
                 }
 
-                await _apiService.PostAsync<Expense_MasterExpenseVM, Expense_MasterExpenseVM>("Expense", model, HttpContext.Request.Cookies["access-token"]);
+				await _apiService.PostWithImageAsync<MasterExpenseDTO, MasterExpenseDTO>("Expense", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
                 return RedirectToAction("Index");
             }
@@ -78,20 +78,31 @@ namespace HR_Project.Presentation.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
-            UpdateExpenseDTO expense = await _apiService.GetByIdAsync<UpdateExpenseDTO>("expense/getbyid", id, HttpContext.Request.Cookies["access-token"]);
+			ViewBag.EnumValues = new
+			{
+				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+				Currencies = EnumHelper.GetEnumSelectList<Currency>()
+			};
+
+			UpdateMasterExpenseDTO expense = await _apiService.GetByIdAsync<UpdateMasterExpenseDTO>("expense/getbyid", id, HttpContext.Request.Cookies["access-token"]);
             return View(expense);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateExpenseDTO model)
+        public async Task<IActionResult> Update(UpdateMasterExpenseDTO model)
         {
-            try
+			ViewBag.EnumValues = new
+			{
+				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+				Currencies = EnumHelper.GetEnumSelectList<Currency>()
+			};
+			try
             {
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
-                await _apiService.UpdateAsync<UpdateExpenseDTO>("expense", model, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.UpdateAsync<UpdateMasterExpenseDTO>("expense", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
                 return RedirectToAction("Index");
             }
@@ -107,7 +118,7 @@ namespace HR_Project.Presentation.Controllers
         {
             try
             {
-                await _apiService.DeleteAsync<ExpenseDTO>($"expense", id, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.DeleteAsync<MasterExpenseVM>($"expense", id, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde silindi.");
                 return RedirectToAction("Index");
             }

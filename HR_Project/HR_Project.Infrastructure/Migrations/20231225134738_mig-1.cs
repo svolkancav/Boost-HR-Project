@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HR_Project.Infrastructure.Migrations
 {
-    public partial class first : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,23 +58,6 @@ namespace HR_Project.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MasterExpenses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AggregateAmount = table.Column<double>(type: "float", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MasterExpenses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,7 +148,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AbsenceDuration = table.Column<long>(type: "bigint", nullable: false),
+                    AbsenceDuration = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     LeaveTypes = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
@@ -372,6 +355,30 @@ namespace HR_Project.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MasterExpenses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AggregateAmount = table.Column<double>(type: "float", nullable: false),
+                    PersonnelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MasterExpenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MasterExpenses_AspNetUsers_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expenses",
                 columns: table => new
                 {
@@ -383,7 +390,6 @@ namespace HR_Project.Infrastructure.Migrations
                     Currency = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
-                    PersonnelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MasterExpenseId = table.Column<int>(type: "int", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -394,12 +400,6 @@ namespace HR_Project.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expenses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Expenses_AspNetUsers_PersonnelId",
-                        column: x => x.PersonnelId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Expenses_Files_ImageId",
                         column: x => x.ImageId,
@@ -528,8 +528,8 @@ namespace HR_Project.Infrastructure.Migrations
                 column: "MasterExpenseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_PersonnelId",
-                table: "Expenses",
+                name: "IX_MasterExpenses_PersonnelId",
+                table: "MasterExpenses",
                 column: "PersonnelId");
 
             migrationBuilder.CreateIndex(

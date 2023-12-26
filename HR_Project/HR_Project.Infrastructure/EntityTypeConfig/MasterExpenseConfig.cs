@@ -13,9 +13,13 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
     {
         public override void Configure(EntityTypeBuilder<MasterExpense> builder)
         {
-            builder.HasMany(x => x.Expenses).WithOne(x => x.MasterExpense).HasForeignKey(x => x.MasterExpenseId);
+            builder.Property(e => e.Condition).IsRequired(true);
+			builder.Property(e => e.PersonnelId).IsRequired(true);
+			builder.HasMany(x => x.Expenses).WithOne(x => x.MasterExpense).HasForeignKey(x => x.MasterExpenseId);
+			builder.HasOne(e => e.Personnel).WithMany(e => e.MasterExpenses).HasForeignKey(e => e.PersonnelId);
 
-            base.Configure(builder);
+
+			base.Configure(builder);
         }
     }
 }

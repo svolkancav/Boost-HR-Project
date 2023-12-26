@@ -20,9 +20,6 @@ namespace HR_Project.Common.Models.VMs
 
         public string Reason { get; set; }
 
-        public ConditionType Condition { get; set; }
-
-        public double AggregateAmount { get; set; }
 
     }
 }

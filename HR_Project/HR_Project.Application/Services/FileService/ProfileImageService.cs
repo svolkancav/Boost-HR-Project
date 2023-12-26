@@ -105,6 +105,8 @@ namespace HR_Project.Application.Services.FileService
 						{
 							FileName = result[0].fileName,
 							FilePath = result[0].pathOrContainerName,
+							Status = Status.Inserted,
+							CreatedDate = DateTime.Now,
 							PersonnelId = Guid.Parse(personnelId)
 						};
 

@@ -48,7 +48,7 @@ namespace HR_Project.API.Controllers
             //    Email = "admin",
             //    Address = "asdasdasdasd",
             //    PhoneNumber = "admin",
-            //    UserName = "admin",
+            //    UserName = "admin1",
             //    Password = "admin123",
             //    DepartmentId = 1,
             //    CompanyId = 2,

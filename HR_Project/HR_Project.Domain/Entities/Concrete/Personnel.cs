@@ -32,8 +32,8 @@ namespace HR_Project.Domain.Entities.Concrete
         public string? Address { get; set; }
         public string Title { get; set; }
         public int? ImageId { get; set; }
-        public Gender Gender { get; set; }
-        public Nation Nation { get; set; }
+        public Gender? Gender { get; set; }
+        public Nation? Nation { get; set; }
 
         public DateTime? BirthDate { get; set; }
 		public DateTime? HireDate { get; set; }

@@ -35,21 +35,16 @@ namespace HR_Project.Application.Services.PersonelServices
             //TODO auto mapper
             Personnel user = new Personnel
             {
-                UserName = model.UserName,
                 Email = model.Email,
                 PasswordHash = model.Password,
                 Name = model.Name,
                 Surname = model.Surname,
                 Title = model.Title,
                 PhoneNumber = model.PhoneNumber,
-                Gender = model.Gender,
-                Nation = model.Nation,
-                CityId = model.CityId,
-                RegionId = model.RegionId,
-                BirthDate = model.BirthDate,
-                BloodType = model.BloodType,
-                HireDate = model.HireDate,
-
+                Address = model.Address,
+                RegionId= model.RegionId,
+                CityId= model.CityId,
+                UserName= model.Name,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);

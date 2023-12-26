@@ -23,7 +23,7 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCompanyDTO model)
+        public async Task<IActionResult> Create(CompanyRegisterDTO model)
         {
            
             await _companyService.Create(model);

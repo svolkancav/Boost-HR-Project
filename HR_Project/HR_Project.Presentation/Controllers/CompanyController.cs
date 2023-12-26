@@ -81,7 +81,7 @@ namespace HR_Project.Presentation.Controllers
                 await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id); ;
 
 
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Information","Account");
 
             }
             catch (Exception ex)

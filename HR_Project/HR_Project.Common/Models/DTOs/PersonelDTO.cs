@@ -25,8 +25,8 @@ namespace HR_Project.Application.IoC.Models.DTOs
 		public DateTime? BirthDate { get; set; }
         public DateTime? HireDate { get; set; }
         public BloodType? Bloodtype { get; set; }
-        public Gender Gender { get; set; }
-        public Nation Nation { get; set; }
+        public Gender? Gender { get; set; }
+        public Nation? Nation { get; set; }
         public int? CompanyId { get; set; }
 		public string? CompanyName { get; set; }
 		public int? DepartmentId { get; set; }

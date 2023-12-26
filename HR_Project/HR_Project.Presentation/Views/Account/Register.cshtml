@@ -53,10 +53,6 @@
                                     </div>
                                     <form class="user" asp-action="Register" method="post" enctype="multipart/form-data">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <div class="form-group">
-                                            <input asp-for="UploadImage" type="file" class="form-control form-control-user" accept="image/*" />
-                                            <span asp-validation-for="UploadImage" class="text-danger"></span>
-                                        </div>
 
                                         <div class="form-group" data-validate="Name">
                                             <input type="text" class="form-control form-control-user" name="Name"
@@ -75,10 +71,6 @@
                                                    id="exampleInputEmail" aria-describedby="emailHelp"
                                                    placeholder="Email...">
                                         </div>
-                                        <div class="form-group" data-validate="UserName" >
-                                            <input type="text" class="form-control form-control-user" name="UserName"
-                                                   id="exampleInputUserName" aria-describedby="UserNameHelp">
-                                        </div>
 
                                         <div class="form-group" data-validate="Title">
                                             <input type="text" class="form-control form-control-user" name="Title"
@@ -94,68 +86,32 @@
 
                                         <div class="form-group">
                                             <select asp-for="CityId" id="CityId" asp-items="Model.CityList" class="form-control form-select-sm">
-                                                <option value="" >Şehir seçiniz</option>
+                                                <option value="">Şehir seçiniz</option>
                                             </select>
                                             <span asp-validation-for="CityId" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
                                             <select asp-for="RegionId" id="RegionId" asp-items="Model.Regions" class="form-control form-select-sm">
-                                                <option value="" >İlçe seçiniz</option>
+                                                <option value="">İlçe seçiniz</option>
                                             </select>
                                             <span asp-validation-for="RegionId" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group" data-validate="Address">
-                                            <input type="text" class="form-control form-control-user" name="Address"
-                                                   id="exampleInputTitle" aria-describedby="AddressHelp"
-                                                   placeholder="Adres Satırı...">
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control form-select-sm" asp-for="BloodType" asp-items="EnumHelper.GetEnumSelectList<BloodType>()">
-                                                <option value="-1">Kan Grubunuzu Giriniz</option>
-                                            </select>
-                                            <span asp-validation-for="BloodType" class="text-danger"></span>
-                                        </div>
-                                        
-                                        <div class ="form-group">
-                                            <select class="form-control form-select-sm" asp-for="Gender" asp-items="EnumHelper.GetEnumSelectList<Gender>()">
-                                                <option value="-1">Cinsiyet Giriniz</option>
-                                            </select>
-                                            <span asp-validation-for="Gender" class="text-danger"></span>
-                                        </div>
- 
-                                        
-                                        <div class="form-group">
-                                            <select class="form-control form-select-sm" placeholder="Uyruk..." asp-for="Nation" asp-items="EnumHelper.GetEnumSelectList<Nation>()">
-                                                <option value="-1">Uyruk Giriniz</option>
-                                            </select>
-                                            <span asp-validation-for="Nation" class="text-danger"></span>
+
+                                        <div class="form-group" data-validate="CompanyName">
+                                            <input type="text" class="form-control form-control-user" name="CompanyName"
+                                                   id="exampleInputCompanyName" aria-describedby="CompanyNameHelp"
+                                                   placeholder="Şirket Adı...">
                                         </div>
 
-                                        <div class="form-group" data-validate="BirthDate">
-                                            <label>Doğum Tarihi</label>
-                                            <input type="date" class="form-control form-control-user" name="BirthDate"
-                                                   id="exampleInputBirthDate" aria-describedby="BirthDateHelp"
-                                                   placeholder="Doğum Tarihi ...">
-                                        </div>
-                                        <div class="form-group" data-validate="HireDate">
-                                            <label>İşe Başlama Tarihi</label>
-                                            <input type="date" class="form-control form-control-user" name="HireDate"
-                                                   id="exampleInputHireDate" aria-describedby="HireDateHelp"
-                                                   placeholder="İşe Giriş Tarihi...">
-                                        </div>
                                         <div class="form-group" data-validate="Password">
                                             <input type="password" class="form-control form-control-user" name="Password"
                                                    id="exampleInputPassword" placeholder="Şifre">
                                         </div>
 
-
                                         <input type="submit" value="Üye Ol" class="btn btn-primary btn-user btn-block" />
 
-
-
                                     </form>
-
 
                                 </div>
                             </div>
@@ -168,8 +124,6 @@
         </div>
 
     </div>
-
-
 
     @section Scripts {
         @if (TempData.ContainsKey("Toastrsuccess"))

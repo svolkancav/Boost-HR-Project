@@ -25,21 +25,19 @@ namespace HR_Project.Application.Services.CompanyService
 			_mapper = mapper;
 		}
 
-		public Task Create(CreateCompanyDTO model)
+		public Task Create(CompanyRegisterDTO model)
 		{
 			try
 			{
-				Company company = _mapper.Map<Company>(model);
-    //            Company company = new Company();
-				//company.Address = model.Address;
-				//company.TaxNumber = model.TaxNumber;
-				//company.Phone = model.Phone;
-				//company.CityId = model.CityId;
-				//company.Name = model.Name;
-				//company.RegionId = model.RegionId;
-				//company.Email = model.Email;
+				Company company = new Company();
+				company.Address = model.Address;
+				company.Phone = model.PhoneNumber;
+				company.CityId = model.CityId;
+				company.Name = model.CompanyName;
+				company.RegionId = model.RegionId;
+				company.PersonnelCount = model.PersonnelCount;
 
-                return _companyRepository.Create(company);
+				return _companyRepository.Create(company);
             }
 			catch (Exception m)
 			{

@@ -32,6 +32,8 @@ namespace HR_Project.Domain.Entities.Concrete
         public Region Region { get; set; }
         public int? CityId { get; set; }
         public City City { get; set; }
+        public Status Status { get; set; } = Status.Inserted;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public ICollection<Department> Departments { get; set; }
         public ICollection<Personnel> Personnels { get; set; }

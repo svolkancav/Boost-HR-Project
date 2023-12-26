@@ -40,8 +40,7 @@ namespace HR_Project.Common.Models.DTOs
 
 
         [Display(Name = "Ünvan")]
-        [Required(ErrorMessage = "Ünvan alanı boş bırakılamaz.")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
 
         public List<SelectListItem>? Regions { get; set; }
@@ -52,12 +51,15 @@ namespace HR_Project.Common.Models.DTOs
 
         [Display(Name = "Telefon Numarası")]
         [Required(ErrorMessage = "Telefon numarası alanı boş bırakılamaz.")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public Guid? ManagerId { get; set; }
         [Display(Name = "Personel Sayısı")]
         [Required(ErrorMessage = "Personel Sayısı boş bırakılamaz")]
         public int? PersonnelCount { get; set; }
+
+        public Status Status { get; set; } = Status.Inserted;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     }
 }

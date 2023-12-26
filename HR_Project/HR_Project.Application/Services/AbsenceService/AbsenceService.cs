@@ -38,6 +38,7 @@ namespace HR_Project.Application.Services.AbsenceService
             absence.Status = Status.Inserted;
             absence.CreatedDate = DateTime.Now;
             absence.PersonnelId = personnel.Id;
+            absence.Condition = ConditionType.Pending;
             try
             {
                 await _absenceRepository.Create(absence);

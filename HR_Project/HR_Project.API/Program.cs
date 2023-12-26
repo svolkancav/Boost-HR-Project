@@ -49,6 +49,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 	builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
 }));
 
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentityCore<Personnel>().AddEntityFrameworkStores<AppDbContext>();

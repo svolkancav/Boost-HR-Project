@@ -10,6 +10,7 @@ using HR_Project.Domain.Repositories;
 using HR_Project.Domain.Services.StorageService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using HR_Project.Domain.Enum;
 
 namespace HR_Project.Application.Services.FileService
 {
@@ -62,18 +63,30 @@ namespace HR_Project.Application.Services.FileService
 			{
 				List<(string fileName, string pathOrContainerName)> result = await _azureStorage.UploadAsync("cost-files", file);
 
-				Expense expense = await _expenseRepository.GetFilteredFirstOrDefault(x => new Expense(),
-						   x => x.Id == Convert.ToInt32(expenselId));
+				Expense expense = await _expenseRepository.GetDefault(x => x.Id == Convert.ToInt32(expenselId));
 
-				
-					expense.CostPicture = new CostPicture()
-					{
-						FileName = result[0].fileName,
-						FilePath = result[0].pathOrContainerName
-					};
-				
 
-				await _expenseRepository.Update(expense);
+				if (expense.ImageId!=null)
+				{
+					var pic = await _fileRepository.GetDefault(x => x.Id == expense.ImageId);
+					pic.Status = Status.Deleted;
+					pic.DeletedDate = DateTime.Now;
+
+					await _fileRepository.Delete(pic);
+				}
+				
+				CostPicture costPicture = new CostPicture
+				{
+					FilePath = result[0].pathOrContainerName,
+					FileName = result[0].fileName,
+					ExpenseId = expense.Id,
+					Status = Status.Inserted,
+					CreatedDate = DateTime.Now
+				};
+
+				expense.CostPicture = costPicture;
+
+				await _fileRepository.Create(costPicture);
 
 				return true;
 			}

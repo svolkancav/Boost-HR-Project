@@ -15,6 +15,7 @@ using HR_Project.Domain.Entities.Concrete.FileEntities;
 using HR_Project.Domain.Repositories;
 using HR_Project.Domain.Services.StorageService;
 using HR_Project.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,8 @@ namespace HR_Project.Application.IoC
             builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
 			builder.RegisterType<ExpenseService>().As<IExpenseService>().InstancePerLifetimeScope();
 
+            builder.RegisterType<MasterExpenseRepository>().As<IMasterExpenseRepository>().InstancePerLifetimeScope();
+
             builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>().InstancePerLifetimeScope();
             builder.RegisterType<DepartmentService>().As<IDepartmentService>().InstancePerLifetimeScope();
 
@@ -63,7 +66,6 @@ namespace HR_Project.Application.IoC
 
             builder.RegisterType<FileRepository<PersonnelPicture>>().As<IFileRepository<PersonnelPicture>>().InstancePerLifetimeScope();
             builder.RegisterType<FileRepository<CostPicture>>().As<IFileRepository<CostPicture>>().InstancePerLifetimeScope();
-
 
 
 			#region AutoMapper

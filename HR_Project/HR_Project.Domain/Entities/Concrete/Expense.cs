@@ -24,13 +24,9 @@ namespace HR_Project.Domain.Entities.Concrete
 
         public string Reason { get; set; }
 
-        public ConditionType Condition { get; set; }
 
 
-        //Navigation 
-        //Todo: PersonnelId masterexpense taşınacak
-        public Guid PersonnelId { get; set; }
-        public Personnel Personnel { get; set; }
+        
 
         public int MasterExpenseId { get; set; }
 

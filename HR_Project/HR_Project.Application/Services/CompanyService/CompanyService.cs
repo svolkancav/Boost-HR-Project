@@ -30,7 +30,6 @@ namespace HR_Project.Application.Services.CompanyService
 			try
 			{
 				Company company = new Company();
-				company.Address = model.Address;
 				company.Phone = model.PhoneNumber;
 				company.CityId = model.CityId;
 				company.Name = model.CompanyName;

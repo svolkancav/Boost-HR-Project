@@ -149,24 +149,18 @@ namespace HR_Project.Presentation.Controllers
                 string subject = "Registration Confirmation";
                 string body = $"Lütfen hesabınızı doğrulamak için linke <a href='{confirmationLink}'>tıklayın</a>.";
 
-                await _emailService.SendEmailRegisterAsync(model.Email, subject, body);
+                //await _emailService.SendEmailRegisterAsync(model.Email, subject, body);
 
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
 
                 CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
                 companyRegisterDTO.CompanyName = model.CompanyName;
                 companyRegisterDTO.PhoneNumber = model.PhoneNumber;
-                companyRegisterDTO.Surname = model.Surname;
                 companyRegisterDTO.RegionId = model.RegionId;
-                companyRegisterDTO.Name = model.Name;
                 companyRegisterDTO.CityId = model.CityId;
-                companyRegisterDTO.Email = model.Email;
-                companyRegisterDTO.Password = model.Password;
-                companyRegisterDTO.Title = model.Title;
-                companyRegisterDTO.ManagerId = model.ManagerId;
                 companyRegisterDTO.PersonnelCount = model.PersonnelCount;
 
-               var result =  await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("company", companyRegisterDTO);
+               var result =  await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
 
                 
 

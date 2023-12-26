@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web.Mvc;
+using System.Web.WebPages.Html;
 
 namespace HR_Project.Presentation.APIService
 {

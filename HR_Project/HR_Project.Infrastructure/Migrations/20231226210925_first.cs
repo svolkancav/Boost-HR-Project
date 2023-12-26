@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HR_Project.Infrastructure.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,9 +113,9 @@ namespace HR_Project.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonnelCount = table.Column<int>(type: "int", nullable: false),
-                    TaxOffice = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonnelCount = table.Column<int>(type: "int", nullable: true),
+                    TaxOffice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegionId = table.Column<int>(type: "int", nullable: true),
@@ -243,8 +243,8 @@ namespace HR_Project.Infrastructure.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Nation = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    Nation = table.Column<int>(type: "int", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BloodType = table.Column<int>(type: "int", nullable: true),
@@ -361,6 +361,7 @@ namespace HR_Project.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AggregateAmount = table.Column<double>(type: "float", nullable: false),
+                    Condition = table.Column<int>(type: "int", nullable: false),
                     PersonnelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -389,7 +390,6 @@ namespace HR_Project.Infrastructure.Migrations
                     ExpenseAmount = table.Column<double>(type: "float", nullable: false),
                     Currency = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Condition = table.Column<int>(type: "int", nullable: false),
                     MasterExpenseId = table.Column<int>(type: "int", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

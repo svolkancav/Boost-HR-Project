@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231226153356_first")]
+    [Migration("20231226210925_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,8 +32,8 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("AbsenceDuration")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("AbsenceDuration")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Condition")
                         .HasColumnType("int");
@@ -181,7 +181,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("PersonnelCount")
+                    b.Property<int?>("PersonnelCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -194,11 +194,9 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TaxNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxOffice")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -262,9 +260,6 @@ namespace HR_Project.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Condition")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -292,9 +287,6 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PersonnelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -309,8 +301,6 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasFilter("[ImageId] IS NOT NULL");
 
                     b.HasIndex("MasterExpenseId");
-
-                    b.HasIndex("PersonnelId");
 
                     b.ToTable("Expenses");
                 });
@@ -362,6 +352,9 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<double>("AggregateAmount")
                         .HasColumnType("float");
 
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -371,10 +364,15 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("PersonnelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
 
                     b.ToTable("MasterExpenses");
                 });
@@ -781,15 +779,18 @@ namespace HR_Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
-                        .WithMany("Expenses")
-                        .HasForeignKey("PersonnelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("CostPicture");
 
                     b.Navigation("MasterExpense");
+                });
+
+            modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.MasterExpense", b =>
+                {
+                    b.HasOne("HR_Project.Domain.Entities.Concrete.Personnel", "Personnel")
+                        .WithMany("MasterExpenses")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Personnel");
                 });
@@ -930,7 +931,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.Navigation("Advances");
 
-                    b.Navigation("Expenses");
+                    b.Navigation("MasterExpenses");
 
                     b.Navigation("Personnels");
                 });

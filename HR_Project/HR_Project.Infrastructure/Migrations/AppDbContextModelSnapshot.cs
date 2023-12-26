@@ -179,7 +179,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("PersonnelCount")
+                    b.Property<int?>("PersonnelCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -192,11 +192,9 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TaxNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxOffice")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

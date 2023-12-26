@@ -18,7 +18,7 @@ namespace HR_Project.Common.ValidationClass
 			{
 				var extension = Path.GetExtension(file.FileName).ToLower(); //.JPEG => .jpeg
 
-				string[] extensions = { "jpg", "jpeg", "png","pdf" };
+				string[] extensions = { ".jpg", ".jpeg", ".png",".pdf" };
 
 				bool result = extensions.Any(x => x.EndsWith(extension));
 

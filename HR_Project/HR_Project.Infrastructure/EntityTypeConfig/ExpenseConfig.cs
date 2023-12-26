@@ -19,12 +19,9 @@ namespace HR_Project.Infrastructure.EntityTypeConfig
             builder.Property(e => e.ExpenseAmount).IsRequired(true);
             builder.Property(e => e.Currency).IsRequired(true);
             builder.Property(e => e.Reason).IsRequired(true);
-            builder.Property(e => e.Condition).IsRequired(true);
-            builder.Property(e => e.PersonnelId).IsRequired(true);
 			builder.Property(x => x.ImageId).IsRequired(false);
 
 
-			builder.HasOne(e=>e.Personnel).WithMany(e=>e.Expenses).HasForeignKey(e=>e.PersonnelId);
 
             builder.HasOne(x => x.CostPicture).WithOne(x => x.Expense).HasForeignKey<Expense>(x => x.ImageId).OnDelete(DeleteBehavior.NoAction);
 

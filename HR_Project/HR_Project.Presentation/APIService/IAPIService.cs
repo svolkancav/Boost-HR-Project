@@ -1,4 +1,5 @@
-﻿using HR_Project.Common.Models.DTOs;
+﻿using HR_Project.Common.Models.Abstract;
+using HR_Project.Common.Models.DTOs;
 using HR_Project.Presentation.Models;
 
 namespace HR_Project.Presentation.APIService
@@ -7,6 +8,7 @@ namespace HR_Project.Presentation.APIService
 	{
 		Task<T> GetAsync<T>(string endpoint, string token);
 		Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data, string token);
+		Task<TResponse> PostWithImageAsync<TRequest, TResponse>(string endpoint, TRequest data, string token) where TRequest : class, IMasterExpense;
 
 		//getbyid
 		Task<T> GetByIdAsync<T>(string endpoint, string id, string token);

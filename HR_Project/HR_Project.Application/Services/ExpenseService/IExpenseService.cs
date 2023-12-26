@@ -11,16 +11,16 @@ namespace HR_Project.Application.Services.ExpenseService
 {
     public interface IExpenseService
     {
-        Task Create(Expense_MasterExpenseVM model);
-        Task Update(UpdateExpenseDTO model);
+        Task Create(MasterExpenseDTO model);
+        Task Update(UpdateMasterExpenseDTO model);
 
         Task Delete(int id);
 
-        Task<List<ExpenseVM>>GetByCondition(ConditionType conditionType);
+        Task<List<MasterExpenseVM>>GetByCondition(ConditionType conditionType);
 
-        Task<List<ExpenseVM>> GetExpenses();
+        Task<List<MasterExpenseVM>> GetExpenses();
 
-        Task<UpdateExpenseDTO> GetById(string id);
+        Task<UpdateMasterExpenseDTO> GetById(string id);
 
 
 

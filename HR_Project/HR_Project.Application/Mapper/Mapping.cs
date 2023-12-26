@@ -29,6 +29,7 @@ namespace HR_Project.Application.Mapper
             CreateMap<UpdateCompanyDTO, CreateCompanyDTO>().ReverseMap();
             CreateMap<Company, CreateCompanyDTO>().ReverseMap();
             CreateMap<Company, UpdateCompanyDTO>().ReverseMap();
+            CreateMap<Company, CompanyRegisterDTO>().ReverseMap();
 
         }
         

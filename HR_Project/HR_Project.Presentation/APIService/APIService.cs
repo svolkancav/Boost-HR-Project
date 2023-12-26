@@ -54,8 +54,6 @@ namespace HR_Project.Presentation.APIService
                 throw message;
             }
 
-
-
         }
 
         //getbyid
@@ -210,6 +208,29 @@ namespace HR_Project.Presentation.APIService
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(content);
         }
+        public async Task<TResponse> PostAsyncWoToken<TRequest, TResponse>(string endpoint, TRequest data)
+        {
+            var jsonData = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+
+            try
+            {
+                var response = await _httpClient.PostAsync(endpoint, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResponse>(responseContent);
+            }
+            catch (Exception message)
+            {
+
+                throw message;
+            }
+
+        }
 
         public async Task ConfirmAsync(string endpoint, MailConfirmDTO data)
         {
@@ -234,6 +255,7 @@ namespace HR_Project.Presentation.APIService
 
 
         }
+
     }
 
 

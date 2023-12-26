@@ -143,23 +143,51 @@ namespace HR_Project.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 RegisterResponse response = await _apiService.RegisterAsync(model);
-                var confirmationLink = Url.Action("Confirmation","Account", response, Request.Scheme);
+                var confirmationLink = Url.Action("Confirmation", "Account", response, Request.Scheme);
                 // Send registration confirmation email
                 //"https://localhost:7034/Account/Confirmation", new { id = personnel.Id, token }, Request.Scheme
                 string subject = "Registration Confirmation";
                 string body = $"Lütfen hesabınızı doğrulamak için linke <a href='{confirmationLink}'>tıklayın</a>.";
 
                 await _emailService.SendEmailRegisterAsync(model.Email, subject, body);
-                return RedirectToAction("Create", "Company");
+
+                Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
+
+                CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
+                companyRegisterDTO.CompanyName = model.CompanyName;
+                companyRegisterDTO.PhoneNumber = model.PhoneNumber;
+                companyRegisterDTO.Surname = model.Surname;
+                companyRegisterDTO.RegionId = model.RegionId;
+                companyRegisterDTO.Name = model.Name;
+                companyRegisterDTO.CityId = model.CityId;
+                companyRegisterDTO.Email = model.Email;
+                companyRegisterDTO.Password = model.Password;
+                companyRegisterDTO.Title = model.Title;
+                companyRegisterDTO.ManagerId = model.ManagerId;
+                companyRegisterDTO.PersonnelCount = model.PersonnelCount;
+
+               var result =  await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("company", companyRegisterDTO);
+
+                
+
+                List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
+                var selectedCompany = companies.FirstOrDefault(x => x.Name == model.Name);
+
+                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id); ;
+
+
+                return RedirectToAction("Information", "Account");
 
             }
             return View(model);
 
         }
 
-
-
-
+        [HttpGet]
+        public async Task<IActionResult> Information()
+        {
+            return View();
+        }
 
 
 
@@ -167,7 +195,7 @@ namespace HR_Project.Presentation.Controllers
         public async Task<IActionResult> Confirmation(string id, string token)
         {
 
-            await _apiService.ConfirmAsync("Account/confirm", new MailConfirmDTO { Id=id,Token=token});
+            await _apiService.ConfirmAsync("Account/confirm", new MailConfirmDTO { Id = id, Token = token });
             return RedirectToAction("Login", "Account");
 
         }

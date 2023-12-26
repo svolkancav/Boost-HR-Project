@@ -35,8 +35,8 @@ namespace HR_Project.Common.Models.DTOs
 		public IFormFile? UploadImage { get; set; }
         public string? ImagePath { get; set; }
 
-        public Gender Gender { get; set; }
-        public Nation Nation { get; set; }
+        public Gender? Gender { get; set; }
+        public Nation? Nation { get; set; }
         //public string ManagerName { get; set; }
 
         public int? CityId { get; set; }

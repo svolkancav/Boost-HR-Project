@@ -425,7 +425,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("HireDate")
@@ -451,7 +451,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Nation")
+                    b.Property<int?>("Nation")
                         .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")

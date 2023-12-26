@@ -10,7 +10,7 @@ namespace HR_Project.Application.Services.CompanyService
 {
 	public interface ICompanyService
 	{
-		Task Create(CreateCompanyDTO model);
+		Task Create(CompanyRegisterDTO model);
 		Task Update(UpdateCompanyDTO model);
 		Task Delete(int id);
         Task<List<UpdateCompanyDTO>> GetCompanies();

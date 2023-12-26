@@ -28,5 +28,6 @@ namespace HR_Project.Presentation.APIService
         //register
         Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel);
 		Task ConfirmAsync(string endpoint, MailConfirmDTO model);
+		Task<TResponse> PostAsyncWoToken<TRequest, TResponse>(string endpoint, TRequest data);
     }
 }

@@ -16,7 +16,7 @@ namespace HR_Project.Common.Models.DTOs
 		[Required(ErrorMessage = "Email alanı boş bırakılamaz.")]
 		public string Email { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [Display(Name = "Parola")]
 		[Required(ErrorMessage = "Parola alanı boş bırakılamaz.")]
@@ -41,7 +41,7 @@ namespace HR_Project.Common.Models.DTOs
 		[Display(Name = "Telefon Numarası")]
 		[Required(ErrorMessage = "Telefon numarası alanı boş bırakılamaz.")]
 		public string PhoneNumber { get; set; }
-		public string Address { get; set; }
+		public string? Address { get; set; }
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
         public int? CompanyId { get; set; }
@@ -53,18 +53,16 @@ namespace HR_Project.Common.Models.DTOs
         //[Required(ErrorMessage = "İlçe alanı boş bırakılamaz.")]
         //public List<SelectListItem> Region { get; set; }
         public int? RegionId { get; set; }
+        public string? CompanyName { get; set; }
         public int? CityId { get; set; }
         //[Display(Name = "İl")]
         //[Required(ErrorMessage = "İl alanı boş bırakılamaz.")]
         //public List<SelectListItem> CityList { get; set; }
 
+        public int? PersonnelCount { get; set; }
 
         [Display(Name = "Kan Grubu")]
 		public BloodType? BloodType { get; set; }
-
-
-		[Display(Name = "Doğum Günü")]
-		[Required(ErrorMessage = "Doğum Günü alanı boş bırakılamaz.")]
 		public DateTime BirthDate { get; set; }
         public DateTime HireDate { get; set; }
         public Gender Gender { get; set; }

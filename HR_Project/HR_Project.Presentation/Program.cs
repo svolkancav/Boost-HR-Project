@@ -68,8 +68,7 @@ if (!app.Environment.IsDevelopment())
 
 
 
-//TODO: SeedData
-//SeedData.Seed(app);
+SeedData.Seed(app);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

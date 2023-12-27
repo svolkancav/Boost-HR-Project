@@ -74,8 +74,28 @@ namespace HR_Project.API.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Update(UpdateMasterExpenseDTO model)
+		public async Task<IActionResult> Update()
 		{
+			var form = await Request.ReadFormAsync();
+			var jsonString = form["model"]; // JSON verisi
+
+			// JSON verisini RegisterDTO'ya çözme
+			var model = JsonConvert.DeserializeObject<UpdateMasterExpenseDTO>(jsonString);
+
+			// IFormFile'ı almak için
+			var files = form.Files;
+
+			for (int i = 0; i < model.Expenses.Count; i++)
+			{
+				var fieldName = $"UploadImage_{i}";
+				var matchingFile = files.FirstOrDefault(f => f.Name == fieldName);
+
+				if (matchingFile != null)
+				{
+					model.Expenses[i].UploadImage = matchingFile;
+				}
+			}
+
 			await _expenseService.Update(model);
 			return Ok();
 		}

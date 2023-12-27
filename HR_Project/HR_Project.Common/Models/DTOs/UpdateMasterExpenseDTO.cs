@@ -21,6 +21,10 @@ namespace HR_Project.Common.Models.DTOs
 
 		public double AggregateAmount { get; set; }
 
+
+		[ValidateExpenseList]
+		public List<ExpenseDTO> Expenses { get; set; }
+
 		private Currency _currency;
 
 		public Currency Currency
@@ -28,9 +32,5 @@ namespace HR_Project.Common.Models.DTOs
 			get { return _currency; }
 			set { _currency = Expenses[0].Currency; }
 		}
-
-		[ValidateExpenseList]
-		public List<ExpenseDTO> Expenses { get; set; }
-
 	}
 }

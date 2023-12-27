@@ -17,7 +17,7 @@ namespace HR_Project.Common.ValidationClass
 			{
 				if (expenses.Count == 0)
 				{
-					return new ValidationResult("Gider listesi boş olamaz.");
+					return new ValidationResult("Masraf boş olamaz.");
 				}
 
 				if (IsValidExpense(expenses))
@@ -26,7 +26,7 @@ namespace HR_Project.Common.ValidationClass
 				}
 				else
 				{
-					return new ValidationResult("Gider listesindeki para birimleri farklı olamaz.");
+					return new ValidationResult("Masrafların para birimleri farklı olamaz.");
 				}
 			}
 

@@ -91,18 +91,19 @@ namespace HR_Project.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateMasterExpenseDTO model)
         {
-			ViewBag.EnumValues = new
-			{
-				ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
-				Currencies = EnumHelper.GetEnumSelectList<Currency>()
-			};
+			
 			try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(model);
+					ViewBag.EnumValues = new
+					{
+						ExpenseTypes = EnumHelper.GetEnumSelectList<ExpenseType>(),
+						Currencies = EnumHelper.GetEnumSelectList<Currency>()
+					};
+					return View(model);
                 }
-                await _apiService.UpdateAsync<UpdateMasterExpenseDTO>("expense", model, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.PutWithImageAsync<UpdateMasterExpenseDTO,UpdateMasterExpenseDTO>("expense", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
                 return RedirectToAction("Index");
             }

@@ -287,6 +287,37 @@ namespace HR_Project.Presentation.APIService
                 return JsonConvert.DeserializeObject<TResponse>(responseContent);
             }
         }
+        public async Task<TResponse> PutWithImageAsync<TRequest, TResponse>(string endpoint, TRequest data, string token) where TRequest : class, IMasterExpense
+        {
+            using (var content = new MultipartFormDataContent())
+            {
+                for (int i = 0; i < data.Expenses.Count; i++)
+                {
+                    ExpenseDTO item = data.Expenses[i];
+
+                    if (item != null && item.UploadImage != null)
+                    {
+                        var imageContent = new StreamContent(item.UploadImage.OpenReadStream());
+                        var fieldName = $"UploadImage_{i}";
+                        content.Add(imageContent, fieldName, item.UploadImage.FileName);
+                        item.UploadImage = null;
+                    }
+                }
+                var jsonData = JsonConvert.SerializeObject(data);
+
+                content.Add(new StringContent(jsonData, Encoding.UTF8, "application/json"), "model");
+
+                var response = await _httpClient.PutAsync(endpoint, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResponse>(responseContent);
+            }
+        }
     }
 
 

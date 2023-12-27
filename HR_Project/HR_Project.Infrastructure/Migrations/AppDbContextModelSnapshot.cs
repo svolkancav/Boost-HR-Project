@@ -69,7 +69,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("Absences");
+                    b.ToTable("Absences", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Advance", b =>
@@ -116,7 +116,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("Advances");
+                    b.ToTable("Advances", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.City", b =>
@@ -145,7 +145,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Company", b =>
@@ -203,7 +203,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Department", b =>
@@ -247,7 +247,7 @@ namespace HR_Project.Infrastructure.Migrations
                     b.HasIndex("ManagerId")
                         .IsUnique();
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Expense", b =>
@@ -300,7 +300,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("MasterExpenseId");
 
-                    b.ToTable("Expenses");
+                    b.ToTable("Expenses", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.FileEntities.File", b =>
@@ -372,7 +372,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("MasterExpenses");
+                    b.ToTable("MasterExpenses", (string)null);
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entities.Concrete.Personnel", b =>
@@ -554,7 +554,7 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Regions");
+                    b.ToTable("Regions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

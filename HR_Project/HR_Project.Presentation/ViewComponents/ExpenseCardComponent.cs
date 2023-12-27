@@ -24,7 +24,7 @@ namespace HR_Project.Presentation.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<ExpenseVM> pendingExpense = await _apiService.GetAsync<List<ExpenseVM>>($"Expense/{ConditionType.Pending}", HttpContext.Request.Cookies["access-token"]);
+            List<MasterExpenseVM> pendingExpense = await _apiService.GetAsync<List<MasterExpenseVM>>($"Expense/{ConditionType.Pending}", HttpContext.Request.Cookies["access-token"]);
 
             int pendingExpenseCount = pendingExpense.Count;
 

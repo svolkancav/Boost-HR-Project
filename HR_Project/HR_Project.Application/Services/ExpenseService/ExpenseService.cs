@@ -72,16 +72,7 @@ namespace HR_Project.Application.Services.ExpenseService
 
 		public async Task Delete(int id)
 		{
-			UpdateMasterExpenseDTO masterExpenseDTO = await _masterExpenseRepository.GetFilteredFirstOrDefault(x => new UpdateMasterExpenseDTO
-			{
-				Id = x.Id,
-				AggregateAmount = x.AggregateAmount,
-				CreateDate = x.CreatedDate,
-				Expenses = _mapper.Map<List<ExpenseDTO>>(x.Expenses)
-			}, x => x.Id == id, include: x => x.Include(x => x.Expenses));
-
-
-			List<Expense> expenses = _mapper.Map<List<Expense>>(masterExpenseDTO.Expenses);
+			List<Expense> expenses = await _expenseRepository.GetDefaults(x => x.MasterExpenseId == id);
 
 			MasterExpense masterExpense = await _masterExpenseRepository.GetDefault(x => x.Id == id);
 
@@ -115,7 +106,7 @@ namespace HR_Project.Application.Services.ExpenseService
 				CreateDate = x.CreatedDate,
 				Id = x.Id,
 				Expenses = _mapper.Map<List<ExpenseDTO>>(x.Expenses)
-			}, x => x.Condition == conditionType, include: x => x.Include(x => x.Expenses));
+			}, x => x.Condition == conditionType && x.Status!=Status.Deleted, include: x => x.Include(x => x.Expenses));
 		}
 
 		public async Task<UpdateMasterExpenseDTO> GetById(string id)

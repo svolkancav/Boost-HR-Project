@@ -16,33 +16,11 @@ namespace HR_Project.Common.Models.DTOs
     {
         public int Id { get; set; }
 
-        [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email alanı boş bırakılamaz.")]
-        public string Email { get; set; }
-
-        [Display(Name = "Parola")]
-        [Required(ErrorMessage = "Parola alanı boş bırakılamaz.")]
-        public string Password { get; set; }
-
-
-        [Display(Name = "Adı")]
-        [Required(ErrorMessage = "Adı alanı boş bırakılamaz.")]
-        public string Name { get; set; }
-
         [Display(Name = "Şirket Adı")]
         [Required(ErrorMessage = "Şirket Adı alanı boş bırakılamaz.")]
         public string CompanyName { get; set; }
 
-
-        [Display(Name = "Soyadı")]
-        [Required(ErrorMessage = "Soyadı alanı boş bırakılamaz.")]
-        public string Surname { get; set; }
-
-
-        [Display(Name = "Ünvan")]
-        public string? Title { get; set; }
-
-
+        public string? Email { get; set; }
         public List<SelectListItem>? Regions { get; set; }
         public List<SelectListItem>? CityList { get; set; }
 
@@ -54,6 +32,7 @@ namespace HR_Project.Common.Models.DTOs
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public Guid? ManagerId { get; set; }
+
         [Display(Name = "Personel Sayısı")]
         [Required(ErrorMessage = "Personel Sayısı boş bırakılamaz")]
         public int? PersonnelCount { get; set; }

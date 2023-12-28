@@ -35,6 +35,7 @@ namespace HR_Project.Application.Services.CompanyService
 				company.Name = model.CompanyName;
 				company.RegionId = model.RegionId;
 				company.PersonnelCount = model.PersonnelCount;
+				company.Email = model.Email;
 
 				return _companyRepository.Create(company);
             }

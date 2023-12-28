@@ -79,6 +79,7 @@ namespace HR_Project.Presentation.Controllers
                     return View(model);
                 }
                 await _apiService.UpdateAsync<UpdateAdvanceDTO>("advance", model, HttpContext.Request.Cookies["access-token"]);
+
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
                 return RedirectToAction("Index");
             }

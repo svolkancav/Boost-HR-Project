@@ -159,15 +159,16 @@ namespace HR_Project.Presentation.Controllers
                 companyRegisterDTO.RegionId = model.RegionId;
                 companyRegisterDTO.CityId = model.CityId;
                 companyRegisterDTO.PersonnelCount = model.PersonnelCount;
+                companyRegisterDTO.Email = model.Email;
 
                var result =  await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
 
                 
 
                 List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
-                var selectedCompany = companies.FirstOrDefault(x => x.Name == model.Name);
+                var selectedCompany = companies.FirstOrDefault(x => x.Email == model.Email);
 
-                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id); ;
+                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id);
 
 
                 return RedirectToAction("Information", "Account");

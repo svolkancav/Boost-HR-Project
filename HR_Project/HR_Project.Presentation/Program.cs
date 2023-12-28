@@ -23,7 +23,7 @@ builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 });
 ////https://localhost:7034/api/
 
-
+//https://localhost:44376/api/
 //https://localhost:7258/api/
 //https://easy-hr-client.azurewebsites.net/api/
 

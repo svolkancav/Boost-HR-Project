@@ -11,8 +11,8 @@ namespace HR_Project.Common.Models.DTOs
 {
 	public class CreateAdvanceDTO
 	{
-		[DateValidaditon(ErrorMessage = "Başlangıç tarihi bugünden önce olamaz.")]
-		public DateTime LastPaidDate { get; set; }
+        [DateValidationNow(ErrorMessage = "Talep edilen tarih bugünden önce olamaz.")]
+        public DateTime LastPaidDate { get; set; }
 		[DataType(DataType.Currency)]
 		[Display(Name = "Tutar")]
 		[Required]

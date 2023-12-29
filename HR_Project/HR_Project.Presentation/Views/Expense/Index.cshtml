@@ -121,8 +121,7 @@
 																	<th>Harcama Tipi</th>
 																	<th>Açıklama</th>
 																	<th>Harcama Tarihi</th>
-																	<th>Harcama Miktarı</th>
-																	<th>Para Birimi</th>
+																	<th>Harcama Tutarı </th>
 																	<th>Belge</th>
 																</tr>
 															</thead>
@@ -134,8 +133,7 @@
 																		<td>@expense.ExpenseType.GetDisplayName()</td>
 																		<td>@expense.Reason</td>
 																		<td>@expense.ExpenseDate</td>
-																		<td>@expense.ExpenseAmount</td>
-																		<td>@expense.Currency</td>
+																		<td>@expense.ExpenseAmount @expense.Currency</td>
 																		<td><a href="javascript:void(0);" onclick="openDocumentModal('@expense.ImageUrl')">Belge için tıklayınız.</a></td>
 																	</tr>
 																}

@@ -74,6 +74,7 @@
 											<th>Oluşturulma Tarihi</th>
 											<th>Durumu</th>
 											<th>Toplam Tutar</th>
+											<th>Durumu</th>
 											<th>İşlemler</th>
 										</tr>
 									</thead>
@@ -90,6 +91,7 @@
 												<td>@masterExpanse.CreateDate.ToShortDateString()</td>
 												<td>@masterExpanse.Condition.GetDisplayName()</td>
 												<td>@masterExpanse.AggregateAmount @masterExpanse.Currency</td>
+												<td>@masterExpanse.Condition.GetDisplayName()</td>
 
 												@{
 													if (masterExpanse.Condition == ConditionType.Pending)

@@ -22,6 +22,7 @@ namespace HR_Project.Domain.Entities.Concrete
 		public string Reason { get; set; }
 		public ConditionType Condition { get; set; }
 
+
 		//Navigation
 		public Guid PersonnelId { get; set; }
 		public Personnel Personnel { get; set; }

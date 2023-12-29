@@ -63,6 +63,9 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+                                    Oluşturma Tarihi
+                                </th>
 
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
                                     Açıklama
@@ -85,7 +88,9 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-
+                                    <td>
+                                        @item.CreatedDate.ToShortDateString()
+                                    </td>
                                     <td>
                                         @item.Reason
                                     </td>

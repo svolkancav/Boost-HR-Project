@@ -15,6 +15,6 @@ namespace HR_Project.Common.Models.VMs
 		public string Reason { get; set; }
         public Currency Currency { get; set; }
         public ConditionType Condition { get; set; }
-
+		public DateTime CreatedDate { get; set; }= DateTime.Now;
 	}
 }

@@ -132,7 +132,7 @@
 																	<tr>
 																		<td>@expense.ExpenseType.GetDisplayName()</td>
 																		<td>@expense.Reason</td>
-																		<td>@expense.ExpenseDate</td>
+																		<td>@expense.ExpenseDate.ToShortDateString()</td>
 																		<td>@expense.ExpenseAmount @expense.Currency</td>
 																		<td><a href="javascript:void(0);" onclick="openDocumentModal('@expense.ImageUrl')">Belge için tıklayınız.</a></td>
 																	</tr>

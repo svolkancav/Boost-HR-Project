@@ -20,6 +20,7 @@ namespace HR_Project.Presentation.Controllers
             if (!string.IsNullOrEmpty(searchText))
             {
                 List<AbsenceVM> absences = await _apiService.GetAsync<List<AbsenceVM>>("absence", HttpContext.Request.Cookies["access-token"]);
+
                 List<AbsenceVM> selectedAbsences = absences.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.LeaveTypes.ToString().ToLower().Contains(searchText.ToLower())).ToList();
 
                 return View(selectedAbsences.ToPagedList(pageNumber, pageSize));

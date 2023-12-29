@@ -65,7 +65,9 @@
 					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 						<thead>
 							<tr>
-
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+									Oluşturulma Tarihi
+								</th>
 								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
 									İzin Türü
 								</th>
@@ -92,36 +94,38 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (var item in Model)
+							@foreach (var absence in Model)
 							{
 								<tr>
-
 									<td>
-										@item.LeaveTypes.GetDisplayName()
+										@absence.CreatedDate.ToShortDateString()
 									</td>
 									<td>
-										@item.Reason
+										@absence.LeaveTypes.GetDisplayName()
 									</td>
 									<td>
-										@item.StartDate.ToShortDateString()
+										@absence.Reason
 									</td>
 									<td>
-										@item.EndDate.ToShortDateString()
+										@absence.StartDate.ToShortDateString()
 									</td>
 									<td>
-										@item.AbsenceDuration
+										@absence.EndDate.ToShortDateString()
 									</td>
 									<td>
-										@item.Condition.GetDisplayName()
+										@absence.AbsenceDuration
+									</td>
+									<td>
+										@absence.Condition.GetDisplayName()
 									</td>
 
 									@{
-										if (item.Condition == ConditionType.Pending)
+										if (absence.Condition == ConditionType.Pending)
 										{
 											<td>
-												<a asp-action="Update" asp-route-id="@item.Id">Düzenle</a>
+												<a asp-action="Update" asp-route-id="@absence.Id">Düzenle</a>
 												|
-												<a asp-action="Delete" role="button" onclick="confirmDelete('@item.Id')" id="deleteprocess">Sil</a>
+												<a asp-action="Delete" role="button" onclick="confirmDelete('@absence.Id')" id="deleteprocess">Sil</a>
 											</td>
 										}
 										else

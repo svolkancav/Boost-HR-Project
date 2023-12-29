@@ -16,5 +16,6 @@ namespace HR_Project.Common.Models.VMs
         public DateTime EndDate { get; set; }
         public double AbsenceDuration { get; set; }
         public ConditionType Condition { get; set; }
-    }
+		public DateTime CreatedDate { get; set; }= DateTime.Now;
+	}
 }

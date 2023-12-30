@@ -1,5 +1,6 @@
 ﻿using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,15 @@ namespace HR_Project.Application.Services.PersonelServices
         Task<PersonelDTO> GetById(string id);
         Task<PersonelDTO> GetByEmail(string email);
         Task<List<PersonelDTO>> GetPersonels();
-        Task<SignInResult> Login(LoginDTO model);
+        Task<List<CompanyManagerVM>> GetUnconfirmedManager();
+
+		Task<SignInResult> Login(LoginDTO model);
         Task<string[]> GetRoles(string email);
 
         //RegisterDTO
         Task<IdentityResult> Register(RegisterDTO model);
+        Task ConfirmManager(Guid id);
+        Task DeleteNewRegister(Guid id);
         void Logout(string token);
         Task<UpdateProfileDTO> FillDTO(string id);
     }

@@ -35,7 +35,7 @@ namespace HR_Project.Common.Models.DTOs
 
         [Display(Name = "Personel Sayısı")]
         [Required(ErrorMessage = "Personel Sayısı boş bırakılamaz")]
-        public int? PersonnelCount { get; set; }
+        public int PersonnelCount { get; set; }
 
         public Status Status { get; set; } = Status.Inserted;
         public DateTime CreatedDate { get; set; } = DateTime.Now;

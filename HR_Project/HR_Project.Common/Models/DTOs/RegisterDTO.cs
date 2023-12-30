@@ -59,7 +59,7 @@ namespace HR_Project.Common.Models.DTOs
         //[Required(ErrorMessage = "İl alanı boş bırakılamaz.")]
         //public List<SelectListItem> CityList { get; set; }
 
-        public int? PersonnelCount { get; set; }
+        public int PersonnelCount { get; set; }
 
         [Display(Name = "Kan Grubu")]
 		public BloodType? BloodType { get; set; }

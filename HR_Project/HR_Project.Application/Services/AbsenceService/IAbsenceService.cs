@@ -16,6 +16,7 @@ namespace HR_Project.Application.Services.AbsenceService
 		Task Delete(int id);
 		Task<List<AbsenceVM>> GetByCondition(ConditionType condition);
 		Task<List<AbsenceVM>> GetAbsences();
+		Task<List<AbsenceVM>> GetPendingAbsence();
 		Task<UpdateAbsenceDTO> GetById(string id);
 	}
 }

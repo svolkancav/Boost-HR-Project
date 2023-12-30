@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using HR_Project.Application.Services.FileService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using HR_Project.Common.Models.VMs;
+using HR_Project.Domain.Enum;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
@@ -18,9 +20,10 @@ namespace HR_Project.Application.Services.PersonelServices
 		private readonly UserManager<Personnel> _userManager;
 		private readonly IProfileImageService _profileImageService;
 		private readonly IConfiguration _configuration;
+		private readonly ICompanyRepository _companyRepository;
 
 
-		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService, IConfiguration configuration)
+		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService, IConfiguration configuration, ICompanyRepository companyRepository)
 		{
 			_personelRepository = personelRepository;
 			_mapper = mapper;
@@ -28,6 +31,7 @@ namespace HR_Project.Application.Services.PersonelServices
 			_userManager = userManager;
 			_profileImageService = profileImageService;
 			_configuration = configuration;
+			_companyRepository = companyRepository;
 		}
 
 		public async Task<IdentityResult> Register(RegisterDTO model)
@@ -154,9 +158,34 @@ namespace HR_Project.Application.Services.PersonelServices
 			return personels;
 		}
 
-		public Task<string[]> GetRoles(string email)
+		public async Task<List<CompanyManagerVM>> GetUnconfirmedManager()
 		{
-			throw new NotImplementedException();
+			List<CompanyManagerVM> companyManagerVM = await _personelRepository.GetFilteredList(x => new CompanyManagerVM
+			{
+				Id = x.Id,
+				FullName = x.Name + " " + x.Surname,
+				Email = x.Company.Email,
+				PhoneNumber = x.PhoneNumber,
+				CompanyName = x.Company.Name,
+				Title = x.Title,
+				PersonnelCount = x.Company.PersonnelCount,
+			}, x => x.Status != Status.Deleted && x.IsAccountConfirmed == false,
+			x => x.OrderByDescending(x => x.CreatedDate),
+			x => x.Include(x => x.Company));
+			return companyManagerVM;
+		}
+
+		public async Task<string[]> GetRoles(string email)
+		{
+			var user = await _userManager.FindByEmailAsync(email);
+
+			if (user != null)
+			{
+				var roles = await _userManager.GetRolesAsync(user);
+				return roles.ToArray();
+			}
+
+			return new string[0];
 		}
 
 
@@ -205,6 +234,8 @@ namespace HR_Project.Application.Services.PersonelServices
 			try
 			{
 				var user = await _signInManager.UserManager.FindByEmailAsync(model.Email);
+				if (user.IsAccountConfirmed == false)
+					return SignInResult.NotAllowed;
 
 				SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 				return result;
@@ -228,7 +259,7 @@ namespace HR_Project.Application.Services.PersonelServices
 				{
 
 					var personnel = await _personelRepository.GetFilteredFirstOrDefault(
-					x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.ManagerId,ManagerName="Yönetici", Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.CompanyId, CompanyName = x.Company.Name, DepartmentId = x.DepartmentId, DepartmentName = x.Department.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.RegionId, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}", Id = x.Id },
+					x => new UpdateProfileDTO { BirthDate = x.BirthDate, ManagerId = x.ManagerId, ManagerName = "Yönetici", Name = x.Name, Surname = x.Surname, Nation = x.Nation, Gender = x.Gender, CompanyId = x.CompanyId, CompanyName = x.Company.Name, DepartmentId = x.DepartmentId, DepartmentName = x.Department.Name, BloodType = x.BloodType, PhoneNumber = x.PhoneNumber, RegionId = x.RegionId, CityId = x.CityId, Title = x.Title, RegionName = x.Region.Name, CityName = x.City.Name, Address = x.Address, Email = x.Email, HireDate = x.HireDate, ImagePath = $"{_configuration["BaseStorageUrl"]}/{x.PersonnelPicture.FilePath}", Id = x.Id },
 					where: x => x.Id == Guid.Parse(id),
 					include: x => x.Include(d => d.Department).Include(c => c.Company).Include(x => x.Region).Include(x => x.City).Include(x => x.PersonnelPicture)
 					);
@@ -251,6 +282,33 @@ namespace HR_Project.Application.Services.PersonelServices
 				throw message;
 			}
 
+		}
+
+		public async Task ConfirmManager(Guid id)
+		{
+			try
+			{
+				Personnel personnel = await _personelRepository.GetDefault(x => x.Id == id);
+				personnel.IsAccountConfirmed = true;
+				await _personelRepository.Update(personnel);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public async Task DeleteNewRegister(Guid id)
+		{
+			Personnel personnel = await _personelRepository.GetDefault(x => x.Id == id);
+			personnel.DeletedDate = DateTime.Now;
+			personnel.Status = Status.Deleted;
+
+			Company company = await _companyRepository.GetDefault(x => x.Id == personnel.CompanyId);
+			company.DeletedDate = DateTime.Now;
+			company.Status = Status.Deleted;
+
+			await _personelRepository.Delete(personnel);
 		}
 	}
 }

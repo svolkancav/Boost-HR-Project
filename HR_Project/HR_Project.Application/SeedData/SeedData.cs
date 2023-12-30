@@ -110,7 +110,7 @@ namespace HR_Project.Application.SeedData
                         
                     
 
-                    var genereatedPersonnels = personnellFaker.Generate(50);
+                    var genereatedPersonnels = personnellFaker.Generate(10);
 
                     context.Personnels.AddRange(genereatedPersonnels);
 
@@ -150,7 +150,7 @@ namespace HR_Project.Application.SeedData
                         .RuleFor(i => i.LastPaidDate, i => i.Date.Recent(100));
                     
 
-                    var genereatedAdvances = advancesFaker.Generate(50);
+                    var genereatedAdvances = advancesFaker.Generate(100);
 
                     context.Advances.AddRange(genereatedAdvances);
 
@@ -169,7 +169,7 @@ namespace HR_Project.Application.SeedData
                        .RuleFor(i => i.EndDate, i => i.Date.Recent(10))
                        .RuleFor(i => i.LeaveTypes, i => i.PickRandom<LeaveTypes>());
 
-                    var genereatedAbsences = absencesFaker.Generate(50);
+                    var genereatedAbsences = absencesFaker.Generate(100);
 
                     context.Absences.AddRange(genereatedAbsences);
 

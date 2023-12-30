@@ -40,6 +40,33 @@ namespace HR_Project.API.Controllers
 			return Ok(personnel);
 		}
 
+		[HttpGet]
+		[Route("GetUnconfirmed")]
+		public async Task<IActionResult> GetUnconfirmed()
+		{
+			var personnels = await _personnelService.GetUnconfirmedManager();
+			
+			return Ok(personnels);
+		}
+
+		[HttpPost]
+		[Route("[action]")]
+		public async Task<IActionResult> ConfirmManager([FromBody] Guid id)
+		{
+            await _personnelService.ConfirmManager(id);
+            
+            return Ok();
+        }
+
+		[HttpPost]
+		[Route("[action]")]
+		public async Task<IActionResult> DeleteNewRegister([FromBody] Guid id)
+		{
+            await _personnelService.DeleteNewRegister(id);
+            
+            return Ok();
+        }
+
 		[HttpPost]
 		public async Task<IActionResult> Create(UpdateProfileDTO model)
 		{

@@ -22,7 +22,8 @@
 		  rel="stylesheet">
 
 	<!-- Custom styles for this template-->
-	<link href="/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="~/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet" />
+	<link href="~/startbootstrap/css/sb-admin-2.css" rel="stylesheet" />
 
 
 </head>
@@ -163,6 +164,24 @@
 						<h6 class="collapse-header">Personel İşlemleri:</h6>
 						<a class="collapse-item" asp-controller="Personnel" asp-action="Index">Personel Listesi</a>
 						<a class="collapse-item" asp-controller="Personnel" asp-action="Create">Personel Kayıt</a>
+
+					</div>
+
+
+				</div>
+			</li>
+
+			<!-- Nav Item - Admin Onayı Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin"
+				   aria-expanded="true" aria-controls="collapseAdmin">
+					<i class="fas fa-thin fa-paper-plane"></i>
+					<span>Admin İşlemleri</span>
+				</a>
+				<div id="collapseAdmin" class="collapse" aria-labelledby="collapseAdmin"
+					 data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" asp-controller="Admin" asp-action="Index">Bekleyen Onaylar</a>
 
 					</div>
 
@@ -468,6 +487,8 @@
 	<!-- Page level custom scripts -->
 	<script src="/startbootstrap/js/demo/chart-area-demo.js"></script>
 	<script src="/startbootstrap/js/demo/chart-pie-demo.js"></script>
+	<script src="~/startbootstrap/js/sb-admin-2.min.js"></script>
+	<script src="~/startbootstrap/js/sb-admin-2.js"></script>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/jquery/dist/jquery.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -475,7 +496,6 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
-
 
 </body>
 

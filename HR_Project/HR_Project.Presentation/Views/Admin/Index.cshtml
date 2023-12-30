@@ -1,0 +1,246 @@
+﻿@using X.PagedList;
+@model IPagedList<HR_Project.Common.Models.VMs.CompanyManagerVM>
+
+@{
+	ViewData["Title"] = "ListCompanyManager";
+	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+}
+
+<body id="page-top">
+
+
+	<!-- Begin Page Content -->
+	<div class="container-fluid">
+
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800">Yeni Kayıtlar</h1>
+
+		<!-- DataTales Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Onay Bekleyenler</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+						<div class="row">
+							<div class="col-sm-12 col-md-9">
+								<div class="dataTables_length" id="dataTable_length">
+
+									<label>
+										Göster
+										<select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm" asp-for="@Model.PageSize" id="pageSizeDropdown">
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+										</select>
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-3">
+								<div id="dataTable_filter" class="dataTables_filter">
+									<label>
+										@using (Html.BeginForm())
+										{
+											<p>
+												Ara: @Html.TextBox("searchText")
+												<input type="submit" class="fa-search alert-light" placeholder="Şirket Sorgula" />
+											</p>
+										}
+
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info">
+									<thead>
+										<tr>
+
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+												Adı Soyad
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
+												Şirket Email
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 120px;">
+												Telefon
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
+												Şirket Adı
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
+												Ünvanı
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 120px;">
+												Çalışan Sayısı
+											</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 140px;">
+												İşlemler
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model)
+										{
+											<tr>
+
+												<td>
+													@item.FullName
+												</td>
+												<td>
+													@item.Email
+												</td>
+												<td>
+													@item.PhoneNumber
+												</td>
+												<td>
+													@item.CompanyName
+												</td>
+												<td>
+													@item.Title
+												</td>
+												<td>
+													@item.PersonnelCount
+												</td>
+
+												<td>
+													<form asp-action="Confirm" method="post">
+														<input type="hidden" name="id" value="@item.Id" />
+														<button class="btn  btn-link btn-sm" type="submit">Onayla</button>
+													</form>
+													|
+													<form asp-action="Delete" method="post">
+														<input type="hidden" name="id" value="@item.Id" />
+														<button class="btn btn-link btn-sm" type="submit">Sil</button>
+													</form>
+												</td>
+
+
+											</tr>
+										}
+
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 align-self-center">
+								<p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing page @(Model.PageNumber) to @Model.PageCount of @Model.TotalItemCount products</p>
+							</div>
+							<div class="col-md-6">
+								<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+									<ul class="pagination">
+										<li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+											<a class="page-link" aria-label="Previous" href="@(Model.HasPreviousPage ? Url.Action("Index", new { pageNumber = Model.PageNumber - 1 , pageSize=Model.PageSize, searchText=Context.Request.Query["searchText"] }) : "#")">
+												<span aria-hidden="true">Önceki</span>
+											</a>
+										</li>
+										@for (int i = 1; i <= Model.PageCount; i++)
+										{
+											<li class="page-item @(i == Model.PageNumber ? "active" : "")">
+												<a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] })">@i</a>
+											</li>
+										}
+										<li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+											<a class="page-link" aria-label="Next" href="@(Model.HasNextPage ? Url.Action("Index", new { pageNumber = Model.PageNumber + 1, pageSize=Model.PageSize,searchText=Context.Request.Query["searchText"] }) : "#")">
+												<span aria-hidden="true">Sonraki</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+
+
+	@section Scripts {
+		@if (TempData.ContainsKey("Toastrsuccess"))
+		{
+			<script>
+				console.log('Toastr Başarı:', '@TempData["Toastrsuccess"]');
+				toastr.success('@TempData["Toastrsuccess"]');
+			</script>
+		}
+
+		@if (TempData.ContainsKey("Toastrerror"))
+		{
+			<script>
+				toastr.error('@TempData["Toastrerror"]');
+			</script>
+		}
+	}
+
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+
+
+	<script>
+		var dropdown = document.getElementById("pageSizeDropdown");
+
+		dropdown.addEventListener("change", function () {
+			var selectedPageSize = this.value;
+			var searchText = '@Context.Request.Query["searchText"]';
+
+			if (searchText) {
+				var url = "/AdminController/Index?pageSize=" + selectedPageSize + "&searchText=" + searchText;
+			} else {
+				var url = "/AdminController/Index?pageSize=" + selectedPageSize;
+			}
+
+			window.location.href = url;
+		});
+
+
+	</script>
+
+
+</body>
+
+
+<script>
+	var dropdown1 = document.getElementById("deleteprocess");
+
+	dropdown1.addEventListener("change", function () {
+		var selectedPageSize = this.value;
+
+
+		var url = "/AdminController/Index?pageSize=" + selectedPageSize;
+
+
+		window.location.href = url;
+	});
+
+	function confirmDelete(id) {
+		if (confirm("Silmek istediğinize emin misiniz?")) {
+			window.location.href = "/AdminController/Delete/?id=" + id;
+		} else {
+
+		}
+	}
+</script>

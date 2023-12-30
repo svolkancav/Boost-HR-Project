@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231226210925_first")]
-    partial class first
+    [Migration("20231230131415_mig-2")]
+    partial class mig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,7 +181,7 @@ namespace HR_Project.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("PersonnelCount")
+                    b.Property<int>("PersonnelCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -433,6 +433,9 @@ namespace HR_Project.Infrastructure.Migrations
 
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsAccountConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

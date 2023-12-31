@@ -1,4 +1,5 @@
-﻿using HR_Project.Common.Models.VMs;
+﻿using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Enum;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
@@ -21,13 +22,24 @@ namespace HR_Project.Presentation.ViewComponents
         //	return await Task.FromResult(View(advances));
         //}
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(bool ownList)
         {
-            List<AdvanceVM> pendingAdvances = await _apiService.GetAsync<List<AdvanceVM>>($"Advance/{ConditionType.Pending}", HttpContext.Request.Cookies["access-token"]);
+            if (ownList)
+            {
+                List<AdvanceVM> pendingAdvances = await _apiService.GetAsync<List<AdvanceVM>>($"Advance/{ConditionType.Pending}", HttpContext.Request.Cookies["access-token"]);
 
-            int pendingAdvanceCount = pendingAdvances.Count;
+                int pendingAdvanceCount = pendingAdvances.Count;
 
-            return new ContentViewComponentResult(pendingAdvanceCount.ToString());
+                return new ContentViewComponentResult(pendingAdvanceCount.ToString());
+            }
+            else
+            {
+                List<PersonnelsListDTO> pendingPersonnelAdvances = await _apiService.GetAsync<List<PersonnelsListDTO>>($"Advance/GetPendingAdvance", HttpContext.Request.Cookies["access-token"]);
+
+                int pendingAdvanceCount = pendingPersonnelAdvances.Where(x => x.Advances != null).SelectMany(x => x.Advances).Count();
+                return new ContentViewComponentResult(pendingAdvanceCount.ToString());
+            }
+            
         }
     }
 }

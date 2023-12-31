@@ -63,7 +63,7 @@ namespace HR_Project.Presentation.Controllers
                         var imagePath = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Thumbprint)?.Value;
                         var company = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Company")?.Value;
                         var department = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Department")?.Value;
-
+                        var roles = jsonToken?.Claims.Where(c => c.Type == ClaimTypes.Role);
 
                         var claims = new List<Claim>
                         {
@@ -77,6 +77,7 @@ namespace HR_Project.Presentation.Controllers
                             //new Claim("Department",department),
 
                         };
+                        claims.AddRange(roles);
 
                         var identity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal principal = new ClaimsPrincipal(identity);

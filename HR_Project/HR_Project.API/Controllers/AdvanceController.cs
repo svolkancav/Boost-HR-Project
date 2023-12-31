@@ -38,6 +38,13 @@ namespace HR_Project.API.Controllers
 			var advances =await _advanceService.GetByCondition(condition);
 			return Ok(advances);
 		}
+		[HttpGet]
+		[Route("GetPendingAdvance")]
+		public async Task<IActionResult> GetPendingAdvance()
+		{
+            var advances = await _advanceService.GetPendingAdvance();
+            return Ok(advances);
+        }
 
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateAdvanceDTO model)

@@ -78,7 +78,7 @@ namespace HR_Project.API.Controllers
 				//Admine Rol atamak için
 				//await _userManager.AddToRoleAsync(personnel, "Admin");
 				//await _userManager.AddToRoleAsync(personnel, "CompanyManager");
-				await _userManager.AddToRoleAsync(personnel, "Personnel");
+				//await _userManager.AddToRoleAsync(personnel, "Personnel");
 
 				var authClaims = new List<Claim>
 				{

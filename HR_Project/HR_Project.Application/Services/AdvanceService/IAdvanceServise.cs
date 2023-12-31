@@ -15,7 +15,8 @@ namespace HR_Project.Application.Services.AdvanceService
 		Task Update(UpdateAdvanceDTO model);
 		Task Delete(int id);
 		Task<List<AdvanceVM>> GetByCondition(ConditionType condition);
-		Task<UpdateAdvanceDTO> GetById(string id);
+        Task<List<PersonnelsListDTO>> GetPendingAdvance();
+        Task<UpdateAdvanceDTO> GetById(string id);
 		Task<List<AdvanceVM>> GetAdvances();
 	}
 }

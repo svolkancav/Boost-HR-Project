@@ -40,6 +40,14 @@ namespace HR_Project.API.Controllers
             return Ok(absences);
         }
 
+        [HttpGet]
+        [Route("GetPendingAbsence")]
+        public async Task<IActionResult> GetPendingAbsence()
+        {
+			var absences = await _absenceService.GetPendingAbsence();
+			return Ok(absences);
+		}
+
         [HttpPost]
         public async Task<IActionResult> Create(AbsenceDTO model)
         {

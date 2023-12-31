@@ -46,6 +46,14 @@ namespace HR_Project.API.Controllers
 			return Ok(expenses);
 		}
 
+		[HttpGet]
+		[Route("GetPendingExpense")]
+		public async Task<IActionResult> GetPendingExpense()
+		{
+            var expenses = await _expenseService.GetPendingExpense();
+            return Ok(expenses);
+        }
+
 		[HttpPost]
 		public async Task<IActionResult> Create()
 		{

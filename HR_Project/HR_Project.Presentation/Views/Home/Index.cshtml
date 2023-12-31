@@ -29,10 +29,19 @@
 </div>
  *@
 
+ @using System.Security.Claims;
+
+
 @{
     var pendingAbsenceCount = await Component.InvokeAsync("AbsenceCardComponent");
     var pendingAdvanceCount = await Component.InvokeAsync("AdvanceCardComponent");
     var pendingExpenseCount = await Component.InvokeAsync("ExpenseCardComponent");
+
+    
+    var pendingAbsenceCountForManager = await Component.InvokeAsync("AbsenceCardComponent", false);
+    var pendingAdvanceCountForManager = await Component.InvokeAsync("AdvanceCardComponent", false);
+    var pendingExpenseCountForManager = await Component.InvokeAsync("ExpenseCardComponent", false);
+    
 }
 
 @{
@@ -120,7 +129,69 @@
                             </div>
                         </div>
                 </div>
+                @if (User.IsInRole("CompanyManager"))
+                {
+                    <!-- absence for manager card  -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <a href="/Expenes/Index" class="d-block">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                onay bekleyen masraf talepleri
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCountForManager</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-sun fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
 
+                    <!-- Advance for manager card  -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <a href="/Advance/Index" class="d-block">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                onay bekleyen avans talepleri
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAdvanceCountForManager</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+
+                    <!-- Expense for manager card  -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <a href="/Expenes/Index" class="d-block">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                onay bekleyen masraf talepleri
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingExpenseCountForManager</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                }
             </div>
 
 

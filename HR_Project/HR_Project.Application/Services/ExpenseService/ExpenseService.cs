@@ -26,15 +26,23 @@ namespace HR_Project.Application.Services.ExpenseService
 		private readonly IMapper _mapper;
 		private readonly IExpenseImageService _expenseImageService;
 		private readonly IConfiguration _configuration;
+        private readonly UserManager<Personnel> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private Personnel currentPersonnel;
+        private readonly IPersonelRepository _personnelRepository;
 
-		public ExpenseService(IExpenseRepository expenseRepository, IMapper mapper, IExpenseImageService expenseImageService, IMasterExpenseRepository masterExpenseRepository, IConfiguration configuration)
+        public ExpenseService(IExpenseRepository expenseRepository, IMapper mapper, IExpenseImageService expenseImageService, UserManager<Personnel> userManager, IMasterExpenseRepository masterExpenseRepository, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IPersonelRepository personnelRepository)
 		{
 			_expenseRepository = expenseRepository;
 			_mapper = mapper;
 			_expenseImageService = expenseImageService;
 			_masterExpenseRepository = masterExpenseRepository;
+			_userManager = userManager;
 			_configuration = configuration;
-		}
+            _httpContextAccessor = httpContextAccessor;
+            currentPersonnel = _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value).Result;
+            _personnelRepository = personnelRepository;
+        }
 
 		public async Task Create(MasterExpenseDTO model)
 		{
@@ -164,7 +172,20 @@ namespace HR_Project.Application.Services.ExpenseService
 			return masterExpenses;
 		}
 
-		public async Task Update(UpdateMasterExpenseDTO model)
+        public async Task<List<PersonnelsListDTO>> GetPendingExpense()
+        {
+            var personnels = await _personnelRepository.GetFilteredList(x => new PersonnelsListDTO
+            {
+                Id = x.Id,
+                MasterExpenses = _mapper.Map<List<MasterExpenseVM>>(x.MasterExpenses.Where(x => x.Status != Status.Deleted && x.Condition == ConditionType.Pending)),
+            },
+                x => x.Status != Status.Deleted && x.ManagerId == currentPersonnel.Id);
+
+
+            return personnels;
+        }
+
+        public async Task Update(UpdateMasterExpenseDTO model)
 		{
 			UpdateMasterExpenseDTO masterExpenseDTO = await _masterExpenseRepository.GetFilteredFirstOrDefault(x => new UpdateMasterExpenseDTO
 			{

@@ -17,6 +17,7 @@ namespace HR_Project.Application.Services.ExpenseService
         Task Delete(int id);
 
         Task<List<MasterExpenseVM>>GetByCondition(ConditionType conditionType);
+        Task<List<PersonnelsListDTO>> GetPendingExpense();
 
         Task<List<MasterExpenseVM>> GetExpenses();
 

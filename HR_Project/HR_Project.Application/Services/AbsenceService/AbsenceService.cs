@@ -23,10 +23,10 @@ namespace HR_Project.Application.Services.AbsenceService
 		private readonly UserManager<Personnel> _userManager;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private Personnel currentPersonnel;
-		private readonly IPersonnelRepository _personnelRepository;
+		private readonly IPersonelRepository _personnelRepository;
 
 
-		public AbsenceService(IAbsenceRepository absenceRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor, IPersonnelRepository personnelRepository)
+		public AbsenceService(IAbsenceRepository absenceRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor, IPersonelRepository personnelRepository)
 		{
 			_absenceRepository = absenceRepository;
 			_mapper = mapper;
@@ -113,20 +113,17 @@ namespace HR_Project.Application.Services.AbsenceService
 
 		}
 
-		public async Task<List<AbsenceVM>> GetPendingAbsence()
+		public async Task<List<PersonnelsListDTO>> GetPendingAbsence()
 		{
-			List<Personnel> personnels = await _personnelRepository.GetDefaults(x => x.Status != Status.Deleted&&x.ManagerId==currentPersonnel.Id);
-
-			
-			return await _absenceRepository.GetFilteredList(x => new AbsenceVM
+			var personnels = await _personnelRepository.GetFilteredList(x => new PersonnelsListDTO
 			{
 				Id = x.Id,
-				Reason = x.Reason,
-				LeaveTypes = x.LeaveTypes,
-				AbsenceDuration = x.AbsenceDuration,
-				StartDate = x.StartDate,
-				EndDate = x.EndDate,
-			}, x => x.Status != Status.Deleted );
+				Absences = _mapper.Map<List<AbsenceVM>>(x.Absences.Where(x=>x.Status!=Status.Deleted&&x.Condition==ConditionType.Pending)),
+			},
+				x => x.Status != Status.Deleted && x.ManagerId == currentPersonnel.Id);
+
+
+			return personnels;
 		}
 
 		public async Task Update(UpdateAbsenceDTO model)

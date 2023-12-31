@@ -32,6 +32,7 @@ namespace HR_Project.Application.Mapper
 
             CreateMap<Expense, ExpenseDTO>().ReverseMap();
             CreateMap<MasterExpenseDTO, MasterExpense>().ReverseMap();
+            CreateMap<MasterExpenseVM, MasterExpense>().ReverseMap();
             CreateMap<UpdateMasterExpenseDTO, MasterExpense>().ReverseMap();
             CreateMap<Company, CompanyRegisterDTO>().ReverseMap();
 

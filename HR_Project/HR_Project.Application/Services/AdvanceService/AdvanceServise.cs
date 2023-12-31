@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -21,22 +22,27 @@ namespace HR_Project.Application.Services.AdvanceService
         private readonly IMapper _mapper;
         private readonly UserManager<Personnel> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AdvanceServise(IAdvanceRepository advanceRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor)
+		private Personnel currentPersonnel;
+        private readonly IPersonelRepository _personnelRepository;
+
+        public AdvanceServise(IAdvanceRepository advanceRepository, IMapper mapper, UserManager<Personnel> userManager, IHttpContextAccessor httpContextAccessor, IPersonelRepository personnelRepository)
         {
             _advanceRepository = advanceRepository;
             _mapper = mapper;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+			currentPersonnel = _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value).Result;
+            _personnelRepository = personnelRepository;
         }
 
         public async Task Create(CreateAdvanceDTO model)
         {
-            Personnel personnel = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            
             
             Advance advance = _mapper.Map<Advance>(model);
             advance.Status = Status.Inserted;
             advance.CreatedDate = DateTime.Now;
-            advance.PersonnelId = personnel.Id;
+            advance.PersonnelId = currentPersonnel.Id;
             advance.Condition = ConditionType.Pending;
 
             await _advanceRepository.Create(advance);
@@ -93,6 +99,18 @@ namespace HR_Project.Application.Services.AdvanceService
             Advance advance= await _advanceRepository.GetDefault(x => x.Id == Convert.ToInt32(id));
 
             return _mapper.Map<UpdateAdvanceDTO>(advance);
+        }
+
+        public async Task<List<PersonnelsListDTO>> GetPendingAdvance()
+        {
+            var personnels = await _personnelRepository.GetFilteredList(x => new PersonnelsListDTO
+            {
+                Id = x.Id,
+                Advances = _mapper.Map<List<AdvanceVM>>(x.Advances.Where(x => x.Status != Status.Deleted && x.Condition == ConditionType.Pending)),
+            },
+                x => x.Status != Status.Deleted && x.ManagerId == currentPersonnel.Id);
+
+            return personnels;
         }
 
         public async Task Update(UpdateAdvanceDTO model)

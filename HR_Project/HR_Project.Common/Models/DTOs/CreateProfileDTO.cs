@@ -1,37 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using HR_Project.Common.Extensions;
-using HR_Project.Common.Models.VMs;
-using HR_Project.Common.ValidationClass;
+﻿using HR_Project.Common.ValidationClass;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HR_Project.Common.Models.DTOs
 {
-	public class UpdateProfileDTO
-	{
+    public class CreateProfileDTO
+    {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string Title { get; set; }
         public string PhoneNumber { get; set; }
         public string? Address { get; set; }
-		
+
         public string? RegionName { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? HireDate { get; set; }
         public BloodType? BloodType { get; set; }
         public int? ImageId { get; set; }
-		[PictureFileExtension]
-		public IFormFile? UploadImage { get; set; }
+        [PictureFileExtension]
+        public IFormFile? UploadImage { get; set; }
         public string? ImagePath { get; set; }
 
         public Gender? Gender { get; set; }

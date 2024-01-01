@@ -61,9 +61,9 @@ namespace HR_Project.API.Controllers
 			//	Gender = Domain.Enum.Gender.Male,
 			//	Nation = Domain.Enum.Nation.TR,
 			//	BirthDate = DateTime.Now,
-			//         });
+			//});
 
-			
+
 
 
 			await CreateRoles();
@@ -74,11 +74,11 @@ namespace HR_Project.API.Controllers
 			{
 				Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
 
-				//personnel.IsAccountConfirmed = true;
+				personnel.IsAccountConfirmed = true;
 				//Admine Rol atamak için
-				//await _userManager.AddToRoleAsync(personnel, "Admin");
-				//await _userManager.AddToRoleAsync(personnel, "CompanyManager");
-				//await _userManager.AddToRoleAsync(personnel, "Personnel");
+				await _userManager.AddToRoleAsync(personnel, "Admin");
+				await _userManager.AddToRoleAsync(personnel, "CompanyManager");
+				await _userManager.AddToRoleAsync(personnel, "Personnel");
 
 				var authClaims = new List<Claim>
 				{

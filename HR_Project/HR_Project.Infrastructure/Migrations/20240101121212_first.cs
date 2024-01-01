@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HR_Project.Infrastructure.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -245,6 +245,7 @@ namespace HR_Project.Infrastructure.Migrations
                     ImageId = table.Column<int>(type: "int", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
                     Nation = table.Column<int>(type: "int", nullable: true),
+                    IsAccountConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BloodType = table.Column<int>(type: "int", nullable: true),

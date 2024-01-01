@@ -35,12 +35,13 @@ namespace HR_Project.API.Controllers
 		[Route("{id}")]
 		public async Task<IActionResult> GetById(string id)
 		{
-			var personnel = await _personnelService.FillDTO(id);
+			var personnel = await _personnelService.GetById(id);
 			
 			return Ok(personnel);
 		}
 
-		[HttpGet]
+
+        [HttpGet]
 		[Route("GetUnconfirmed")]
 		public async Task<IActionResult> GetUnconfirmed()
 		{
@@ -68,7 +69,7 @@ namespace HR_Project.API.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> Create(UpdateProfileDTO model)
+		public async Task<IActionResult> Create(CreateProfileDTO model)
 		{
 			await _personnelService.Create(model);
 			return Ok();

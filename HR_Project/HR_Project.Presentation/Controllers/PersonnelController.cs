@@ -83,14 +83,14 @@ namespace HR_Project.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(UpdateProfileDTO model)
+        public async Task<IActionResult> Create(CreateProfileDTO model)
         {
             if (ModelState.IsValid)
             {
                 var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var personnel = await _apiService.GetByIdAsync<UpdateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
+                var personnel = await _apiService.GetByIdAsync<CreateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
                 model.CompanyId = personnel.CompanyId;
-                await _apiService.PostAsync<UpdateProfileDTO, UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.PostAsync<CreateProfileDTO, CreateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
                 return RedirectToAction("Index");
             }
             else return RedirectToAction("Index");

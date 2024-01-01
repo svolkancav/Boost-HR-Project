@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Enum;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace HR_Project.Application.Services.PersonelServices
 {
@@ -21,20 +22,22 @@ namespace HR_Project.Application.Services.PersonelServices
 		private readonly IProfileImageService _profileImageService;
 		private readonly IConfiguration _configuration;
 		private readonly ICompanyRepository _companyRepository;
+		private readonly IDepartmentRepository _departmentRepository;
 
 
-		public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService, IConfiguration configuration, ICompanyRepository companyRepository)
-		{
-			_personelRepository = personelRepository;
-			_mapper = mapper;
-			_signInManager = signInManager;
-			_userManager = userManager;
-			_profileImageService = profileImageService;
-			_configuration = configuration;
-			_companyRepository = companyRepository;
-		}
+        public PersonnelService(IPersonelRepository personelRepository, IMapper mapper, SignInManager<Personnel> signInManager, UserManager<Personnel> userManager, IProfileImageService profileImageService, IConfiguration configuration, ICompanyRepository companyRepository, IDepartmentRepository departmentRepository)
+        {
+            _personelRepository = personelRepository;
+            _mapper = mapper;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _profileImageService = profileImageService;
+            _configuration = configuration;
+            _companyRepository = companyRepository;
+            _departmentRepository = departmentRepository;
+        }
 
-		public async Task<IdentityResult> Register(RegisterDTO model)
+        public async Task<IdentityResult> Register(RegisterDTO model)
 		{
 			//TODO auto mapper
 			Personnel user = new Personnel
@@ -74,7 +77,7 @@ namespace HR_Project.Application.Services.PersonelServices
 			return result;
 		}
 
-		public async Task Create(UpdateProfileDTO model)
+		public async Task Create(CreateProfileDTO model)
 		{
 			Personnel personnel = new Personnel
 			{
@@ -116,6 +119,15 @@ namespace HR_Project.Application.Services.PersonelServices
 		{
 			Personnel personnel = await _personelRepository.GetDefault(x => x.Id == Guid.Parse(id));
 			var model = _mapper.Map<PersonelDTO>(personnel);
+			var company = await _companyRepository.GetDefault(x => x.Id == personnel.CompanyId);
+			var department = await _departmentRepository.GetDefault(x => x.Id == personnel.DepartmentId);
+            var manager = await _personelRepository.GetDefault(x => x.Id == personnel.ManagerId);
+			
+			
+			model.ManagerName = manager is not null ? $"{manager.Name} {manager.Surname}" : " ";
+            model.CompanyName = company is not null ? company.Name : " ";
+			model.DepartmentName = department is not null ? department.Name : " ";
+			
 
 			return model;
 		}

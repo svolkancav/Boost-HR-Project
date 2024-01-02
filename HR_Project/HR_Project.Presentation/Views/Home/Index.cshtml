@@ -64,7 +64,8 @@
                 <h1 class="h3 mb-0 text-gray-800"></h1>
             </div>
 
-
+            <hr />
+            <p>Onay Bekleyenler</p>
             <div class="row">
 
                 <!-- absence card  -->
@@ -112,7 +113,7 @@
 
                 <!-- Expense card  -->
                 <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="/Expenes/Index" class="d-block">
+                    <a href="/Expense/Index" class="d-block">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -129,17 +130,22 @@
                             </div>
                         </div>
                 </div>
+                               
+            </div>
+            <hr />
+            <p>Onaylanması Gerekenler</p>
+            <div class="row">
                 @if (User.IsInRole("CompanyManager"))
                 {
                     <!-- absence for manager card  -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="/Expenes/Index" class="d-block">
+                        <a href="/Absence/Index" class="d-block">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                onay bekleyen masraf talepleri
+                                                onay bekleyen izin talepleri
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCountForManager</div>
                                         </div>
@@ -174,7 +180,7 @@
 
                     <!-- Expense for manager card  -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="/Expenes/Index" class="d-block">
+                        <a href="/Expense/Index" class="d-block">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -193,8 +199,6 @@
                     </div>
                 }
             </div>
-
-
 
 
         </div>

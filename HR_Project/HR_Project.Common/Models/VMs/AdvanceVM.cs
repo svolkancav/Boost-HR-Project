@@ -13,8 +13,8 @@ namespace HR_Project.Common.Models.VMs
 		public DateTime LastPaidDate { get; set; }
 		public decimal Amount { get; set; }
 		public string Reason { get; set; }
-        public Currency Currency { get; set; }
-        public ConditionType Condition { get; set; }
-		public DateTime CreatedDate { get; set; }= DateTime.Now;
+		public Currency Currency { get; set; }
+		public ConditionType Condition { get; set; }
+		public DateTime CreatedDate { get; set; }
 	}
 }

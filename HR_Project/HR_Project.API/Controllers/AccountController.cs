@@ -76,7 +76,7 @@ namespace HR_Project.API.Controllers
 
 				personnel.IsAccountConfirmed = true;
 				//Admine Rol atamak için
-				await _userManager.AddToRoleAsync(personnel, "Admin");
+				//await _userManager.AddToRoleAsync(personnel, "Admin");
 				await _userManager.AddToRoleAsync(personnel, "CompanyManager");
 				await _userManager.AddToRoleAsync(personnel, "Personnel");
 

@@ -114,7 +114,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-
+        //TODO: Sil çalışmıyor.
         public async Task<IActionResult> Delete(int id)
         {
             try

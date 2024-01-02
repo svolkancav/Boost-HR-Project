@@ -14,7 +14,7 @@ namespace HR_Project.Presentation.Controllers
 			_apiService = apiService;
 		}
 
-		//TODO: Yeni şirket listeye düşmüyor.
+		
 		public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
 		{
 			if (!string.IsNullOrEmpty(searchText))
@@ -39,7 +39,7 @@ namespace HR_Project.Presentation.Controllers
 			{
 				await _apiService.PostAsync<object, object>($"personnel/ConfirmManager", id, HttpContext.Request.Cookies["access-token"]);
 				Toastr("success", "Başarılı bir şekilde onaylandı");
-				//TODO: Mail atma işlemi yapılacak.
+				//TODO: Mail atma işlemi yapılacak. Osman
 
 				return RedirectToAction("Index");
 			}

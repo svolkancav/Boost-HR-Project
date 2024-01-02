@@ -102,7 +102,7 @@ namespace HR_Project.Presentation.Controllers
 
         [HttpPost]
 
-        //TODO: Update hatalı
+        //TODO: Update hatalı Seray
         public async Task<IActionResult> Update(UpdateCompanyDTO model)
         {
             try

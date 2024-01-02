@@ -4,6 +4,8 @@ using HR_Project.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,10 +30,12 @@ namespace HR_Project.Common.Models.DTOs
         [DateCompare("StartDate", ErrorMessage = "Bitiş tarihi başlangıç tarihinden önce olamaz.")]
 		[DataType(DataType.Date)]
 		public DateTime EndDate { get; set; }
+
         [Display(Name = "İzin Süresi")]
         [AbsenceDurationValidation("StartDate", "EndDate")]
         public double AbsenceDuration { get; set; }
-		[Display(Name = "İzin Durumu")]
+
+        [Display(Name = "İzin Durumu")]
         public ConditionType Condition { get; set; }
     }
 }

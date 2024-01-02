@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +15,21 @@ namespace HR_Project.Common.Models.DTOs
 	{
         [DateValidationNow(ErrorMessage = "Talep edilen tarih bugünden önce olamaz.")]
         public DateTime LastPaidDate { get; set; }
+
 		[DataType(DataType.Currency)]
 		[Display(Name = "Tutar")]
 		[Required]
-		public decimal Amount { get; set; }
-		[Display(Name = "Açıklama")]
+        public decimal Amount { get; set; }
+
+        [NotMapped]
+        public string AmountString
+        {
+            get => Amount.ToString("N2", CultureInfo.InvariantCulture);
+            set => Amount = decimal.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue) ? parsedValue : 0;
+        }
+
+
+        [Display(Name = "Açıklama")]
 		[Required]
 		public string Reason { get; set; }
 

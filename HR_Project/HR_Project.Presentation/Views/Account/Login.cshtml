@@ -28,6 +28,10 @@
     <!-- Custom styles for this template-->
     <link href="~/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -49,7 +53,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
                                     </div>
-                                    <form class="user" asp-action="Login">
+                                    <form class="user" asp-action="Login" method="post">
                                         <div class="form-group" data-validate="Email">
                                             <input type="text" class="form-control form-control-user" name="Email"
                                                    id="exampleInputEmail" aria-describedby="emailHelp"
@@ -92,6 +96,8 @@
     </div>
 
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     @section Scripts {
         @if (TempData.ContainsKey("Toastrsuccess"))
         {
@@ -110,7 +116,7 @@
     }
 
     <!-- Bootstrap core JavaScript-->
-    <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>
+@*    <script src="~/startbootstrap/vendor/jquery/jquery.min.js"></script>*@
     <script src="~/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->

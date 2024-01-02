@@ -75,7 +75,8 @@ namespace HR_Project.Application.Services.AdvanceService
                 LastPaidDate = x.LastPaidDate,
                 Condition = x.Condition,
                 Reason = x.Reason,
-                Currency = x.Currency
+                Currency = x.Currency,
+                CreatedDate = x.CreatedDate,
             }, x => x.Status != Status.Deleted);
         }
 

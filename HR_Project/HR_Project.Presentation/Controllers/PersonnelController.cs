@@ -81,7 +81,7 @@ namespace HR_Project.Presentation.Controllers
 
 
         }
-
+        //TODO: PErsonel oluştururken şifre verilmeyecek.
         [HttpPost]
         public async Task<IActionResult> Create(CreateProfileDTO model)
         {
@@ -152,6 +152,7 @@ namespace HR_Project.Presentation.Controllers
             return View(personnel);
         }
 
+        //TODO: Güncelleme hatalı
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProfileDTO model)
         {

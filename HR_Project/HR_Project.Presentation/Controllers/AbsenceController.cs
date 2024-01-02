@@ -93,7 +93,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-        // silme için
+        // TODO: Silme hatalı
         public async Task<IActionResult> Delete(int id)
         {
             try

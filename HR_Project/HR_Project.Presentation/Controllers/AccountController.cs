@@ -140,6 +140,7 @@ namespace HR_Project.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //TODO: CompanyID eklenmeli ve Rol ataması yapılmalı
         public async Task<IActionResult> Register(RegisterDTO model)
         {
             IFormFile uploadedFile = model.UploadImage;

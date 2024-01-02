@@ -143,7 +143,6 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Şirket İşlemleri:</h6>
 						<a class="collapse-item" asp-controller="Company" asp-action="Index">Şirket Bilgileri</a>
-						<a class="collapse-item" asp-controller="Company" asp-action="Create">Şirket Kayıt</a>
 
 					</div>
 
@@ -151,25 +150,30 @@
 				</div>
 			</li>
 
-			<!-- Nav Item - Personel Ekleme Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePersonnel"
-				   aria-expanded="true" aria-controls="collapsePersonnel">
-					<i class="fas fa-thin fa-paper-plane"></i>
-					<span>Personel İşlemleri</span>
-				</a>
-				<div id="collapsePersonnel" class="collapse" aria-labelledby="headingPersonnel"
-					 data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Personel İşlemleri:</h6>
-						<a class="collapse-item" asp-controller="Personnel" asp-action="Index">Personel Listesi</a>
-						<a class="collapse-item" asp-controller="Personnel" asp-action="Create">Personel Kayıt</a>
+
+			@if (User.IsInRole("Admin") || User.IsInRole("CompanyManager"))
+			{
+				<!-- Nav Item - Personel Ekleme Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePersonnel"
+					   aria-expanded="true" aria-controls="collapsePersonnel">
+						<i class="fas fa-thin fa-paper-plane"></i>
+						<span>Personel İşlemleri</span>
+					</a>
+					<div id="collapsePersonnel" class="collapse" aria-labelledby="headingPersonnel"
+						 data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Personel İşlemleri:</h6>
+							<a class="collapse-item" asp-controller="Personnel" asp-action="Index">Personel Listesi</a>
+							<a class="collapse-item" asp-controller="Personnel" asp-action="Create">Personel Kayıt</a>
+
+						</div>
+
 
 					</div>
-
-
-				</div>
-			</li>
+				</li>
+			}
+			
 
 			<!-- Nav Item - Admin Onayı Collapse Menu -->
 			<li class="nav-item">

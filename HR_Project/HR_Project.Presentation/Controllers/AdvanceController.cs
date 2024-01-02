@@ -35,7 +35,7 @@ namespace HR_Project.Presentation.Controllers
 
         }
 
-
+        //TODO: Createdate kontrol edilecek.
         public IActionResult Create()
         {
             return View();
@@ -62,7 +62,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-
+        //TODO: Güncelle hatalı
         public async Task<IActionResult> Update(string id)
         {
             UpdateAdvanceDTO advance = await _apiService.GetByIdAsync<UpdateAdvanceDTO>("advance/getbyid", id, HttpContext.Request.Cookies["access-token"]);
@@ -90,7 +90,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-
+        //TODO: Silme hatalı
         public async Task<IActionResult> Delete(int id)
         {
             try

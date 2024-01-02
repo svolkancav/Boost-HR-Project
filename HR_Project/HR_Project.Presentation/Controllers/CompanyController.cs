@@ -101,6 +101,8 @@ namespace HR_Project.Presentation.Controllers
         }
 
         [HttpPost]
+
+        //TODO: Update hatalı
         public async Task<IActionResult> Update(UpdateCompanyDTO model)
         {
             try

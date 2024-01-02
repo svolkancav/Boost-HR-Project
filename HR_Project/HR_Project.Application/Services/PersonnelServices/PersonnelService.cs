@@ -206,7 +206,7 @@ namespace HR_Project.Application.Services.PersonelServices
 			throw new NotImplementedException();
 		}
 
-		//TODO: bakılacak. hatalı
+		//TODO: bakılacak. hatalı Volkan
 		public async Task Update(UpdateProfileDTO model)
 		{
 			var personel = await _personelRepository.GetDefault(x => x.Id == model.Id);

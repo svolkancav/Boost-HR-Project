@@ -140,7 +140,7 @@ namespace HR_Project.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //TODO: CompanyID eklenmeli ve Rol ataması yapılmalı
+        //TODO: CompanyID eklenmeli ve Rol ataması yapılmalı Volkan
         public async Task<IActionResult> Register(RegisterDTO model)
         {
             IFormFile uploadedFile = model.UploadImage;

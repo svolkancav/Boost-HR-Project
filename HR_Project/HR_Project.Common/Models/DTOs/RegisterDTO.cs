@@ -63,10 +63,10 @@ namespace HR_Project.Common.Models.DTOs
 
         [Display(Name = "Kan Grubu")]
 		public BloodType? BloodType { get; set; }
-		public DateTime BirthDate { get; set; }
-        public DateTime HireDate { get; set; }
-        public Gender Gender { get; set; }
-		public Nation Nation { get; set; }
+		public DateTime? BirthDate { get; set; }
+        public DateTime? HireDate { get; set; }
+        public Gender? Gender { get; set; }
+		public Nation? Nation { get; set; }
         public List<SelectListItem>? Regions { get; set; }
         public List<SelectListItem>? CityList { get; set; }
         public List<SelectListItem>? Managers { get; set; }

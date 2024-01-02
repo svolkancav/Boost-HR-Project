@@ -218,6 +218,7 @@ namespace HR_Project.Application.Services.PersonelServices
 
 				personel.Name = model.Name;
 				personel.PhoneNumber = model.PhoneNumber;
+				personel.PasswordHash = model.Password;
 				//personel.Region.Name = model.RegionName; //TODO: kontrol edilecek.
 				personel.CityId = model.CityId;
 				personel.Email = model.Email;

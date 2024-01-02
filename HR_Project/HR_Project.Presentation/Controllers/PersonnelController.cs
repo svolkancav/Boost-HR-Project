@@ -42,10 +42,10 @@ namespace HR_Project.Presentation.Controllers
         {
             List<CityDTO> cities = await _apiService.GetAsync<List<CityDTO>>("city", HttpContext.Request.Cookies["access-token"]);
             List<RegionDTO> regionList = await _apiService.GetAsync<List<RegionDTO>>("region", HttpContext.Request.Cookies["access-token"]);
-            List<UpdateProfileDTO> personnelList = await _apiService.GetAsync<List<UpdateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
+            List<CreateProfileDTO> personnelList = await _apiService.GetAsync<List<CreateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
             List<DepartmentDTO> departments = await _apiService.GetAsync<List<DepartmentDTO>>("department", HttpContext.Request.Cookies["access-token"]);
 
-            UpdateProfileDTO model = new UpdateProfileDTO();
+            CreateProfileDTO model = new CreateProfileDTO();
             model.CityList = cities.Select(c => new SelectListItem
             {
                 Value = c.CityId.ToString(),

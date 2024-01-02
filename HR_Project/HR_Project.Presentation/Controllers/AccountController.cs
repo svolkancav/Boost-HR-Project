@@ -10,6 +10,8 @@ using HR_Project.Domain.Enum;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using HR_Project.Presentation.Models;
 using HR_Project.Common;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 
 namespace HR_Project.Presentation.Controllers
 {
@@ -162,9 +164,9 @@ namespace HR_Project.Presentation.Controllers
                 companyRegisterDTO.PersonnelCount = model.PersonnelCount;
                 companyRegisterDTO.Email = model.Email;
 
-               var result =  await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
+                var result = await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
 
-                
+
 
                 List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
                 var selectedCompany = companies.FirstOrDefault(x => x.Email == model.Email);
@@ -209,6 +211,76 @@ namespace HR_Project.Presentation.Controllers
                 .ToList();
 
             return Json(regions);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            ForgotPasswordDTO forgotPasswordDTO = new ForgotPasswordDTO();
+            return View(forgotPasswordDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDTO model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    List<UpdateProfileDTO> personnelList = await _apiService.GetAsync<List<UpdateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
+                    var personnel = personnelList.Find(x => x.Email == model.Email);
+                    if (personnel is not null)
+                    {
+                        string subject = "Şifre Yenile";
+                        string body = $"Lütfen şifrenizi yenilemek için linke <a href='{"https://localhost:7034/Account/Changepassword"}'>tıklayın</a>.";
+
+                        await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+                        Toastr("success", "Mail gönderildi");
+                    }
+                }
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+                return View(model);
+            }
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword()
+        {
+            ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
+            return View(changePasswordDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO model)
+        {
+            try
+            {
+                List<UpdateProfileDTO> personnelList = await _apiService.GetAsync<List<UpdateProfileDTO>>("personnel", HttpContext.Request.Cookies["access-token"]);
+                var personnel = personnelList.Find(x => x.Email == model.Email);
+                personnel.Password = model.NewPassword;
+                await _apiService.UpdateAsync<UpdateProfileDTO>("personnel", personnel, HttpContext.Request.Cookies["access-token"]);
+
+                string subject = "Şifre Değiştirildi";
+                string body = $"Şifreniz değiştirilmiştir. Yeni şifreniz ile giriş yapmak için linke <a href='{"https://localhost:7034/Account/Login"}'>tıklayın</a>.";
+
+                await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
+
+                Toastr("success", "Şifre başarılı bir şekilde güncellendi.");
+
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+                throw;
+            }
+            
         }
     }
 }

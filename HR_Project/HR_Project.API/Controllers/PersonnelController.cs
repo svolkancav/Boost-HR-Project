@@ -1,4 +1,5 @@
-﻿using HR_Project.Application.IoC.Models.DTOs;
+﻿using System.Security.Claims;
+using HR_Project.Application.IoC.Models.DTOs;
 using HR_Project.Application.Services.AdvanceService;
 using HR_Project.Application.Services.FileService;
 using HR_Project.Application.Services.PersonelServices;
@@ -14,16 +15,18 @@ namespace HR_Project.API.Controllers
 	{
 		private readonly IPersonnelService _personnelService;
 		private readonly IProfileImageService _profileImageService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly IConfiguration _configuration;
 
-		public PersonnelController(IPersonnelService personnelService, IProfileImageService profileImageService, IConfiguration configuration)
-		{
-			_personnelService = personnelService;
-			_profileImageService = profileImageService;
-			_configuration = configuration;
-		}
+        public PersonnelController(IPersonnelService personnelService, IProfileImageService profileImageService, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        {
+            _personnelService = personnelService;
+            _profileImageService = profileImageService;
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
-		[HttpGet]
+        [HttpGet]
 		public async Task<IActionResult> Get()
 		{
 			var personnels = await _personnelService.GetPersonels();
@@ -54,9 +57,8 @@ namespace HR_Project.API.Controllers
 		[Route("[action]")]
 		public async Task<IActionResult> ConfirmManager([FromBody] Guid id)
 		{
-            await _personnelService.ConfirmManager(id);
-            
-            return Ok();
+			string email = await _personnelService.ConfirmManager(id);
+            return Ok(new {Email=email});
         }
 
 		[HttpPost]
@@ -80,7 +82,7 @@ namespace HR_Project.API.Controllers
 		public async Task<IActionResult> Update(UpdateProfileDTO model)
 		{
 			await _personnelService.Update(model);
-			return Ok();
+			return Ok(model);
 		}
 
 		[HttpDelete]
@@ -92,9 +94,13 @@ namespace HR_Project.API.Controllers
 		}
 
 		[HttpPost("[action]")]
-		public async Task<IActionResult> UploadImage(string id)
+		public async Task<IActionResult> UploadImage()
 		{
-			await _profileImageService.UploadFile(id, Request.Form.Files.First());
+			string id = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var a = Request.Form.Files.First();
+
+            await _profileImageService.UploadFile(id, Request.Form.Files.First());
 			return Ok();
 		}
 

@@ -1,4 +1,5 @@
-﻿using HR_Project.Common.Models.Abstract;
+﻿using Bogus.DataSets;
+using HR_Project.Common.Models.Abstract;
 using HR_Project.Common.Models.DTOs;
 using HR_Project.Presentation.Models;
 using Newtonsoft.Json;
@@ -108,20 +109,28 @@ namespace HR_Project.Presentation.APIService
         //update
         public async Task<T> UpdateAsync<T>(string endpoint, T data, string token)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var jsonData = JsonConvert.SerializeObject(data);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync(endpoint, content);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception($"API isteği başarısız: {response.StatusCode}");
-            }
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(responseContent);
+                var jsonData = JsonConvert.SerializeObject(data);
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync(endpoint, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(responseContent);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         //get created model
@@ -154,6 +163,30 @@ namespace HR_Project.Presentation.APIService
 
             var responseContent = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TokenResponse>(responseContent);
+        }
+
+        public async Task<TokenResponse> RefreshToken(string token)
+        {
+            try
+            {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var jsonData = JsonConvert.SerializeObject(new RefreshTokenRequest { RefreshToken=token});
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                
+                var response = await _httpClient.PostAsync("Account/refresh-token", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TokenResponse>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         //register
@@ -318,6 +351,26 @@ namespace HR_Project.Presentation.APIService
                 return JsonConvert.DeserializeObject<TResponse>(responseContent);
             }
         }
+
+        public async Task PostFileAsync(string endpoint, IFormFile file, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using (var content = new MultipartFormDataContent())
+            {
+                var fileContent = new StreamContent(file.OpenReadStream());
+                content.Add(fileContent, "file", file.FileName);
+
+                var response = await _httpClient.PostAsync(endpoint, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API isteği başarısız: {response.StatusCode}");
+                }
+
+            }
+        }
+
     }
 
 

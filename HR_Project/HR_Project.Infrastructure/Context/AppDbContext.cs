@@ -15,7 +15,6 @@ namespace HR_Project.Infrastructure.Context
 {
     public class AppDbContext : IdentityDbContext<Personnel, IdentityRole<Guid>, Guid>
     {
-        //ToDo : Eklenecek
         public DbSet<Advance> Advances { get; set; }
         public DbSet<Absence> Absences { get; set; }
         public DbSet<Personnel> Personnels { get; set; }

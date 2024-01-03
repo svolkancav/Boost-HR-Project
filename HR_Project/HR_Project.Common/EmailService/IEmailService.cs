@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Common
 {
-	public interface IEmailService 
-	{
-		Task SendEmailRegisterAsync(string toEmail, string subject, string body);
-
+    public interface IEmailService
+    {
+        Task SendEmailRegisterAsync(string toEmail, string subject, string body);
         Task SendConfirmationEmailAsync(string toEmail, int companyId);
     }
 }

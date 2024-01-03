@@ -1,4 +1,6 @@
-﻿using HR_Project.Common.Models.VMs;
+﻿using HR_Project.Common;
+using HR_Project.Common.Models.DTOs;
+using HR_Project.Common.Models.VMs;
 using HR_Project.Presentation.APIService;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
@@ -8,14 +10,16 @@ namespace HR_Project.Presentation.Controllers
 	public class AdminController : BaseController
 	{
 		private readonly IAPIService _apiService;
+		private readonly IEmailService _emailService;
 
-		public AdminController(IAPIService apiService)
-		{
-			_apiService = apiService;
-		}
+        public AdminController(IAPIService apiService, IEmailService emailService)
+        {
+            _apiService = apiService;
+            _emailService = emailService;
+        }
 
-		
-		public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
+
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
 		{
 			if (!string.IsNullOrEmpty(searchText))
 			{
@@ -37,9 +41,10 @@ namespace HR_Project.Presentation.Controllers
 		{
 			try
 			{
-				await _apiService.PostAsync<object, object>($"personnel/ConfirmManager", id, HttpContext.Request.Cookies["access-token"]);
+				var response= await _apiService.PostAsync<object, ConfirmManagerResponse > ($"personnel/ConfirmManager", id, HttpContext.Request.Cookies["access-token"]);
 				Toastr("success", "Başarılı bir şekilde onaylandı");
-				//TODO: Mail atma işlemi yapılacak. Osman
+				
+				await _emailService.SendEmailRegisterAsync(response.Email, "HR Hesap Onayı", "İyi günler sayın yetkili hesabınız onaylanmıştır");
 
 				return RedirectToAction("Index");
 			}

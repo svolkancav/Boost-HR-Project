@@ -62,7 +62,6 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-        //TODO: Güncelle hatalı Osman
         public async Task<IActionResult> Update(string id)
         {
             UpdateAdvanceDTO advance = await _apiService.GetByIdAsync<UpdateAdvanceDTO>("advance/getbyid", id, HttpContext.Request.Cookies["access-token"]);

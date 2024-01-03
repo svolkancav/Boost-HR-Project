@@ -39,7 +39,6 @@ namespace HR_Project.Application.Services.PersonelServices
 
         public async Task<IdentityResult> Register(RegisterDTO model)
 		{
-			//TODO auto mapper
 			Personnel user = new Personnel
 			{
 				Email = model.Email,
@@ -83,7 +82,6 @@ namespace HR_Project.Application.Services.PersonelServices
 			{
 				Id = model.Id,
 				Email = model.Email,
-				PasswordHash = model.Password,
 				Name = model.Name,
 				Surname = model.Surname,
 				Title = model.Title,
@@ -219,8 +217,6 @@ namespace HR_Project.Application.Services.PersonelServices
 
 				personel.Name = model.Name;
 				personel.PhoneNumber = model.PhoneNumber;
-				personel.PasswordHash = model.Password;
-				//personel.Region.Name = model.RegionName; //TODO: kontrol edilecek.
 				personel.CityId = model.CityId;
 				personel.Email = model.Email;
 				personel.Address = model.Address;
@@ -232,7 +228,6 @@ namespace HR_Project.Application.Services.PersonelServices
 				personel.ManagerId = model.ManagerId;
 				personel.CompanyId = model.CompanyId;
 				personel.RegionId = model.RegionId;
-				personel.HireDate = model.HireDate;
 
 
 
@@ -298,13 +293,14 @@ namespace HR_Project.Application.Services.PersonelServices
 
 		}
 
-		public async Task ConfirmManager(Guid id)
+		public async Task<string> ConfirmManager(Guid id)
 		{
 			try
 			{
 				Personnel personnel = await _personelRepository.GetDefault(x => x.Id == id);
 				personnel.IsAccountConfirmed = true;
 				await _personelRepository.Update(personnel);
+				return personnel.Email;
 			}
 			catch (Exception ex)
 			{

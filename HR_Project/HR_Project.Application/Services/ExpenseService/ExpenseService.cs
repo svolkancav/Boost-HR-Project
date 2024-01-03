@@ -41,7 +41,6 @@ namespace HR_Project.Application.Services.ExpenseService
             _userManager = userManager;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
-            //TODO: masraf create ederken currentPersonnel null geliyor.
             if (_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email) != null)
             {
                 currentPersonnel = _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value).Result;

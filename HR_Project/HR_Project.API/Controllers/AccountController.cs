@@ -74,11 +74,11 @@ namespace HR_Project.API.Controllers
 			{
 				Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
 
-				personnel.IsAccountConfirmed = true;
+				//personnel.IsAccountConfirmed = true;
 				//Admine Rol atamak için
 				//await _userManager.AddToRoleAsync(personnel, "Admin");
-				await _userManager.AddToRoleAsync(personnel, "CompanyManager");
-				await _userManager.AddToRoleAsync(personnel, "Personnel");
+				//await _userManager.AddToRoleAsync(personnel, "CompanyManager");
+				//await _userManager.AddToRoleAsync(personnel, "Personnel");
 
 				var authClaims = new List<Claim>
 				{
@@ -116,6 +116,41 @@ namespace HR_Project.API.Controllers
 			}
 		}
 
+		[HttpPost("refresh-token")]
+		public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest refreshTokenRequest)
+		{
+            Personnel personnel = await _userManager.FindByEmailAsync(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
+
+
+            var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, personnel.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, personnel.Id.ToString()),
+                    new Claim(ClaimTypes.Name, personnel.Name),
+                    new Claim(ClaimTypes.Surname, personnel.Surname),
+                    new Claim(ClaimTypes.Thumbprint, await _profileImageService.GetFileById(personnel.Id.ToString()))
+                   
+                };
+
+
+            var userRoles = await _personnelService.GetRoles(personnel.Email);
+
+            if (userRoles.Length == 0)
+                return Unauthorized("Kullanıcının Rolü mevcut değil");
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+
+            var token = GetToken(authClaims);
+
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiration = token.ValidTo
+            });
+        }
 
 
 		[HttpPost("logout")]

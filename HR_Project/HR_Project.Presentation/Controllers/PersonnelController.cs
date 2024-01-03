@@ -3,8 +3,11 @@ using HR_Project.Common.Models.DTOs;
 using HR_Project.Common.Models.VMs;
 using HR_Project.Domain.Entities.Concrete;
 using HR_Project.Presentation.APIService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using X.PagedList;
@@ -81,7 +84,6 @@ namespace HR_Project.Presentation.Controllers
 
 
         }
-        //TODO: Personel oluştururken şifre verilmeyecek. Osman
         [HttpPost]
         public async Task<IActionResult> Create(CreateProfileDTO model)
         {
@@ -152,7 +154,70 @@ namespace HR_Project.Presentation.Controllers
             return View(personnel);
         }
 
-        //TODO: Güncelleme hatalı Osman
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            try
+            {
+                await _apiService.PostFileAsync("personnel/UploadImage", file, HttpContext.Request.Cookies["access-token"]);
+
+                var token = await _apiService.RefreshToken(HttpContext.Request.Cookies["access-token"]);
+
+                if (token != null)
+                {
+
+                    Response.Cookies.Append("access-token", token.Token, new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None,
+                        Expires = token.Expiration
+                    });
+
+
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(token.Token) as JwtSecurityToken;
+
+                    var email = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                    var userId = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                    var userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                    var userSurName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                    var imagePath = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Thumbprint)?.Value;
+                    var company = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Company")?.Value;
+                    var department = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Department")?.Value;
+                    var roles = jsonToken?.Claims.Where(c => c.Type == ClaimTypes.Role);
+
+                    var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Email, email),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(ClaimTypes.NameIdentifier, userId),
+                            new Claim(ClaimTypes.Name, userName),
+                            new Claim(ClaimTypes.Surname, userSurName),
+                            new Claim(ClaimTypes.Thumbprint, imagePath),
+                            //new Claim("Company",company),
+                            //new Claim("Department",department),
+
+                        };
+                    claims.AddRange(roles);
+
+                    var identity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                }
+                Toastr("success", "Profil resmi başarılı bir şekilde güncellendi.");
+
+                return RedirectToAction("Profil");
+            }
+            catch (Exception ex)
+            {
+                Toastr("error", $"Kayıt sırasında hata oluştu : {ex.Message}");
+
+                throw ex;
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProfileDTO model)
         {
@@ -162,9 +227,9 @@ namespace HR_Project.Presentation.Controllers
                 {
                     return View(model);
                 }
-                await _apiService.UpdateAsync<UpdateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+                await _apiService.UpdateAsync("personnel", model, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde güncellendi.");
-                return RedirectToAction("Update");
+                return RedirectToAction("Profil");
 
             }
 

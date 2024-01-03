@@ -12,7 +12,6 @@ namespace HR_Project.Application.Services.PersonelServices
 {
     public interface IPersonnelService
     {
-        // TODO: PersonelDTO geçici eklendi. DTO lar oluştuktan sonra yenileri eklenebilir.
         Task Create(CreateProfileDTO model);
         Task Update(UpdateProfileDTO model);
         Task Delete(string id);
@@ -26,7 +25,7 @@ namespace HR_Project.Application.Services.PersonelServices
 
         //RegisterDTO
         Task<IdentityResult> Register(RegisterDTO model);
-        Task ConfirmManager(Guid id);
+        Task<string> ConfirmManager(Guid id);
         Task DeleteNewRegister(Guid id);
         void Logout(string token);
         Task<UpdateProfileDTO> FillDTO(string id);

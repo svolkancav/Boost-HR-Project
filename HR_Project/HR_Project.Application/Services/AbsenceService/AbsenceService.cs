@@ -98,7 +98,7 @@ namespace HR_Project.Application.Services.AbsenceService
 				AbsenceDuration = x.AbsenceDuration,
 				StartDate = x.StartDate,
 				EndDate = x.EndDate,
-			}, x => x.Status != Status.Deleted && x.Condition == condition);
+			}, x => x.Status != Status.Deleted && x.Condition == condition && x.PersonnelId == currentPersonnel.Id);
 		}
 
 		public async Task<UpdateAbsenceDTO> GetById(string id)

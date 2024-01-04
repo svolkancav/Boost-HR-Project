@@ -54,3 +54,18 @@
 	<a class="h5 p-4" asp-action="Index">Listeye Geri Dön</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		console.log("ready!");
+		// Input elemanının değeri değiştiğinde çalışacak
+		$('#AbsenceDuration').on('input', function () {
+			// Input değerini al
+			var value = $(this).val();
+			// Nokta varsa virgülle değiştir
+			value = value.replace('.', ',');
+			// Değiştirilmiş değeri input'a geri yaz
+			$(this).val(value);
+		});
+	});
+</script>

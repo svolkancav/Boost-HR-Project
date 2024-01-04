@@ -45,7 +45,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="AbsenceDuration" class="control-label">İzin Süresi</label>
-				<input asp-for="AbsenceDuration" class="form-control" min="1" />
+				<input asp-for="AbsenceDuration" class="form-control" />
 				<span asp-validation-for="AbsenceDuration" class="text-danger"></span>
 			</div>
 
@@ -61,74 +61,18 @@
 </div>
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-	// Başlangıç ve bitiş tarihlerini al
-	var startDateInput = document.getElementById("startDate");
-	var endDateInput = document.getElementById("endDate");
-	var durationInput = document.getElementById("absenceDurationText");
-
-	startDateInput.addEventListener("change", updateDuration);
-	endDateInput.addEventListener("change", updateDuration);
-
-
-	function updateDuration() {
-
-
-		//Tarih farkını al
-		var startDate = new Date(startDateInput.value);
-		var endDate = new Date(endDateInput.value);
-
-		// Geçerli tarihler mi kontrol et
-		if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-			durationInput.value = "Geçersiz tarih";
-			return;
-		} else {
-			var howManyDaysWeekendsAndHolidays = countDaysWithoutWeekendsAndHolidays(startDate, endDate);
-		}
-
-		// Farkı gün ve saat olarak ayrıştır
-		var duration = endDate - startDate; // in milliseconds
-		
-		var days = howManyDaysWeekendsAndHolidays;
-		var hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		// İzin Süresi alanını güncelle
-		if (hours === 0) {
-			durationInput.value = days + " gün";
-		} else {
-			durationInput.value = days + " gün " + hours + " saat";
-		}
-		// İznin süresini milisaniye cinsinden modele aktar
-		document.getElementById("absenceDuration").value = Math.floor(days * (1000 * 60 * 60 * 24)) + (hours * (1000 * 60 * 60));
-		console.log(duration); 
-		console.log(Math.floor(days * (1000 * 60 * 60 * 24)) + (hours * (1000 * 60 * 60)));
-
-	}
-	function isWeekend(date) {
-		var day = date.getDay();
-		return day === 0 || day === 6; // Pazar veya Cumartesi
-	}
-
-	function isHoliday(date) {
-		// Tatil listesini kontrol et ve tatilse true döndür
-		// Örnek:
-		var holidayList = [/* ... */];
-		var dateString = date.toISOString().split('T')[0]; // Tarihi stringe dönüştür
-		
-		return holidayList.includes(dateString);
-	}
-
-	function countDaysWithoutWeekendsAndHolidays(startDate, endDate) {
-		var count = 0;
-		var currentDate = new Date(startDate);
-
-		while (currentDate <= endDate) {
-			if (!isWeekend(currentDate) && !isHoliday(currentDate)) {
-				count++;
-			}
-			currentDate.setDate(currentDate.getDate() + 1);
-		}
-
-		return count;
-	}
+	$(document).ready(function () {
+		console.log("ready!");
+		// Input elemanının değeri değiştiğinde çalışacak
+		$('#AbsenceDuration').on('input', function () {
+			// Input değerini al
+			var value = $(this).val();
+			// Nokta varsa virgülle değiştir
+			value = value.replace('.', ',');
+			// Değiştirilmiş değeri input'a geri yaz
+			$(this).val(value);
+		});
+	});
 </script>

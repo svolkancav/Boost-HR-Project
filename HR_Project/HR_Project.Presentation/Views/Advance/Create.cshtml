@@ -57,3 +57,18 @@
     <a asp-action="Index">Listeye Dön</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        // Input elemanının değeri değiştiğinde çalışacak
+        $('#Amount').on('input', function () {
+            // Input değerini al
+            var value = $(this).val();
+            // Nokta varsa virgülle değiştir
+            value = value.replace('.', ',');
+            // Değiştirilmiş değeri input'a geri yaz
+            $(this).val(value);
+        });
+    });
+</script>

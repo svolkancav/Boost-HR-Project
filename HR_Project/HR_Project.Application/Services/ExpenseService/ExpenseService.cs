@@ -118,7 +118,8 @@ namespace HR_Project.Application.Services.ExpenseService
                 CreateDate = x.CreatedDate,
                 Id = x.Id,
                 Expenses = _mapper.Map<List<ExpenseDTO>>(x.Expenses)
-            }, x => x.Condition == conditionType && x.Status != Status.Deleted, include: x => x.Include(x => x.Expenses));
+            }, x => x.Condition == conditionType && x.Status != Status.Deleted && x.PersonnelId == currentPersonnel.Id, 
+            include: x => x.Include(x => x.Expenses));
         }
 
         public async Task<UpdateMasterExpenseDTO> GetById(string id)
@@ -154,7 +155,7 @@ namespace HR_Project.Application.Services.ExpenseService
                 AggregateAmount = x.AggregateAmount,
                 CreateDate = x.CreatedDate,
                 Condition = x.Condition,
-            }, x => x.Status != Status.Deleted,
+            }, x => x.Status != Status.Deleted && x.PersonnelId == currentPersonnel.Id,
             orderBy: x => x.OrderByDescending(x => x.CreatedDate)
             );
 

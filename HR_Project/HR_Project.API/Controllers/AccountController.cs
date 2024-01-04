@@ -73,6 +73,7 @@ namespace HR_Project.API.Controllers
 			if (user.Succeeded)
 			{
 				Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
+				var isManager=await _personnelService.IsManager(personnel.Id);
                 if (!personnel.IsAccountConfirmed)
 					return Unauthorized("Kullanıcı hesabı onaylanmamıştır.");
                     //personnel.IsAccountConfirmed = true;
@@ -90,6 +91,7 @@ namespace HR_Project.API.Controllers
 					new Claim(ClaimTypes.Surname, personnel.Surname),
 					new Claim(ClaimTypes.Thumbprint, await _profileImageService.GetFileById(personnel.Id.ToString())),
 					new Claim(ClaimTypes.WindowsSubAuthority , personnel.CompanyId.ToString()),
+					new Claim(ClaimTypes.UserData, isManager?"Manager":"Not" )
                     //new Claim("Company",personnel.CompanyId.ToString()),
                     //new Claim("Department",personnel.DepartmentId.ToString()),
                 };

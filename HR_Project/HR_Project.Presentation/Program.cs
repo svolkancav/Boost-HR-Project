@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 builder.Services.AddHttpClient<IAPIService, APIService>(opt =>
 {
-    opt.BaseAddress = new Uri("https://localhost:7258/api/");
+    opt.BaseAddress = new Uri("https://localhost:44376/api/");
 	
 });
 ////https://localhost:7034/api/

@@ -93,6 +93,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
+
         // TODO: Silme hatalı Sultan- Silme işleminde API uyarısı veriyor ama siliyor.
         public async Task<IActionResult> Delete(int id)
         {
@@ -108,6 +109,7 @@ namespace HR_Project.Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
 
         
     }

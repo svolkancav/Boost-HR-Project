@@ -73,21 +73,23 @@ namespace HR_Project.API.Controllers
 			if (user.Succeeded)
 			{
 				Personnel personnel = await _userManager.FindByEmailAsync(model.Email);
+                if (!personnel.IsAccountConfirmed)
+					return Unauthorized("Kullanıcı hesabı onaylanmamıştır.");
+                    //personnel.IsAccountConfirmed = true;
+                    //Admine Rol atamak için
+                    //await _userManager.AddToRoleAsync(personnel, "Admin");
+                    //await _userManager.AddToRoleAsync(personnel, "CompanyManager");
+                    //await _userManager.AddToRoleAsync(personnel, "Personnel");
 
-				//personnel.IsAccountConfirmed = true;
-				//Admine Rol atamak için
-				//await _userManager.AddToRoleAsync(personnel, "Admin");
-				//await _userManager.AddToRoleAsync(personnel, "CompanyManager");
-				//await _userManager.AddToRoleAsync(personnel, "Personnel");
-
-				var authClaims = new List<Claim>
+                    var authClaims = new List<Claim>
 				{
 					new Claim(ClaimTypes.Email, model.Email),
 					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 					new Claim(ClaimTypes.NameIdentifier, personnel.Id.ToString()),
 					new Claim(ClaimTypes.Name, personnel.Name),
 					new Claim(ClaimTypes.Surname, personnel.Surname),
-					new Claim(ClaimTypes.Thumbprint, await _profileImageService.GetFileById(personnel.Id.ToString()))
+					new Claim(ClaimTypes.Thumbprint, await _profileImageService.GetFileById(personnel.Id.ToString())),
+					new Claim(ClaimTypes.WindowsSubAuthority , personnel.CompanyId.ToString()),
                     //new Claim("Company",personnel.CompanyId.ToString()),
                     //new Claim("Department",personnel.DepartmentId.ToString()),
                 };
@@ -97,6 +99,7 @@ namespace HR_Project.API.Controllers
 
 				if (userRoles.Length == 0)
 					return Unauthorized("Kullanıcının Rolü mevcut değil");
+				
 				foreach (var userRole in userRoles)
 				{
 					authClaims.Add(new Claim(ClaimTypes.Role, userRole));

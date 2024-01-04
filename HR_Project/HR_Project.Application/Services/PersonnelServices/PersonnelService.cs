@@ -56,7 +56,9 @@ namespace HR_Project.Application.Services.PersonelServices
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 			if (result.Succeeded)
 			{
-				await _signInManager.SignInAsync(user, isPersistent: false);
+                await _userManager.AddToRoleAsync(user, "Personnel"); 
+				await _userManager.AddToRoleAsync(user, "CompanyManager");
+                await _signInManager.SignInAsync(user, isPersistent: false);
 
 
 				try
@@ -97,12 +99,30 @@ namespace HR_Project.Application.Services.PersonelServices
 				DepartmentId = model.DepartmentId,
 				CompanyId = model.CompanyId,
 				Address = model.Address,
-
-
+				UserName = model.Email,
+				IsAccountConfirmed= true,
 			};
+			
+            try
+            {
 
-			await _personelRepository.Create(personnel);
-		}
+                IdentityResult result = await _userManager.CreateAsync(personnel,"asd123");
+				if (result.Succeeded)
+				{
+                    await _profileImageService.UploadFile(personnel.Id.ToString(), model.UploadImage);
+                    await _userManager.AddToRoleAsync(personnel, "Personnel");
+                }
+                else
+				{
+                    throw new Exception(result.Errors.FirstOrDefault().Description);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
 		public async Task Delete(string id)
 		{
@@ -228,7 +248,13 @@ namespace HR_Project.Application.Services.PersonelServices
 				personel.ManagerId = model.ManagerId;
 				personel.CompanyId = model.CompanyId;
 				personel.RegionId = model.RegionId;
+				personel.ModifiedDate = DateTime.Now;
+				personel.Status=Status.Updated;
 
+				if(model.Password is not null)
+				{
+                    await _userManager.ChangePasswordAsync(personel, personel.PasswordHash,model.Password);
+                }
 
 
 				//personel.ImagePath = model.ImagePath;

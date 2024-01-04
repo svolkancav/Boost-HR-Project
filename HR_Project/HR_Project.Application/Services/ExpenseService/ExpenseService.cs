@@ -154,7 +154,8 @@ namespace HR_Project.Application.Services.ExpenseService
                 AggregateAmount = x.AggregateAmount,
                 CreateDate = x.CreatedDate,
                 Condition = x.Condition,
-            }, x => x.Status != Status.Deleted
+            }, x => x.Status != Status.Deleted,
+            orderBy: x => x.OrderByDescending(x => x.CreatedDate)
             );
 
             foreach (var item in masterExpenses)

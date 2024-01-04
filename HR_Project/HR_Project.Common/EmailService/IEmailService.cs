@@ -10,5 +10,6 @@ namespace HR_Project.Common
     {
         Task SendEmailRegisterAsync(string toEmail, string subject, string body);
         Task SendConfirmationEmailAsync(string toEmail, int companyId);
+        Task SendEmailAsync(string email, string subject, string htmlMessage);
     }
 }

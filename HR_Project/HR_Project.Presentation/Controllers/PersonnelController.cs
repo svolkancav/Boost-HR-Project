@@ -11,17 +11,21 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using X.PagedList;
+using HR_Project.Common;
+using NuGet.Common;
 
 namespace HR_Project.Presentation.Controllers
 {
     public class PersonnelController : BaseController
     {
         private readonly IAPIService _apiService;
+        private readonly IEmailService _emailService;
 
 
-        public PersonnelController(IAPIService apiService)
+        public PersonnelController(IAPIService apiService, IEmailService emailService)
         {
             _apiService = apiService;
+            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10, string sortColumn = "", string sortOrder = "")
@@ -122,6 +126,13 @@ namespace HR_Project.Presentation.Controllers
                 var personnel = await _apiService.GetByIdAsync<CreateProfileDTO>("personnel", id, HttpContext.Request.Cookies["access-token"]);
                 model.CompanyId = personnel.CompanyId;
                 await _apiService.PostAsync<CreateProfileDTO, CreateProfileDTO>("personnel", model, HttpContext.Request.Cookies["access-token"]);
+
+
+                var confirmationLink = Url.Action("Changepassword", "Account", new ChangePasswordDTO { Email = model.Email }, Request.Scheme);
+
+
+                _emailService.SendEmailAsync(model.Email, "HR Project - Şifre Oluşturma", $"Şifrenizi Oluşturmak için <a href='{confirmationLink}'>tıklayınız</a>.");
+                
                 return RedirectToAction("Index");
             }
             else return RedirectToAction("Index");
@@ -238,7 +249,7 @@ namespace HR_Project.Presentation.Controllers
                 }
                 Toastr("success", "Profil resmi başarılı bir şekilde güncellendi.");
 
-                return RedirectToAction("Profil");
+                return Ok();
             }
             catch (Exception ex)
             {

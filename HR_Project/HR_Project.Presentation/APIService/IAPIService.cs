@@ -25,6 +25,7 @@ namespace HR_Project.Presentation.APIService
 		Task<T> GetCreateModelAsync<T>(string endpoint, string token);
 		// login
 		Task<TokenResponse> LoginAsync(LoginDTO loginModel);
+		Task<TokenResponse> RefreshToken(string token);
 
         Task<T> GetAsyncWoToken<T>(string endpoint);
 
@@ -32,5 +33,6 @@ namespace HR_Project.Presentation.APIService
         Task<RegisterResponse> RegisterAsync(RegisterDTO registerModel);
 		Task ConfirmAsync(string endpoint, MailConfirmDTO model);
 		Task<TResponse> PostAsyncWoToken<TRequest, TResponse>(string endpoint, TRequest data);
+		Task PostFileAsync(string endpoint, IFormFile file, string token);
     }
 }

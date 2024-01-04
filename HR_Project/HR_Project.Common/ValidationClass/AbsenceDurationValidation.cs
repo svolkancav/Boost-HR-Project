@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Common.ValidationClass
 {
-	//Todo : yarım günlük izinler için validation yazılacak.
 	public class AbsenceDurationValidation : ValidationAttribute
 	{
 		private readonly string _startDate;

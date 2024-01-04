@@ -35,8 +35,8 @@ namespace HR_Project.Presentation.Controllers
 
         }
 
-        //TODO: Createdate kontrol edilecek. Sultan
-        public IActionResult Create()
+		//TODO: Createdate kontrol edilecek. Sultan- Kontrol edildi , sorunsuz oluşturuyor
+		public IActionResult Create()
         {
             return View();
         }
@@ -62,7 +62,6 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-        //TODO: Güncelle hatalı Osman
         public async Task<IActionResult> Update(string id)
         {
             UpdateAdvanceDTO advance = await _apiService.GetByIdAsync<UpdateAdvanceDTO>("advance/getbyid", id, HttpContext.Request.Cookies["access-token"]);
@@ -90,8 +89,8 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-        //TODO: Silme hatalı
-        public async Task<IActionResult> Delete(int id)
+		//TODO: Silme hatalı- Silme işleminde API uyarısı veriyor ama siliyor.
+		public async Task<IActionResult> Delete(int id)
         {
             try
             {

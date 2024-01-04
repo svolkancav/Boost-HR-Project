@@ -62,7 +62,7 @@ namespace HR_Project.Application.Services.FileService
 		public async Task<string> GetFileById(string personnelId)
 		{
 
-			PersonnelPicture picture = await _fileRepository.GetDefault(x => x.PersonnelId == Guid.Parse(personnelId));
+			PersonnelPicture picture = await _fileRepository.GetDefault(x => x.PersonnelId == Guid.Parse(personnelId)&&x.Status!=Status.Deleted);
 
 			return $"{_configuration["BaseStorageUrl"]}/{picture.FilePath}";
 
@@ -119,7 +119,7 @@ namespace HR_Project.Application.Services.FileService
 
 					//}
 				}
-				else
+				else if (personnel.ImageId == null)
 				{
 
 					PersonnelPicture picture = new PersonnelPicture()
@@ -137,7 +137,7 @@ namespace HR_Project.Application.Services.FileService
 					return true;
 				}
 
-
+				return true;
 
 			}
 			catch (Exception ex)

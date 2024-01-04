@@ -93,7 +93,7 @@ namespace HR_Project.Presentation.Controllers
             }
         }
 
-        // TODO: Silme hatalı Sultan
+        // TODO: Silme hatalı Sultan.
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -108,6 +108,7 @@ namespace HR_Project.Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
+        
 
         
     }

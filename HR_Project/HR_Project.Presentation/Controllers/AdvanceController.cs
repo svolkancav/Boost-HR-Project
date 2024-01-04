@@ -17,26 +17,60 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10, string sortColumn = "", string sortOrder = "")
         {
             if (!string.IsNullOrEmpty(searchText))
             {
 
                 List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
                 List<AdvanceVM> selectedAdvences = advances.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.Amount.ToString().Contains(searchText)).ToList();
+                // Apply sorting
+                selectedAdvences = ApplySorting(selectedAdvences.AsQueryable(), sortColumn, sortOrder).ToList();
 
                 return View(selectedAdvences.ToPagedList(pageNumber, pageSize));
             }
             else
             {
                 List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>("advance", HttpContext.Request.Cookies["access-token"]);
+                advances = ApplySorting(advances.AsQueryable(), sortColumn, sortOrder).ToList();
+
                 return View(advances.ToPagedList(pageNumber, pageSize));
             }
 
         }
 
-		//TODO: Createdate kontrol edilecek. Sultan- Kontrol edildi , sorunsuz oluşturuyor
-		public IActionResult Create()
+        private IQueryable<AdvanceVM> ApplySorting(IQueryable<AdvanceVM> advanceList, string sortColumn, string sortOrder)
+        {
+            switch (sortColumn)
+            {
+                case "CreateDate":
+                    advanceList = sortOrder == "asc" ? advanceList.OrderBy(p => p.CreatedDate) : advanceList.OrderByDescending(p => p.CreatedDate);
+                    break;
+                case "Reason":
+                    advanceList = sortOrder == "asc" ? advanceList.OrderBy(p => p.Reason) : advanceList.OrderByDescending(p => p.Reason);
+                    break;
+                case "Amount":
+                    advanceList = sortOrder == "asc" ? advanceList.OrderBy(p => p.Amount) : advanceList.OrderByDescending(p => p.Amount);
+                    break;
+                case "LastPaidDate":
+                    advanceList = sortOrder == "asc" ? advanceList.OrderBy(p => p.LastPaidDate) : advanceList.OrderByDescending(p => p.LastPaidDate);
+                    break;
+                case "Condition":
+                    advanceList = sortOrder == "asc" ? advanceList.OrderBy(p => p.Condition) : advanceList.OrderByDescending(p => p.Condition);
+                    break;
+
+                // Add cases for other columns as needed
+                default:
+                    // Default sorting by Name in ascending order
+                    advanceList = advanceList.OrderByDescending(p => p.CreatedDate);
+                    break;
+            }
+
+            return advanceList;
+        }
+
+        //TODO: Createdate kontrol edilecek. Sultan- Kontrol edildi , sorunsuz oluşturuyor
+        public IActionResult Create()
         {
             return View();
         }

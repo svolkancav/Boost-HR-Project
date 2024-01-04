@@ -15,26 +15,63 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
         // listelemek için
-        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10, string sortColumn = "", string sortOrder = "")
         {
             if (!string.IsNullOrEmpty(searchText))
             {
                 List<AbsenceVM> absences = await _apiService.GetAsync<List<AbsenceVM>>("absence", HttpContext.Request.Cookies["access-token"]);
 
                 List<AbsenceVM> selectedAbsences = absences.Where(x => x.Reason.ToLower().Contains(searchText.ToLower()) || x.LeaveTypes.ToString().ToLower().Contains(searchText.ToLower())).ToList();
-
-                return View(selectedAbsences.ToPagedList(pageNumber, pageSize));
+				selectedAbsences = ApplySorting(selectedAbsences.AsQueryable(), sortColumn, sortOrder).ToList();
+				return View(selectedAbsences.ToPagedList(pageNumber, pageSize));
             }
             else
             {
                 List<AbsenceVM> absences = await _apiService.GetAsync<List<AbsenceVM>>("absence", HttpContext.Request.Cookies["access-token"]);
-                return View(absences.ToPagedList(pageNumber, pageSize));
+				absences = ApplySorting(absences.AsQueryable(), sortColumn, sortOrder).ToList();
+				return View(absences.ToPagedList(pageNumber, pageSize));
             }
 
         }
 
-        // ekleme için
-        public IActionResult Create()
+		private IQueryable<AbsenceVM> ApplySorting(IQueryable<AbsenceVM> absenceList, string sortColumn, string sortOrder)
+		{
+			switch (sortColumn)
+			{
+				case "CreateDate":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.CreatedDate) : absenceList.OrderByDescending(p => p.CreatedDate);
+					break;
+				case "LeaveTypes":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.LeaveTypes) : absenceList.OrderByDescending(p => p.LeaveTypes);
+					break;
+				case "Reason":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.Reason) : absenceList.OrderByDescending(p => p.Reason);
+					break;
+				case "StartDate":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.StartDate) : absenceList.OrderByDescending(p => p.StartDate);
+					break;
+				case "EndDate":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.EndDate) : absenceList.OrderByDescending(p => p.EndDate);
+					break;
+				case "AbsenceDuration":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.AbsenceDuration) : absenceList.OrderByDescending(p => p.AbsenceDuration);
+					break;
+				case "Condition":
+					absenceList = sortOrder == "asc" ? absenceList.OrderBy(p => p.Condition) : absenceList.OrderByDescending(p => p.Condition);
+					break;
+
+				// Add cases for other columns as needed
+				default:
+					// Default sorting by Name in ascending order
+					absenceList = absenceList.OrderByDescending(p => p.CreatedDate);
+					break;
+			}
+
+			return absenceList;
+		}
+
+		// ekleme için
+		public IActionResult Create()
         {
             return View();
         }

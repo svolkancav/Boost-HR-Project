@@ -59,24 +59,24 @@
                     </div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
-                            <tr>
+                            <tr role="row">
 
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('Name')" aria-sort="ascending" style="width: 140px;">
                                     Adı
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('Surname')" aria-sort="ascending" style="width: 140px;">
                                     Soyadı
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Currency: activate to sort column ascending" style="width: 120px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('Email')" aria-sort="ascending" style="width: 120px;">
                                     Email
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('Address')" aria-sort="ascending" style="width: 140px;">
                                     Adresi
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 140px;">
                                     Ünvanı
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Condition: activate to sort column ascending" style="width: 140px;">
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending"  style="width: 140px;">
                                     İşlemler
                                 </th>
                             </tr>
@@ -233,6 +233,33 @@
             window.location.href = "/Personnel/Delete/?id=" + id;
         } else {
 
+        }
+    }
+</script>
+<script>
+    function sortColumn(columnName) {
+        var currentUrl = window.location.href;
+
+        // Get the current sort order from the URL
+        var sortOrder = "asc";
+        if (currentUrl.includes("sortOrder=asc")) {
+            sortOrder = "desc";
+        }
+
+        // Update the URL with the selected column and sort order
+        var newUrl = updateQueryStringParameter(currentUrl, "sortColumn", columnName);
+        newUrl = updateQueryStringParameter(newUrl, "sortOrder", sortOrder);
+
+        window.location.href = newUrl;
+    }
+
+    function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return uri + separator + key + "=" + value;
         }
     }
 </script>

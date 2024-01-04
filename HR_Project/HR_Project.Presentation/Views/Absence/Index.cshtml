@@ -65,26 +65,26 @@
 					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 						<thead>
 							<tr>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('CreatedDate')" aria-sort="ascending" style="width: 140px;">
 									Oluşturulma Tarihi
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="LeaveTypes: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('LeaveTypes')" aria-sort="ascending" style="width: 140px;">
 									İzin Türü
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Reason: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('Reason')" aria-sort="ascending" style="width: 140px;">
 									Açıklama
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="StartDate: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('StartDate')" aria-sort="ascending" style="width: 140px;">
 									Başlangıç Tarihi
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="EndDate: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('EndDate')" aria-sort="ascending" style="width: 140px;">
 									Bitiş Tarihi
 								</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="AbsenceDuration: activate to sort column ascending" style="width: 140px;">
+								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" onclick="sortColumn('AbsenceDuration')" aria-sort="ascending" style="width: 140px;">
 									İzin Süresi
 								</th>
 								<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
-									aria-label="Condition.GetDisplayName(Model.Condition)"
+									aria-label="Condition.GetDisplayName(Model.Condition)" onclick="sortColumn('Condition')" aria-sort="ascending"
 									style="width: 140px;">
 									Durumu
 								</th>
@@ -289,3 +289,30 @@
 	}
 </script>
 
+<script>
+	function sortColumn(columnName) {
+		var currentUrl = window.location.href;
+
+		// Get the current sort order from the URL
+		var sortOrder = "asc";
+		if (currentUrl.includes("sortOrder=asc")) {
+			sortOrder = "desc";
+		}
+
+		// Update the URL with the selected column and sort order
+		var newUrl = updateQueryStringParameter(currentUrl, "sortColumn", columnName);
+		newUrl = updateQueryStringParameter(newUrl, "sortOrder", sortOrder);
+
+		window.location.href = newUrl;
+	}
+
+	function updateQueryStringParameter(uri, key, value) {
+		var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+		var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+		if (uri.match(re)) {
+			return uri.replace(re, '$1' + key + "=" + value + '$2');
+		} else {
+			return uri + separator + key + "=" + value;
+		}
+	}
+</script>

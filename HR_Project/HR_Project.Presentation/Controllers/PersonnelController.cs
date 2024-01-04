@@ -24,21 +24,50 @@ namespace HR_Project.Presentation.Controllers
             _apiService = apiService;
         }
 
-        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchText, int pageNumber = 1, int pageSize = 10, string sortColumn = "", string sortOrder = "")
         {
             if (!string.IsNullOrEmpty(searchText))
             {
                 List<PersonelVM> personnels = await _apiService.GetAsync<List<PersonelVM>>("personnel", HttpContext.Request.Cookies["access-token"]);
                 List<PersonelVM> selectedPersonnels = personnels.Where(x => x.Name.ToLower().Contains(searchText.ToLower()) || x.Surname.ToString().ToLower().Contains(searchText.ToLower())).ToList();
-
+                // Apply sorting
+                selectedPersonnels = ApplySorting(selectedPersonnels.AsQueryable(), sortColumn, sortOrder).ToList();
                 return View(selectedPersonnels.ToPagedList(pageNumber, pageSize));
             }
             else
             {
                 List<PersonelVM> personnels = await _apiService.GetAsync<List<PersonelVM>>("personnel", HttpContext.Request.Cookies["access-token"]);
+                personnels = ApplySorting(personnels.AsQueryable(), sortColumn, sortOrder).ToList();
                 return View(personnels.ToPagedList(pageNumber, pageSize));
             }
 
+        }
+
+        private IQueryable<PersonelVM> ApplySorting(IQueryable<PersonelVM> personnelList, string sortColumn, string sortOrder)
+        {
+            switch (sortColumn)
+            {
+                case "Name":
+                    personnelList = sortOrder == "asc" ? personnelList.OrderBy(p => p.Name) : personnelList.OrderByDescending(p => p.Name);
+                    break;
+                case "Surname":
+                    personnelList = sortOrder == "asc" ? personnelList.OrderBy(p => p.Surname) : personnelList.OrderByDescending(p => p.Surname);
+                    break;
+                case "Email":
+                    personnelList = sortOrder == "asc" ? personnelList.OrderBy(p => p.Email) : personnelList.OrderByDescending(p => p.Email);
+                    break;
+                case "Adresi":
+                    personnelList = sortOrder == "asc" ? personnelList.OrderBy(p => p.Address) : personnelList.OrderByDescending(p => p.Address);
+                    break;
+
+                // Add cases for other columns as needed
+                default:
+                    // Default sorting by Name in ascending order
+                    personnelList = personnelList.OrderBy(p => p.Name);
+                    break;
+            }
+
+            return personnelList;
         }
 
         public async Task<IActionResult> Create()
@@ -248,12 +277,12 @@ namespace HR_Project.Presentation.Controllers
             {
                 await _apiService.DeleteAsync<PersonelDTO>($"personnel", id, HttpContext.Request.Cookies["access-token"]);
                 Toastr("success", "Kayıt başarılı bir şekilde silindi.");
-                return RedirectToAction("ListPersonnel");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 Toastr("error", $"Kayıt silinirken hata oluştu : {ex.Message}");
-                return RedirectToAction("ListPersonnel");
+                return RedirectToAction("Index");
             }
         }
         [HttpGet]

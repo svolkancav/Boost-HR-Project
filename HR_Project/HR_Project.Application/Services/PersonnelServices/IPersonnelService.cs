@@ -18,6 +18,7 @@ namespace HR_Project.Application.Services.PersonelServices
         Task<PersonelDTO> GetById(string id);
         Task<PersonelDTO> GetByEmail(string email);
         Task<List<PersonelDTO>> GetPersonels();
+        Task<bool> IsManager(Guid id);
         Task<List<CompanyManagerVM>> GetUnconfirmedManager();
 
 		Task<SignInResult> Login(LoginDTO model);

@@ -12,7 +12,10 @@ namespace HR_Project.Common.ValidationClass
         public override bool IsValid(object value)
         {
             DateTime date = Convert.ToDateTime(value);
-            if (date >= DateTime.Now.AddMonths(-1))
+            DateTime now = DateTime.Now;
+            DateTime lastMonthStart = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
+
+            if (date >= lastMonthStart)
             {
                 return true;
             }

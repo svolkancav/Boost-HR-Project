@@ -63,9 +63,9 @@ namespace HR_Project.Presentation.Controllers
                         var userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
                         var userSurName = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
                         var imagePath = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Thumbprint)?.Value;
-                        var company = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Company")?.Value;
-                        var department = jsonToken?.Claims.FirstOrDefault(c => c.Type == "Department")?.Value;
                         var roles = jsonToken?.Claims.Where(c => c.Type == ClaimTypes.Role);
+                        var companyId= jsonToken?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.WindowsSubAuthority)?.Value;
+                        var isManager = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData)?.Value;
 
                         var claims = new List<Claim>
                         {
@@ -75,6 +75,8 @@ namespace HR_Project.Presentation.Controllers
                             new Claim(ClaimTypes.Name, userName),
                             new Claim(ClaimTypes.Surname, userSurName),
                             new Claim(ClaimTypes.Thumbprint, imagePath),
+                            new Claim(ClaimTypes.UserData, isManager),
+                            new Claim(ClaimTypes.WindowsSubAuthority, companyId),
                             //new Claim("Company",company),
                             //new Claim("Department",department),
 

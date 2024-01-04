@@ -40,6 +40,11 @@ namespace HR_Project.Common.ValidationClass
 				validationResult = new ValidationResult("İzin süresi tam gün veya yarım gün girebilirsiniz.");
 			}
 
+			if (absenceduration < 0.5)
+			{
+                validationResult = new ValidationResult("İzin süresi yarım günden az olamaz.");
+            }
+
 			return validationResult;
 		}
 	}

@@ -77,7 +77,7 @@ namespace HR_Project.Application.Services.AdvanceService
                 Reason = x.Reason,
                 Currency = x.Currency,
                 CreatedDate = x.CreatedDate,
-            }, x => x.Status != Status.Deleted);
+            }, x => x.Status != Status.Deleted && x.PersonnelId == currentPersonnel.Id);
         }
 
         public async Task<List<AdvanceVM>> GetByCondition(ConditionType condition)
@@ -90,7 +90,7 @@ namespace HR_Project.Application.Services.AdvanceService
                 Condition = x.Condition,
                 Reason = x.Reason,
                 Currency = x.Currency
-            }, x => x.Status != Status.Deleted && x.Condition == condition);
+            }, x => x.Status != Status.Deleted && x.Condition == condition && x.PersonnelId == currentPersonnel.Id);
         }
 
         public async Task<UpdateAdvanceDTO> GetById(string id)

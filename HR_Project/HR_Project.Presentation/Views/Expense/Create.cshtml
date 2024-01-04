@@ -191,6 +191,17 @@
 					return options;
 				}
 
+
+				$('#ExpenseAmount').on('input', function () {
+					// Input değerini al
+					var value = $(this).val();
+					// Nokta varsa virgülle değiştir
+					value = value.replace('.', ',');
+					// Değiştirilmiş değeri input'a geri yaz
+					$(this).val(value);
+				});
+
+
 			});
 
 		</script>

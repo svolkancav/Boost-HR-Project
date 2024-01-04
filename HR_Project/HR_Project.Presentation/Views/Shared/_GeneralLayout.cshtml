@@ -176,6 +176,7 @@
 			
 
 			<!-- Nav Item - Admin Onayı Collapse Menu -->
+			@if (User.IsInRole("Admin")){
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin"
 				   aria-expanded="true" aria-controls="collapseAdmin">
@@ -193,7 +194,7 @@
 				</div>
 			</li>
 		
-
+			}
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 

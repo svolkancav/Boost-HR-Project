@@ -125,7 +125,7 @@
 											<td>
 												<a asp-action="Update" asp-route-id="@absence.Id">Düzenle</a>
 												|
-												<a asp-action="Delete" role="button" onclick="confirmDelete('@absence.Id')" id="deleteprocess">Sil</a>
+												<a href="#" onclick="confirmDelete(@absence.Id)" id="deleteprocess">Sil</a>
 											</td>
 										}
 										else
@@ -281,6 +281,7 @@
 	});
 
 	function confirmDelete(id) {
+		console.log(id);
 		if (confirm("Silmek istediğinize emin misiniz?")) {
 			window.location.href = "/Absence/Delete/?id=" + id;
 		} else {

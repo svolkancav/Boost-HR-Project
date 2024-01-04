@@ -199,7 +199,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveImage()">Kaydet</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Kapat</button>
             </div>
         </div>
     </div>
@@ -263,18 +263,19 @@
         formData.append('file', $('#imageInput')[0].files[0]);
         console.log('formData:', formData);
         $.ajax({
-            url: '/Personnel/UploadImage', // UploadImage controller'ının gerçek URL'sini belirtmelisiniz
+            url: '/Personnel/UploadImage', 
             type: 'POST',
             data: formData,
             contentType: false,
             processData: false,
             success: function (result) {
-                
-                // Modal'ı kapat
+                location.reload();
                 $('#imageUploadModal').modal('hide');
             },
             error: function (error) {
-                console.error('Resim yükleme hatası:', error);
+                var errorMessage = "Resim yükleme sırasında bir hata oluştu." + error.responseText.
+
+                toastr.error(errorMessage);
             }
         });
     }

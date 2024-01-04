@@ -70,15 +70,15 @@
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                            <th >
+                                            <th class="sorting" onclick="sortColumn('CreatedDate')" aria-sort="ascending">
                                                 Oluşturulma Tarihi
                                             </th>
-                                            <th >
+                                            <th class="sorting" onclick="sortColumn('AggregateAmount')" aria-sort="ascending">
                                                 Toplam tutar
                                             </th>
                                             <th >
                                                 Durumu
-                                            </th>
+                                            </th >
                                                     <th>İşlemler</th>
                                                 </tr>
                                             </thead>
@@ -102,7 +102,7 @@
                                                                 <td>
                                                                     <a asp-action="Update" asp-route-id="@masterExpanse.Id">Düzenle</a>
                                                                     |
-                                                                    <a asp-action="Delete" role="button" onclick="confirmDelete('@masterExpanse.Id')" id="deleteprocess">Sil</a>
+                                                            <a href="#" onclick="confirmDelete('@masterExpanse.Id')" id="deleteprocess">Sil</a>
                                                                 </td>
                                                             }
                                                             else
@@ -320,5 +320,31 @@
     function openDocumentModal(imageUrl) {
         $('#documentImage').attr('src', imageUrl);
         $('#documentModal').modal('show');
+    }
+
+    function sortColumn(columnName) {
+        var currentUrl = window.location.href;
+
+        // Get the current sort order from the URL
+        var sortOrder = "asc";
+        if (currentUrl.includes("sortOrder=asc")) {
+            sortOrder = "desc";
+        }
+
+        // Update the URL with the selected column and sort order
+        var newUrl = updateQueryStringParameter(currentUrl, "sortColumn", columnName);
+        newUrl = updateQueryStringParameter(newUrl, "sortOrder", sortOrder);
+
+        window.location.href = newUrl;
+    }
+
+    function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return uri + separator + key + "=" + value;
+        }
     }
 </script>

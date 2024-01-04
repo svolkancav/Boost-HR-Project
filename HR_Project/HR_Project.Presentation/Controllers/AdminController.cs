@@ -56,11 +56,11 @@ namespace HR_Project.Presentation.Controllers
 			
 		}
 		[HttpPost]
-		public async Task<IActionResult> Delete([FromForm] Guid id)
+		public async Task<IActionResult> Delete([FromForm] string id)
 		{
 			try
 			{
-				await _apiService.DeleteAsync<object>($"personnel", id.ToString(), HttpContext.Request.Cookies["access-token"]);
+				await _apiService.DeleteAsync<object>($"personnel", id, HttpContext.Request.Cookies["access-token"]);
 				Toastr("success", "Başarılı bir şekilde silindi");
 
 				return RedirectToAction("Index");

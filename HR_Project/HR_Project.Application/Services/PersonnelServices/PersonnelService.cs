@@ -77,16 +77,15 @@ namespace HR_Project.Application.Services.PersonelServices
                 await _userManager.AddToRoleAsync(user, "CompanyManager");
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
-				CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
-				companyRegisterDTO.CompanyName = model.CompanyName;
-				companyRegisterDTO.PhoneNumber = model.PhoneNumber;
-				companyRegisterDTO.RegionId = model.RegionId;
-				companyRegisterDTO.CityId = model.CityId;
-				companyRegisterDTO.PersonnelCount = model.PersonnelCount;
-				companyRegisterDTO.Email = model.Email;
+				Company company = new Company();
+				company.Name = model.CompanyName;
+				company.RegionId = model.RegionId;
+				company.CityId = model.CityId;
+				company.PersonnelCount = model.PersonnelCount;
+				company.Email = model.Email;
 
-                await _companyRepository.Create(_mapper.Map<Company>(companyRegisterDTO));
-                user.CompanyId = companyRegisterDTO.Id;
+                await _companyRepository.Create(company);
+                user.CompanyId = company.Id;
 
                 await _personelRepository.Update(user);
 

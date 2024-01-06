@@ -298,7 +298,9 @@ namespace HR_Project.Application.Services.PersonelServices
             try
             {
                 var user = await _signInManager.UserManager.FindByEmailAsync(model.Email);
-                if (user.IsAccountConfirmed == false)
+				//user.IsAccountConfirmed = true;
+
+				if (user.IsAccountConfirmed == false)
                     return SignInResult.NotAllowed;
 
                 SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);

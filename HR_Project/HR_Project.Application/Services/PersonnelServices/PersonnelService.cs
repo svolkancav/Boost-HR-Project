@@ -87,6 +87,9 @@ namespace HR_Project.Application.Services.PersonelServices
 
                 await _companyRepository.Create(_mapper.Map<Company>(companyRegisterDTO));
                 user.CompanyId = companyRegisterDTO.Id;
+
+                await _personelRepository.Update(user);
+
 				try
                 {
                     await _profileImageService.UploadFile(user.Id.ToString(), model.UploadImage);

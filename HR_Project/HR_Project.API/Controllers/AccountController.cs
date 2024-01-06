@@ -76,9 +76,8 @@ namespace HR_Project.API.Controllers
 				var isManager=await _personnelService.IsManager(personnel.Id);
                 if (!personnel.IsAccountConfirmed)
 					return Unauthorized("Kullanıcı hesabı onaylanmamıştır.");
-				//personnel.IsAccountConfirmed = true;
 				//Admine Rol atamak için
-				////await _userManager.AddToRoleAsync(personnel, "Admin");
+				//await _userManager.AddToRoleAsync(personnel, "Admin");
 				//await _userManager.AddToRoleAsync(personnel, "CompanyManager");
 				//await _userManager.AddToRoleAsync(personnel, "Personnel");
 

@@ -62,78 +62,79 @@
 			<div class="sidebar-heading">
 				Özlük İşlemleri
 			</div>
+			@if (User.IsInRole("CompanyManager") || User.IsInRole("Personnel"))
+			{
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link" asp-controller="Personnel" asp-action="Profil">
+						<i class="fas fa-fw fa-cog"></i>
+						<span>Profil</span>
+					</a>
+				</li>
 
-			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link" asp-controller="Personnel" asp-action="Profil">
-					<i class="fas fa-fw fa-cog"></i>
-					<span>Profil</span>
-				</a>
-			</li>
+				<!-- Nav Item - İzin İşlemleri Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIzin"
+					aria-expanded="true" aria-controls="collapseIzin">
+						<i class="fas fa-regular fa-calendar"></i>
+						<span>İzin İşlemleri</span>
+					</a>
+					<div id="collapseIzin" class="collapse" aria-labelledby="headingIzin"
+					data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">İzin İşlemleri:</h6>
+							<a class="collapse-item" asp-controller="Absence" asp-action="Index">İzin Listesi</a>
+							<a class="collapse-item" asp-controller="Absence" asp-action="Create">İzin Oluştur</a>
 
-			<!-- Nav Item - İzin İşlemleri Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIzin"
-				   aria-expanded="true" aria-controls="collapseIzin">
-					<i class="fas fa-regular fa-calendar"></i>
-					<span>İzin İşlemleri</span>
-				</a>
-				<div id="collapseIzin" class="collapse" aria-labelledby="headingIzin"
-					 data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">İzin İşlemleri:</h6>
-						<a class="collapse-item" asp-controller="Absence" asp-action="Index">İzin Listesi</a>
-						<a class="collapse-item" asp-controller="Absence" asp-action="Create">İzin Oluştur</a>
+						</div>
+
 
 					</div>
+				</li>
 
+				<!-- Nav Item - Avans İşlemleri Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAvans"
+					aria-expanded="true" aria-controls="collapseAvans">
+						<i class="fas fa-thin fa-wallet"></i>
+						<span>Avans İşlemleri</span>
+					</a>
+					<div id="collapseAvans" class="collapse" aria-labelledby="headingAvans"
+					data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Avans İşlemleri:</h6>
+							<a class="collapse-item" asp-controller="Advance" asp-action="Index">Avans Listesi</a>
+							<a class="collapse-item" asp-controller="Advance" asp-action="Create">Avans Oluştur</a>
 
-				</div>
-			</li>
+						</div>
 
-			<!-- Nav Item - Avans İşlemleri Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAvans"
-				   aria-expanded="true" aria-controls="collapseAvans">
-					<i class="fas fa-thin fa-wallet"></i>
-					<span>Avans İşlemleri</span>
-				</a>
-				<div id="collapseAvans" class="collapse" aria-labelledby="headingAvans"
-					 data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Avans İşlemleri:</h6>
-						<a class="collapse-item" asp-controller="Advance" asp-action="Index">Avans Listesi</a>
-						<a class="collapse-item" asp-controller="Advance" asp-action="Create">Avans Oluştur</a>
 
 					</div>
+				</li>
 
+				<!-- Nav Item - Masraf İşlemleri Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasraf"
+					aria-expanded="true" aria-controls="collapseMasraf">
+						<i class="fas fa-thin fa-paper-plane"></i>
+						<span>Masraf İşlemleri</span>
+					</a>
+					<div id="collapseMasraf" class="collapse" aria-labelledby="headingMasraf"
+					data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Masraf İşlemleri:</h6>
+							<a class="collapse-item" asp-controller="Expense" asp-action="Index">Masraf Bilgileri</a>
+							<a class="collapse-item" asp-controller="Expense" asp-action="Create">Masraf Kayıt</a>
 
-				</div>
-			</li>
+						</div>
 
-			<!-- Nav Item - Masraf İşlemleri Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMasraf"
-				   aria-expanded="true" aria-controls="collapseMasraf">
-					<i class="fas fa-thin fa-paper-plane"></i>
-					<span>Masraf İşlemleri</span>
-				</a>
-				<div id="collapseMasraf" class="collapse" aria-labelledby="headingMasraf"
-					 data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Masraf İşlemleri:</h6>
-						<a class="collapse-item" asp-controller="Expense" asp-action="Index">Masraf Bilgileri</a>
-						<a class="collapse-item" asp-controller="Expense" asp-action="Create">Masraf Kayıt</a>
 
 					</div>
+				</li>
 
-
-				</div>
-			</li>
-
-			<!-- Nav Item - Şirket İşlemleri Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSirket"
+				<!-- Nav Item - Şirket İşlemleri Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSirket"
 				   aria-expanded="true" aria-controls="collapseSirket">
 					<i class="fas fa-thin fa-paper-plane"></i>
 					<span>Şirket İşlemleri</span>
@@ -149,9 +150,9 @@
 
 				</div>
 			</li>
+			}
 
-
-			@if (User.IsInRole("Admin") || User.IsInRole("CompanyManager"))
+			@if (User.IsInRole("CompanyManager"))
 			{
 				<!-- Nav Item - Personel Ekleme Collapse Menu -->
 				<li class="nav-item">

@@ -31,7 +31,7 @@ namespace HR_Project.Common.Models.VMs
 		public Currency Currency
 		{
 			get { return _currency; }
-			set { _currency = Expenses[0].Currency; }
+			set { _currency = Expenses.Count==0? Currency.TL: Expenses[0].Currency; }
 		}
 
 		//public double AggregateAmount { get; set; }

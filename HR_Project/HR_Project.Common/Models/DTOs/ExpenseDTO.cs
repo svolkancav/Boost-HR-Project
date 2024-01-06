@@ -19,6 +19,7 @@ namespace HR_Project.Common.Models.DTOs
 		public ExpenseType ExpenseType { get; set; }
 
 		[Display(Name = "Masraf Tarihi")]
+		[ExpenseDateValidation()]
 		public DateTime ExpenseDate { get; set; }
 
 

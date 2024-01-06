@@ -21,12 +21,7 @@ namespace HR_Project.Common.Models.DTOs
 		[Required]
         public decimal Amount { get; set; }
 
-        [NotMapped]
-        public string AmountString
-        {
-            get => Amount.ToString("N2", CultureInfo.InvariantCulture);
-            set => Amount = decimal.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue) ? parsedValue : 0;
-        }
+        
 
 
         [Display(Name = "Açıklama")]

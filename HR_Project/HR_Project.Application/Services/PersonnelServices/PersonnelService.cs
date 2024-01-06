@@ -45,7 +45,9 @@ namespace HR_Project.Application.Services.PersonelServices
 
             if (user != null)
             {
-                return true;
+                if(user.Personnels.Count > 0)
+                    return true;
+                return false;
             }
             else
             {
@@ -75,8 +77,17 @@ namespace HR_Project.Application.Services.PersonelServices
                 await _userManager.AddToRoleAsync(user, "CompanyManager");
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
+				CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
+				companyRegisterDTO.CompanyName = model.CompanyName;
+				companyRegisterDTO.PhoneNumber = model.PhoneNumber;
+				companyRegisterDTO.RegionId = model.RegionId;
+				companyRegisterDTO.CityId = model.CityId;
+				companyRegisterDTO.PersonnelCount = model.PersonnelCount;
+				companyRegisterDTO.Email = model.Email;
 
-                try
+                await _companyRepository.Create(_mapper.Map<Company>(companyRegisterDTO));
+                user.CompanyId = companyRegisterDTO.Id;
+				try
                 {
                     await _profileImageService.UploadFile(user.Id.ToString(), model.UploadImage);
 

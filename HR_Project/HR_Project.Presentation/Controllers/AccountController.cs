@@ -159,15 +159,15 @@ namespace HR_Project.Presentation.Controllers
 
                 Toastr("success", "Kayıt başarılı bir şekilde oluşturuldu.");
 
-                CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
-                companyRegisterDTO.CompanyName = model.CompanyName;
-                companyRegisterDTO.PhoneNumber = model.PhoneNumber;
-                companyRegisterDTO.RegionId = model.RegionId;
-                companyRegisterDTO.CityId = model.CityId;
-                companyRegisterDTO.PersonnelCount = model.PersonnelCount;
-                companyRegisterDTO.Email = model.Email;
+                //CompanyRegisterDTO companyRegisterDTO = new CompanyRegisterDTO();
+                //companyRegisterDTO.CompanyName = model.CompanyName;
+                //companyRegisterDTO.PhoneNumber = model.PhoneNumber;
+                //companyRegisterDTO.RegionId = model.RegionId;
+                //companyRegisterDTO.CityId = model.CityId;
+                //companyRegisterDTO.PersonnelCount = model.PersonnelCount;
+                //companyRegisterDTO.Email = model.Email;
 
-                var result = await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
+                //var result = await _apiService.PostAsyncWoToken<CompanyRegisterDTO, CompanyRegisterDTO>("Company", companyRegisterDTO);
 
 
 

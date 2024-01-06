@@ -1,6 +1,4 @@
-﻿
-
-@* <div class="card shadow mb-4">
+﻿@* <div class="card shadow mb-4">
 	<!-- Card Header - Accordion -->
 	<a href="#collapseAbcense" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseAbcense">
 		<h6 class="m-0 font-weight-bold text-primary">Onay Bekleyen İzinler</h6>
@@ -34,177 +32,177 @@
 
 
 @{
-    var pendingAbsenceCount = await Component.InvokeAsync("AbsenceCardComponent");
-    var pendingAdvanceCount = await Component.InvokeAsync("AdvanceCardComponent");
-    var pendingExpenseCount = await Component.InvokeAsync("ExpenseCardComponent");
+	var pendingAbsenceCount = await Component.InvokeAsync("AbsenceCardComponent");
+	var pendingAdvanceCount = await Component.InvokeAsync("AdvanceCardComponent");
+	var pendingExpenseCount = await Component.InvokeAsync("ExpenseCardComponent");
 
-    
-    var pendingAbsenceCountForManager = await Component.InvokeAsync("AbsenceCardComponent", false);
-    var pendingAdvanceCountForManager = await Component.InvokeAsync("AdvanceCardComponent", false);
-    var pendingExpenseCountForManager = await Component.InvokeAsync("ExpenseCardComponent", false);
-    
+
+	var pendingAbsenceCountForManager = await Component.InvokeAsync("AbsenceCardComponent", false);
+	var pendingAdvanceCountForManager = await Component.InvokeAsync("AdvanceCardComponent", false);
+	var pendingExpenseCountForManager = await Component.InvokeAsync("ExpenseCardComponent", false);
+
 }
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 
 }
 
 
 <body id="page-top">
 
-    <!-- Main Content -->
-    <div id="content">
+	<!-- Main Content -->
+	<div id="content">
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+		<!-- Begin Page Content -->
+		<div class="container-fluid">
 
-            <!-- Page Heading -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800"></h1>
-            </div>
+			<!-- Page Heading -->
+			<div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h1 class="h3 mb-0 text-gray-800"></h1>
+			</div>
 
-            <hr />
-            <p>Onay Bekleyenler</p>
-            <div class="row">
+			<hr />
+			<p>Talepleriniz</p>
+			<div class="row">
 
-                <!-- absence card  -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="/Absence/Index" class="d-block">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
+				<!-- absence card  -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<a href="/Absence/Index" class="d-block">
+						<div class="card border-left-primary shadow h-100 py-2">
+							<div class="card-body">
 
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            onay bekleyen izin talepleri
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCount</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-sun fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-
-                <!-- Advance card  -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="/Advance/Index" class="d-block">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            onay bekleyen avans talepleri
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAdvanceCount</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+											onay bekleyen izin talepleri
+										</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCount</div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-sun fa-2x text-gray-300"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
 
 
-                <!-- Expense card  -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="/Expense/Index" class="d-block">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            onay bekleyen masraf talepleri
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingExpenseCount</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                               
-            </div>
-            <hr />
-            <p>Onaylanması Gerekenler</p>
-            <div class="row">
-                @if (httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value=="Manager")
-                {
-                    <!-- absence for manager card  -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="/Absence/Index" class="d-block">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                onay bekleyen izin talepleri
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCountForManager</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-sun fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-
-                    <!-- Advance for manager card  -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="/Advance/Index" class="d-block">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                onay bekleyen avans talepleri
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAdvanceCountForManager</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
+				<!-- Advance card  -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<a href="/Advance/Index" class="d-block">
+						<div class="card border-left-primary shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+											onay bekleyen avans talepleri
+										</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAdvanceCount</div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
 
 
-                    <!-- Expense for manager card  -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="/Expense/Index" class="d-block">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                onay bekleyen masraf talepleri
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@pendingExpenseCountForManager</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                }
-            </div>
+				<!-- Expense card  -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<a href="/Expense/Index" class="d-block">
+						<div class="card border-left-primary shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+											onay bekleyen masraf talepleri
+										</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingExpenseCount</div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+
+			</div>
+			@if (httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).Value == "Manager")
+			{
+				<hr />
+				<p>Onayınızı Bekleyen Talepler</p>
+				<div class="row">
+					<!-- absence for manager card  -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<a href="/Absence/Index" class="d-block">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+												onay bekleyen izin talepleri
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAbsenceCountForManager</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-sun fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+
+					<!-- Advance for manager card  -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<a href="/Advance/Index" class="d-block">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+												onay bekleyen avans talepleri
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingAdvanceCountForManager</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
 
 
-        </div>
+					<!-- Expense for manager card  -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<a href="/Expense/Index" class="d-block">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+												onay bekleyen masraf talepleri
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">@pendingExpenseCountForManager</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+			}
 
-    </div>
+
+		</div>
+
+	</div>
 
 
 

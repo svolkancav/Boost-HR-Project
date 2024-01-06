@@ -21,8 +21,7 @@ namespace HR_Project.Presentation.ViewComponents
         //	List<AdvanceVM> advances = await _apiService.GetAsync<List<AdvanceVM>>($"Advance/{ConditionType.Pending}", HttpContext.Request.Cookies["access-token"]);
         //	return await Task.FromResult(View(advances));
         //}
-
-        public async Task<IViewComponentResult> InvokeAsync(bool ownList)
+        public async Task<IViewComponentResult> InvokeAsync(bool ownList=true)
         {
             if (ownList)
             {

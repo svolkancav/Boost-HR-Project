@@ -54,4 +54,4 @@ jobs:
           app-name: 'easyhr2'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_778A447029604549912C49F82F5BD6C4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D342138163C24D658A494221C70F8453 }}

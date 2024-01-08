@@ -173,8 +173,9 @@ namespace HR_Project.Presentation.Controllers
 
                 List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
                 var selectedCompany = companies.FirstOrDefault(x => x.Email == model.Email);
+                string companyName = selectedCompany.Name;
 
-                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id);
+                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", companyName);
 
 
                 return RedirectToAction("Information", "Account");

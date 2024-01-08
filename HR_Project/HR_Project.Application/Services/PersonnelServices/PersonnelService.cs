@@ -67,7 +67,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 Address = model.Address,
                 RegionId = model.RegionId,
                 CityId = model.CityId,
-                UserName = model.Name,
+                UserName = model.Email,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);

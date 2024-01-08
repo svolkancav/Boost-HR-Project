@@ -63,7 +63,7 @@ namespace HR_Project.Common
 
             var message = new MailMessage
             {
-                From = new MailAddress(_smtpUsername, "HS-12-MVC Hamburgerci"),
+                From = new MailAddress(_smtpUsername, "EasyHR"),
                 Subject = subject,
                 Body = htmlMessage,
                 IsBodyHtml = true,

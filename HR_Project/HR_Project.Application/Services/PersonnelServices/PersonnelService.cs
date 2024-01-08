@@ -129,6 +129,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 Address = model.Address,
                 UserName = model.Email,
                 IsAccountConfirmed = true,
+                EmailConfirmed = true,
             };
 
             try
@@ -355,6 +356,7 @@ namespace HR_Project.Application.Services.PersonelServices
             {
                 Personnel personnel = await _personelRepository.GetDefault(x => x.Id == id);
                 personnel.IsAccountConfirmed = true;
+                personnel.EmailConfirmed = true;
                 await _personelRepository.Update(personnel);
                 return personnel.Email;
             }

@@ -237,7 +237,7 @@ namespace HR_Project.Presentation.Controllers
                     if (personnel is not null)
                     {
                         string subject = "Şifre Yenile";
-                        string body = $"Lütfen şifrenizi yenilemek için linke <a href='{"https://localhost:7034/Account/Changepassword"}'>tıklayın</a>.";
+                        string body = $"Lütfen şifrenizi yenilemek için linke <a href='{"https://easyhrboost.azurewebsites.net/Account/Changepassword"}'>tıklayın</a>.";
 
                         await _emailService.SendEmailRegisterAsync(personnel.Email, subject, body);
                         Toastr("success", "Mail gönderildi");

@@ -195,7 +195,7 @@ namespace HR_Project.Presentation.APIService
             //var jsonData = JsonConvert.SerializeObject(registerModel);
             //var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            //var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
+            //var response = await _httpClient.PostAsync("https://easyhrboostapi.azurewebsites.net/api/Account/register", content);
 
             //if (!response.IsSuccessStatusCode)
             //{
@@ -215,7 +215,7 @@ namespace HR_Project.Presentation.APIService
                 content.Add(new StringContent(JsonConvert.SerializeObject(registerModel), Encoding.UTF8, "application/json"), "model");
 
 
-                var response = await _httpClient.PostAsync("https://localhost:7258/api/Account/register", content);
+                var response = await _httpClient.PostAsync("https://easyhrboostapi.azurewebsites.net/api/Account/register", content);
 
                 if (!response.IsSuccessStatusCode)
                 {

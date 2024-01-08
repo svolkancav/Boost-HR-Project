@@ -29,10 +29,10 @@ namespace HR_Project.Common
             _smtpPassword = "bjas khhb jcud tjrw";
         }
 
-        public async Task SendConfirmationEmailAsync(string toEmail, int companyId)
+        public async Task SendConfirmationEmailAsync(string toEmail, string companyName)
         {
             //var token = await _tokenService.GenerateTokenAsync(companyId);
-            var confirmationLink = $"https://localhost:7034/company/confirm?companyId={companyId}";
+            var confirmationLink = $"https://localhost:7034/company/confirm?companyId={companyName}";
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Admin", "hreasyboost@gmail.com"));
@@ -40,7 +40,7 @@ namespace HR_Project.Common
             message.Subject = "Şirket Onayı";
 
             var builder = new BodyBuilder();
-            builder.TextBody = $"Sayın Admin, {companyId} şirketi için onayınız beklenmektedir. Lütfen aşağıdaki linke tıklayarak onaylayın:\n\n{confirmationLink}";
+            builder.TextBody = $"Sayın Admin, {companyName} şirketi için onayınız beklenmektedir.";
 
             message.Body = builder.ToMessageBody();
 

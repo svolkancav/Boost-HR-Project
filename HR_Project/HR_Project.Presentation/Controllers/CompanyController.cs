@@ -77,8 +77,8 @@ namespace HR_Project.Presentation.Controllers
 
                 List<CreateCompanyDTO> companies = await _apiService.GetAsyncWoToken<List<CreateCompanyDTO>>("Company");
                 var selectedCompany = companies.FirstOrDefault(x => x.Name == model.Name);
-
-                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", selectedCompany.Id); ;
+                string companyname = selectedCompany.Name;
+                await _emailService.SendConfirmationEmailAsync("hreasyboost@gmail.com", companyname ); ;
 
 
                 return RedirectToAction("Information","Account");
@@ -148,7 +148,7 @@ namespace HR_Project.Presentation.Controllers
                 var company = await _apiService.GetByIdAsync<UpdateCompanyDTO>("company", companyId.ToString(), HttpContext.Request.Cookies["access-token"]);
                 // Token doğrulandı, şirketi aktif hale getir
                 // companyId parametresini kullanarak şirketi bulup aktifleştirme işlemlerini gerçekleştirin
-                string body = $"Şirketiniz onaylandı. Lütfen giriş yapınız.<a href='https://localhost:7034/'>tıklayın</a>. ";
+                string body = $"Şirketiniz onaylandı. Lütfen giriş yapınız.<a href='https://easyhrboost.azurewebsites.net'>tıklayın</a>. ";
                 string subject = "Registration Confirmation";
                 await _emailService.SendEmailRegisterAsync(company.Email, subject, body);
                 return RedirectToAction("Login", "Account");

@@ -130,6 +130,7 @@ namespace HR_Project.Application.Services.PersonelServices
                 UserName = model.Email,
                 IsAccountConfirmed = true,
                 EmailConfirmed = true,
+                
             };
 
             try
